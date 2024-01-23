@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "503923325128",
+    "project_id": "navalha-prod",
+    "storage_bucket": "navalha-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503923325128:android:3d7712e8981c6451aa4dfd",
+        "android_client_info": {
+          "package_name": "br.com.manager.navalha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503923325128-ms8brondqnsrld6bu5vcptsireonda6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7a9ocze1zdggtXRl1CuYWmftxGlj7jfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503923325128-ee4a482nlie2q6ri69eldikrgcomjoqf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "503923325128-77lrcenmifh5hj1ak32lrhis2g6ouebm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "customer.navalha"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503923325128:android:eb74c8fe884fd968aa4dfd",
+        "android_client_info": {
+          "package_name": "customer.navalha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503923325128-0jid4lrlq2nkvhanrslo6s4t5m9cqsb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "customer.navalha",
+            "certificate_hash": "88cc705df3be84f4f427b283a34789ac20ce9b76"
+          }
+        },
+        {
+          "client_id": "503923325128-aas4re2tmuamuida5sb51nv18lnaq59u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "customer.navalha",
+            "certificate_hash": "a90c167636592b895b961a47c8949ab163972994"
+          }
+        },
+        {
+          "client_id": "503923325128-ar7hor3mm1q0aae6lftqg9nfp5cf22a4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "customer.navalha",
+            "certificate_hash": "4091aa1d5e6b92880c5ab5df08fe6a109fff77e3"
+          }
+        },
+        {
+          "client_id": "503923325128-g455fd6aev2tukgtdgrvb0kvgkecs6g0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "customer.navalha",
+            "certificate_hash": "5049822b13b57a7df80a234a0433e5c0038c72c5"
+          }
+        },
+        {
+          "client_id": "503923325128-ms8brondqnsrld6bu5vcptsireonda6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7a9ocze1zdggtXRl1CuYWmftxGlj7jfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503923325128-ee4a482nlie2q6ri69eldikrgcomjoqf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "503923325128-77lrcenmifh5hj1ak32lrhis2g6ouebm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "customer.navalha"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
