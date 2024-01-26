@@ -19,7 +19,7 @@ class FormFieldEmail extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         color: colorContainers353535,
         borderRadius: const BorderRadius.all(

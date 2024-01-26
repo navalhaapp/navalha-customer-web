@@ -46,183 +46,170 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
   Widget build(BuildContext context) {
     final getSchedule = ref.watch(getScheduleCustomerList(getScheduleModel));
     Size size = MediaQuery.of(context).size;
-    return Consumer(
-      builder: (context, ref, child) {
-        final loginController =
-            ref.read(LoginStateController.provider.notifier);
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              getSchedule.when(
-                data: (data) {
-                  List<ScheduleItemModel> listScheduleItem =
-                      orderScheduleList(data.result!);
-                  if (listScheduleItem.isNotEmpty) {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, top: 20, bottom: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                padding: const EdgeInsets.only(left: 30),
-                                onPressed: () {
-                                  navigationFadePush(
-                                      const ServicesPageWeb(), context);
-                                },
-                                icon: const Icon(
-                                  CupertinoIcons.clear,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                'Minha agenda',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  shadows: shadow,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              IconButton(
-                                padding: const EdgeInsets.only(left: 30),
-                                onPressed: () {},
-                                icon: const Icon(
-                                  CupertinoIcons.clear,
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                            top: 10,
-                            bottom: 10,
-                          ),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.all<Color>(
-                                colorContainers353535,
-                              ),
-                              elevation: MaterialStateProperty.all(0),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 28, 28, 28)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
+    return getSchedule.when(
+      data: (data) {
+        List<ScheduleItemModel> listScheduleItem =
+            orderScheduleList(data.result!);
+        if (listScheduleItem.isNotEmpty) {
+          return Consumer(
+            builder: (context, ref, child) {
+              final loginController =
+                  ref.read(LoginStateController.provider.notifier);
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            padding: const EdgeInsets.only(left: 30),
                             onPressed: () {
                               navigationFadePush(
                                   const ServicesPageWeb(), context);
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.add_circled_solid,
-                                            color: Colors.white,
-                                          ),
-                                          SizedBox(width: 15),
-                                          Text(
-                                            'Marcar um serviço',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Icon(
-                                    CupertinoIcons.chevron_forward,
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              ),
+                            icon: const Icon(
+                              CupertinoIcons.clear,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            'Minha agenda',
+                            style: TextStyle(
+                              fontSize: 20,
+                              shadows: shadow,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            padding: const EdgeInsets.only(left: 30),
+                            onPressed: () {},
+                            icon: const Icon(
+                              CupertinoIcons.clear,
+                              color: Colors.transparent,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 10,
+                        bottom: 10,
+                      ),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          overlayColor: MaterialStateProperty.all<Color>(
+                            colorContainers353535,
+                          ),
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 28, 28, 28)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                         ),
-                        for (int i = 0; i < listScheduleItem.length; i++)
-                          ContainerCalendarWeb(
-                            birthDate:
-                                loginController.user!.customer!.birthDate!,
-                            canceled: listScheduleItem[i].canceled!,
-                            reviewed: listScheduleItem[i].reviewed!,
-                            professionalId: listScheduleItem[i]
-                                .professional!
-                                .professionalId,
-                            serviceId: listScheduleItem[i].scheduleServiceId!,
-                            customerId:
-                                loginController.user!.customer!.customerId!,
-                            nameService: listScheduleItem[i].service!.name!,
-                            priceService: listScheduleItem[i].service!.price,
-                            nameBarberShop:
-                                listScheduleItem[i].barbershop!.barbershopName!,
-                            day: listScheduleItem[i].date!.substring(3, 5),
-                            mouth: pickMonth(
-                                listScheduleItem[i].date!.substring(0, 2)),
-                            hour: listScheduleItem[i].initialHour!,
-                            imgProfessional:
-                                listScheduleItem[i].professional!.imgProfile!,
-                            imgBarberShop:
-                                listScheduleItem[i].barbershop!.imgProfile!,
-                            nameProfessional:
-                                listScheduleItem[i].professional!.name!,
-                            finalized: listScheduleItem[i].finalized!,
-                            i: i,
+                        onPressed: () {
+                          navigationFadePush(const ServicesPageWeb(), context);
+                        },
+                        child: const Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.add_circled_solid,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: 15),
+                                      Text(
+                                        'Marcar um serviço',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Icon(
+                                CupertinoIcons.chevron_forward,
+                                color: Colors.white,
+                              ),
+                            ],
                           ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                        )
-                      ],
-                    );
-                  } else {
-                    return Center(
-                      child: WidgetEmpty(
-                        titleSize: 20,
-                        topSpace: 0,
-                        title: 'Nenhum agendamento',
-                        subTitle: 'Você não possui nenhum agendamento',
-                        text: 'Atualizar',
-                        onPressed: () => navigationWithFadeAnimation(
-                            const CalendarPageWeb(), context),
+                        ),
                       ),
-                    );
-                  }
-                },
-                error: (error, stackTrace) => WidgetEmpty(
-                  title: 'Ops, Algo aconteceu!',
-                  subTitle: 'Houve algum erro, tente novamente mais tarde.',
-                  onPressed: () {
-                    navigationWithFadeAnimation(
-                        const CalendarPageWeb(), context);
-                  },
-                  text: 'Tentar de novo',
+                    ),
+                    for (int i = 0; i < listScheduleItem.length; i++)
+                      ContainerCalendarWeb(
+                        birthDate: loginController.user!.customer!.birthDate!,
+                        canceled: listScheduleItem[i].canceled!,
+                        reviewed: listScheduleItem[i].reviewed!,
+                        professionalId:
+                            listScheduleItem[i].professional!.professionalId,
+                        serviceId: listScheduleItem[i].scheduleServiceId!,
+                        customerId: loginController.user!.customer!.customerId!,
+                        nameService: listScheduleItem[i].service!.name!,
+                        priceService: listScheduleItem[i].service!.price,
+                        nameBarberShop:
+                            listScheduleItem[i].barbershop!.barbershopName!,
+                        day: listScheduleItem[i].date!.substring(3, 5),
+                        mouth: pickMonth(
+                            listScheduleItem[i].date!.substring(0, 2)),
+                        hour: listScheduleItem[i].initialHour!,
+                        imgProfessional:
+                            listScheduleItem[i].professional!.imgProfile!,
+                        imgBarberShop:
+                            listScheduleItem[i].barbershop!.imgProfile!,
+                        nameProfessional:
+                            listScheduleItem[i].professional!.name!,
+                        finalized: listScheduleItem[i].finalized!,
+                        i: i,
+                      ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    )
+                  ],
                 ),
-                loading: () => const ShimmerCalendar(),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1)
-            ],
-          ),
-        );
+              );
+            },
+          );
+        } else {
+          return WidgetEmpty(
+            titleSize: 20,
+            topSpace: 0,
+            title: 'Nenhum agendamento',
+            subTitle: 'Você não possui nenhum agendamento',
+            text: 'Atualizar',
+            onPressed: () =>
+                navigationWithFadeAnimation(const CalendarPageWeb(), context),
+          );
+        }
       },
+      error: (error, stackTrace) => WidgetEmpty(
+        title: 'Ops, Algo aconteceu!',
+        subTitle: 'Houve algum erro, tente novamente mais tarde.',
+        onPressed: () {
+          navigationWithFadeAnimation(const CalendarPageWeb(), context);
+        },
+        text: 'Tentar de novo',
+      ),
+      loading: () => const ShimmerCalendar(),
     );
   }
 }

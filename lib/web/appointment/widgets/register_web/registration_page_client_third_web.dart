@@ -14,6 +14,7 @@ import 'package:navalha/mobile/register/provider/register_customer_provider.dart
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/text_edit.dart';
+import 'package:navalha/web/appointment/text_edit_web.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_page_client_web.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_password_web.dart';
 
@@ -98,7 +99,7 @@ class _RegistrationPageClientThirdWebState
                         ),
                       ],
                     ),
-                    TextEditPattern(
+                    TextEditPatternWeb(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 10,
@@ -112,7 +113,7 @@ class _RegistrationPageClientThirdWebState
                       mask: TelefoneInputFormatter(),
                       keyboardType: TextInputType.number,
                     ),
-                    TextEditPattern(
+                    TextEditPatternWeb(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       width: MediaQuery.of(context).size.width,

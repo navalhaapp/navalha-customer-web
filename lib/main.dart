@@ -1,5 +1,7 @@
 // import 'dart:html';
 
+import 'dart:html';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -92,13 +94,13 @@ class _MyAppState extends ConsumerState<MyApp> {
       initialRoute: kIsWeb ? AppRoutes.servicesPageWeb : AppRoutes.splashPage,
       onGenerateRoute: (settings) {
         if (kIsWeb) {
-          // final url = Uri.dataFromString(window.location.href);
-          // Map<String, String> params = url.queryParameters;
-          // var origin = params['id'];
-          // return MaterialPageRoute(
-          //   // builder: (context) => LoginPageWeb(),
-          //   builder: (context) => ServicesPageWeb(url: origin),
-          // );
+          final url = Uri.dataFromString(window.location.href);
+          Map<String, String> params = url.queryParameters;
+          var origin = params['id'];
+          return MaterialPageRoute(
+            // builder: (context) => LoginPageWeb(),
+            builder: (context) => ServicesPageWeb(url: origin),
+          );
         } else {
           return MaterialPageRoute(
             builder: (context) => const SplashPage(),

@@ -7,7 +7,6 @@ import 'package:navalha/mobile/home/provider/provider_get_barber_shop_by_id.dart
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/schedule/widgets/body_schedule.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/shared/model/barber_shop_model.dart';
 import 'package:navalha/shared/model/professional_model.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
@@ -46,7 +45,6 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
       barberShopId: widget.url.toString(),
       customerId: null,
     );
-    setState(() {});
   }
 
   bool loading = false;
@@ -54,12 +52,9 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
   Widget build(BuildContext context) {
     final getBarbershopController =
         ref.watch(getAllBarberShopById(getBarberShopModel));
-    final barberShopIdController =
-        ref.watch(barberShopSelectedIdProvider.state);
 
     return getBarbershopController.when(
       data: (data) {
-        barberShopIdController.state = data.barbershop!.barbershopId!;
         List<Professional> getProfessionalsByService(
             Service service, List<Professional> professionals) {
           final String serviceName = service.name!;
@@ -82,6 +77,10 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
         );
         return Consumer(
           builder: (context, ref, child) {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              ref.watch(barberShopSelectedProvider.state).state =
+                  data.barbershop!;
+            });
             final loginController =
                 ref.read(LoginStateController.provider.notifier);
             return Scaffold(
@@ -215,7 +214,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
       },
       error: (error, stackTrace) => Scaffold(
         body: WidgetEmpty(
-          title: 'Ops, Algo aconteceu!',
+          title: 'Ops, Algo asconteceu!',
           subTitle: 'Houve algum erro, tente novamente mais tarde.',
           onPressed: () {
             navigationWithFadeAnimation(const AppointmentWebPage(), context);
@@ -223,8 +222,12 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
           text: 'Tentar de novo',
         ),
       ),
-      // loading: () => const Scaffold(body: ShimmerCalendar()),
-      loading: () => const Scaffold(body: SizedBox()),
+      loading: () => const Scaffold(
+          body: SizedBox(
+        child: Center(
+          child: Text('aaa'),
+        ),
+      )),
     );
   }
 }
@@ -253,6 +256,7 @@ class DownloadAppPromotion extends StatelessWidget {
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
@@ -268,8 +272,7 @@ class DownloadAppPromotion extends StatelessWidget {
                   color: Colors.black,
                 ),
                 child: const Padding(
-                  padding:
-                      EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 20),
                   child: Text(
                     textAlign: TextAlign.center,
                     'Para uma experiência completa, baixe nosso aplicativo.',

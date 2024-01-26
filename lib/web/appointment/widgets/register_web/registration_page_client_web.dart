@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:navalha/web/appointment/text_edit_web.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:navalha/core/colors.dart';
@@ -12,7 +13,6 @@ import 'package:navalha/mobile/register/provider/register_customer_provider.dart
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/text_edit.dart';
 
 import 'registration_page_client_second_web.dart';
 
@@ -88,7 +88,7 @@ class _RegistrationPageClientWebState
                         ),
                       ],
                     ),
-                    TextEditPattern(
+                    TextEditPatternWeb(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 20,
                       ),
@@ -99,7 +99,7 @@ class _RegistrationPageClientWebState
                       obscure: false,
                       keyboardType: TextInputType.name,
                     ),
-                    TextEditPattern(
+                    TextEditPatternWeb(
                       margin: const EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 20,

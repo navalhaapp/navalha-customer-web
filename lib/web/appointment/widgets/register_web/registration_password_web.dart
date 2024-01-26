@@ -21,6 +21,7 @@ import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/text_edit.dart';
+import 'package:navalha/web/appointment/text_edit_web.dart';
 import 'package:navalha/web/appointment/widgets/login_page_web.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_page_client_web.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -127,7 +128,7 @@ class _MyWidgetState extends ConsumerState<RegistrationPasswordWeb>
                           ),
                         ],
                       ),
-                      TextEditPattern(
+                      TextEditPatternWeb(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 10,
@@ -154,7 +155,7 @@ class _MyWidgetState extends ConsumerState<RegistrationPasswordWeb>
                           },
                         ),
                       ),
-                      TextEditPattern(
+                      TextEditPatternWeb(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 20,
                         ),

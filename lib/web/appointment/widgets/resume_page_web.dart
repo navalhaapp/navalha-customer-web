@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -169,8 +171,13 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                                   ),
                                 ),
                                 onPressed: () {
+                                  final url =
+                                      Uri.dataFromString(window.location.href);
+                                  Map<String, String> params =
+                                      url.queryParameters;
+                                  var origin = params['id'];
                                   navigationFadePush(
-                                      const ServicesPageWeb(), context);
+                                      ServicesPageWeb(url: origin), context);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(

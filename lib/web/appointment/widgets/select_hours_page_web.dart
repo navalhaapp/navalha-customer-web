@@ -103,7 +103,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
               ref.watch(packageSelectedToUseProvider.state);
           return SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Center(
                   child: Column(

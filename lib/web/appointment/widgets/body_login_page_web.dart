@@ -183,6 +183,7 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
                                   _state = 0;
                                 });
                               });
+
                               Future.delayed(const Duration(seconds: 1))
                                   .then((value) async {
                                 navigationWithFadeAnimation(

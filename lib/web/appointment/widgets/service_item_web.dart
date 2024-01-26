@@ -67,7 +67,7 @@ class ServiceItemWeb extends StatelessWidget {
                       children: [
                         AutoSizeText(
                           name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),

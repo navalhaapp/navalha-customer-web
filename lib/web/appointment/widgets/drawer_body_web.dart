@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -70,8 +72,15 @@ class DrawerBodyWeb extends StatelessWidget {
                 _ButtonItem(
                   label: 'Reservar',
                   onPressed: () {
+                    final url = Uri.dataFromString(window.location.href);
+                    Map<String, String> params = url.queryParameters;
+                    var origin = params['id'];
                     navigationWithFadeAnimation(
-                        const ServicesPageWeb(), context);
+                      ServicesPageWeb(
+                        url: origin,
+                      ),
+                      context,
+                    );
                   },
                   icon: CupertinoIcons.calendar_badge_plus,
                 ),

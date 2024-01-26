@@ -170,7 +170,7 @@ class _FloatingForget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(bottom: size.height * .02),
+      margin: EdgeInsets.only(bottom: size.height * .02, left: 20, right: 20),
       width: size.width * 0.9,
       height: 50,
       child: ElevatedButton(
@@ -256,7 +256,8 @@ class _ForgetDialog extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               width: size.width * 0.3,
               child: ElevatedButton(
                 style: ButtonStyle(

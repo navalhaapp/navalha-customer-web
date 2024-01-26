@@ -100,7 +100,7 @@ class TextEditPattern extends HookConsumerWidget {
                   controller: controller,
                   maxLines: obscure == false ? maxLines : 1,
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.050,
+                    fontSize: 12,
                     color: const Color.fromARGB(255, 255, 255, 255),
                     fontStyle: FontStyle.normal,
                   ),

@@ -31,6 +31,7 @@ class _CupertinoDataPickerState extends State<CupertinoDataPickerWeb> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
+              width: 500,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 color: colorBackground181818,
@@ -46,7 +47,7 @@ class _CupertinoDataPickerState extends State<CupertinoDataPickerWeb> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              width: MediaQuery.of(context).size.width * 0.98,
+              width: 500,
               height: MediaQuery.of(context).size.height * 0.05,
               color: Colors.transparent,
               child: ElevatedButton(
@@ -109,7 +110,7 @@ class _CupertinoDataPickerState extends State<CupertinoDataPickerWeb> {
               onPressed: () => _showDialog(
                 SizedBox(
                   height: 250,
-                  width: MediaQuery.of(context).size.width,
+                  width: 500,
                   child: CupertinoTheme(
                     data: const CupertinoThemeData(
                       textTheme: CupertinoTextThemeData(
