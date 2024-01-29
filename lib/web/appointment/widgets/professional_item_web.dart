@@ -90,7 +90,9 @@ class ProfessionalItemWeb extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: 140,
+                          width: MediaQuery.sizeOf(context).height > 700
+                              ? 140
+                              : 50,
                           child: AutoSizeText(
                             textAlign: TextAlign.start,
                             name,
@@ -139,43 +141,55 @@ class ProfessionalItemWeb extends StatelessWidget {
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    RatingBar.builder(
-                      initialRating: rating,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemSize: 15,
-                      ignoreGestures: true,
-                      unratedColor: const Color.fromARGB(80, 255, 255, 255),
-                      itemBuilder: (context, _) => const Icon(
-                        CupertinoIcons.star_fill,
-                        color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 5,
+                        top: 5,
+                        bottom: 5,
                       ),
-                      onRatingUpdate: (rating) {},
+                      child: RatingBar.builder(
+                        initialRating: rating,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 15,
+                        ignoreGestures: true,
+                        unratedColor: const Color.fromARGB(80, 255, 255, 255),
+                        itemBuilder: (context, _) => const Icon(
+                          CupertinoIcons.star_fill,
+                          color: Colors.white,
+                        ),
+                        onRatingUpdate: (rating) {},
+                      ),
                     ),
                     const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        for (int i = 0; i < listImgServices!.length; i++)
-                          Container(
-                            margin: const EdgeInsets.only(
-                              right: 5,
-                              top: 5,
-                              bottom: 5,
-                            ),
-                            width: 20,
-                            height: 20,
-                            child: ClipOval(
-                              child: FadeInImage.assetNetwork(
-                                placeholder: imgLoading3,
-                                image: listImgServices![i].imgProfile!,
-                                fit: BoxFit.fill,
+                    Visibility(
+                      visible: MediaQuery.sizeOf(context).width > 474 &&
+                          listImgServices!.length > 5,
+                      child: Row(
+                        children: [
+                          for (int i = 0; i < listImgServices!.length; i++)
+                            Container(
+                              margin: const EdgeInsets.only(
+                                right: 5,
+                                top: 5,
+                                bottom: 5,
+                              ),
+                              width: 20,
+                              height: 20,
+                              child: ClipOval(
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: imgLoading3,
+                                  image: listImgServices![i].imgProfile!,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     )
                   ],
                 ),

@@ -199,6 +199,9 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                                   },
                                 ),
                               ),
+                              SizedBox(
+                                height: 50,
+                              )
                             ],
                           ),
                         ),
@@ -265,18 +268,21 @@ class DownloadAppPromotion extends StatelessWidget {
               Container(
                 width: size.width > 500 ? 350 : 200,
                 decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(18),
-                    bottomRight: Radius.circular(18),
-                  ),
-                  color: Colors.black,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10, top: 20),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    'Para uma experiência completa, baixe nosso aplicativo.',
-                    style: TextStyle(color: Color.fromARGB(255, 212, 212, 212)),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(18),
+                      bottomRight: Radius.circular(18),
+                    ),
+                    color: Colors.black),
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 10),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      'Para uma experiência completa, baixe nosso aplicativo.',
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 212, 212, 212)),
+                    ),
                   ),
                 ),
               ),

@@ -1,6 +1,6 @@
 # navalha
 
-A new Flutter project.
+Navalha agendamento.
 
 ## Getting Started
 

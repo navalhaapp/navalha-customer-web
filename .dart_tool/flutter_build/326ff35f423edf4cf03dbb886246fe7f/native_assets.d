@@ -1,0 +1,1 @@
+ /Users/premiersoft/Documents/navalha/navalha-customer-web/.dart_tool/flutter_build/326ff35f423edf4cf03dbb886246fe7f/native_assets.yaml: 
