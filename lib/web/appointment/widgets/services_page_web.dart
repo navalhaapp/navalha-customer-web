@@ -247,15 +247,18 @@ class DownloadAppPromotion extends StatelessWidget {
       margin: const EdgeInsets.only(top: 18),
       height: 200,
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(color: Colors.white10, spreadRadius: 2),
+        ],
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15),
           topRight: Radius.circular(15),
         ),
-        color: colorYellow25020050,
+        // color: colorYellow25020050,
         image: DecorationImage(
           image: AssetImage(imgBackgroundBarberLogin),
           fit: BoxFit.cover,
-          opacity: 0.3,
+          // opacity: 0.3,
         ),
       ),
       child: Row(

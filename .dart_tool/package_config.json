@@ -279,7 +279,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/premiersoft/Development/flutter/packages/flutter",
+      "rootUri": "file:///Users/premiersoft/Documents/development/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -327,7 +327,7 @@
     },
     {
       "name": "flutter_localizations",
-      "rootUri": "file:///Users/premiersoft/Development/flutter/packages/flutter_localizations",
+      "rootUri": "file:///Users/premiersoft/Documents/development/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -363,13 +363,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/premiersoft/Development/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/premiersoft/Documents/development/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/premiersoft/Development/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/premiersoft/Documents/development/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -933,7 +933,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/premiersoft/Development/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/premiersoft/Documents/development/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -1142,7 +1142,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2024-01-26T11:50:19.366564Z",
+  "generated": "2024-01-30T00:17:27.290970Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }

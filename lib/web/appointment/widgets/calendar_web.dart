@@ -22,6 +22,7 @@ import '../../../shared/utils.dart';
 import '../../../shared/widgets/widget_empty.dart';
 
 class CalendarWeb extends StatefulHookConsumerWidget {
+  static const String page = '/calendar-page-web';
   const CalendarWeb({super.key});
 
   @override

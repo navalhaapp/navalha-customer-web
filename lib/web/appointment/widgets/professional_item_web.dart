@@ -55,6 +55,7 @@ class ProfessionalItemWeb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
+        var listImgServicess = listImgServices!.take(5);
         return Container(
           margin: const EdgeInsets.only(
             bottom: 15,
@@ -166,30 +167,26 @@ class ProfessionalItemWeb extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Visibility(
-                      visible: MediaQuery.sizeOf(context).width > 474 &&
-                          listImgServices!.length > 5,
-                      child: Row(
-                        children: [
-                          for (int i = 0; i < listImgServices!.length; i++)
-                            Container(
-                              margin: const EdgeInsets.only(
-                                right: 5,
-                                top: 5,
-                                bottom: 5,
-                              ),
-                              width: 20,
-                              height: 20,
-                              child: ClipOval(
-                                child: FadeInImage.assetNetwork(
-                                  placeholder: imgLoading3,
-                                  image: listImgServices![i].imgProfile!,
-                                  fit: BoxFit.fill,
-                                ),
+                    Row(
+                      children: [
+                        for (int i = 0; i < listImgServicess.length; i++)
+                          Container(
+                            margin: const EdgeInsets.only(
+                              right: 5,
+                              top: 5,
+                              bottom: 5,
+                            ),
+                            width: 20,
+                            height: 20,
+                            child: ClipOval(
+                              child: FadeInImage.assetNetwork(
+                                placeholder: imgLoading3,
+                                image: listImgServices![i].imgProfile!,
+                                fit: BoxFit.fill,
                               ),
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     )
                   ],
                 ),

@@ -72,43 +72,42 @@ class ContainerCalendarWeb extends StatelessWidget {
               horizontal: 20,
               vertical: 20,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 280,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: SizedBox(
+              width: 280,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.zero,
-                            width: 30,
-                            height: 30,
-                            child: CircleAvatar(
-                              radius: 60,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: NetworkImage(imgBarberShop),
-                            ),
-                          ),
-                          const SizedBox(width: 5),
-                          SizedBox(
-                            width: 200,
-                            child: Text(
-                              nameBarberShop,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],
+                      Container(
+                        padding: EdgeInsets.zero,
+                        width: 30,
+                        height: 30,
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: NetworkImage(imgBarberShop),
+                        ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(width: 5),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          nameBarberShop,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
                       Row(
                         children: [
                           getStatusContainer(finalized, canceled),
@@ -173,41 +172,41 @@ class ContainerCalendarWeb extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 100,
+                        width: 1,
+                        color: const Color.fromARGB(255, 68, 68, 68),
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            mouth,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            day,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 26,
+                            ),
+                          ),
+                          Text(
+                            hour,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 100,
-                  width: 1,
-                  color: const Color.fromARGB(255, 68, 68, 68),
-                ),
-                Column(
-                  children: [
-                    Text(
-                      mouth,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      day,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                      ),
-                    ),
-                    Text(
-                      hour,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
