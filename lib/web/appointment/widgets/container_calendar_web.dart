@@ -215,7 +215,7 @@ class ContainerCalendarWeb extends StatelessWidget {
           child: Row(
             children: [
               Visibility(
-                visible: finalized,
+                visible: finalized && !reviewed,
                 child: Expanded(
                   flex: 1,
                   child: _ContainerEvaluate(
