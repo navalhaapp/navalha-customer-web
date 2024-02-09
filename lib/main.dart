@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/app_routes.dart';
-import 'core/theme.dart';
-import 'firebase_options.dart';
+import 'package:navalha/core/theme.dart';
+import 'package:navalha/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

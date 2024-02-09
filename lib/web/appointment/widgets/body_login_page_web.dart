@@ -19,6 +19,7 @@ import 'package:navalha/web/appointment/widgets/resume_page_web.dart';
 import 'package:navalha/web/appointment/widgets/row_register_and_forget_web.dart';
 import 'package:navalha/web/appointment/widgets/row_social_networks_google_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../shared/animation/page_trasition.dart';
 import '../../../shared/providers.dart';
@@ -171,7 +172,16 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
                                 );
                               });
                             } else if (response.status == 'success') {
-                              // loginController.user.customer = response.customer;
+                              loginController.user.customer = response.customer;
+                              LocalStorageManager.saveCustomer(
+                                CustomerDB(
+                                  name: response.customer.name,
+                                  image: response.customer.imgProfile,
+                                  customerId: response.customer.customerId,
+                                  token: response.token,
+                                  email: response.customer.email,
+                                ),
+                              );
                               _login();
                               setState(() {
                                 _state = 2;

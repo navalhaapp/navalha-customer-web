@@ -5,6 +5,7 @@ import 'dart:html';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:navalha/core/assets.dart';
@@ -42,8 +43,7 @@ class DrawerBodyWeb extends StatelessWidget {
       width: 250,
       child: Consumer(
         builder: (context, ref, child) {
-          final loginController =
-              ref.read(LoginStateController.provider.notifier);
+          CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
           final refresh = ref.watch(RefreshStateController.provider.notifier);
           return SingleChildScrollView(
             child: Column(
@@ -51,16 +51,13 @@ class DrawerBodyWeb extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _ImageProfile(
-                  imgProfile: loginController.user?.customer?.imgProfile ??
-                      imgProfileDefaultS3,
-                  nameUser: getFirstName(
-                      loginController.user?.customer?.name ?? 'Usuário'),
-                  adressEmail: loginController.user?.customer == null
+                  imgProfile: retrievedCustomer?.image ?? imgProfileDefaultS3,
+                  nameUser: getFirstName(retrievedCustomer?.name ?? 'Usuário'),
+                  adressEmail: retrievedCustomer == null
                       ? ''
-                      : loginController.user!.customer!.email!
-                              .contains('appleid.com')
+                      : retrievedCustomer.email.contains('appleid.com')
                           ? ''
-                          : loginController.user!.customer!.email!,
+                          : retrievedCustomer.email,
                 ),
                 _ButtonItem(
                   label: 'Reservar',
@@ -84,7 +81,7 @@ class DrawerBodyWeb extends StatelessWidget {
                 _ButtonItem(
                   label: 'Sair',
                   onPressed: () async {
-                    loginController.user = null;
+                    retrievedCustomer = null;
                     navigationWithFadeAnimation(const LoginPageWeb(), context);
                   },
                   icon: Icons.exit_to_app_rounded,

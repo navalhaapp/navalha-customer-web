@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:navalha/mobile/payment/model/response_create_pix_payment.dart';
 import 'package:navalha/shared/utils.dart';
 import '../model/response_schedule.dart';
 
@@ -12,7 +13,7 @@ class CreateScheduleEndPoint {
     double amount,
     double codeDiscount,
     double codePercent,
-    List<dynamic> listService,
+    List<ServiceRequest> listService,
   ) async {
     final headers = {
       'Authorization': token,
@@ -50,7 +51,7 @@ class CreateScheduleRepository {
     double amount,
     double codeDiscount,
     double codePercent,
-    List<dynamic> listService,
+    List<ServiceRequest> listService,
   ) async {
     final result = await createScheduleEndPoint.createSchedule(
       customerId,
@@ -81,7 +82,7 @@ class CreateScheduleUseCase {
     double amount,
     double codeDiscount,
     double codePercent,
-    List<dynamic> listService,
+    List<ServiceRequest> listService,
   ) async {
     final response = await repository.createSchedule(
       customerId,

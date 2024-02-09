@@ -12,6 +12,7 @@ import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
 import 'package:navalha/web/appointment/widgets/login_page_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import '../../../core/colors.dart';
 import '../../../shared/model/barber_shop_model.dart';
 import '../../../shared/providers.dart';
@@ -40,11 +41,9 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Consumer(
       builder: (context, ref, child) {
-        final loginController =
-            ref.watch(LoginStateController.provider.notifier);
+        CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
         var serviceCache = ref.watch(listServicesCacheProvider.state);
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
         final createSchedule =
@@ -168,16 +167,16 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                                 ),
                               ),
                         onPressed: () {
-                          if (loginController.user != null) {
+                          if (retrievedCustomer != null) {
                             EasyDebounce.debounce('finalized-buy-service-web',
                                 const Duration(milliseconds: 500), () async {
                               setState(() => loading = true);
 
                               ResponseCreateSchedule response =
                                   await createSchedule.createSchedule(
-                                loginController.user!.customer!.customerId!,
+                                retrievedCustomer.customerId,
                                 widget.barberShop.barbershopId!,
-                                loginController.user!.token!,
+                                retrievedCustomer.token,
                                 listResumePayment.state.transactionAmount!,
                                 listResumePayment
                                         .state.promotionalCodeDiscount ??

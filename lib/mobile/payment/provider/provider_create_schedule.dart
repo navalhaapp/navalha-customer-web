@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:navalha/mobile/payment/model/response_create_pix_payment.dart';
 import '../api/create_schedule.dart';
 
 final createScheduleEndpointProvider = Provider((ref) {
@@ -37,7 +38,7 @@ class CreateScheduleStateController extends StateNotifier {
     double amount,
     double codeDiscount,
     double codePercent,
-    List<dynamic> listService,
+    List<ServiceRequest> listService,
   ) async {
     schedule = await _read(createScheduleUseCase).execute(
       customerId,

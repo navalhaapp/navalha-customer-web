@@ -12,6 +12,7 @@ import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/appointment/widgets/service_item_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import '../../../mobile/home/model/response_get_barber_shop_by_id.dart';
 import '../../../shared/model/service_model.dart';
 
@@ -33,6 +34,7 @@ class ServicesPageWeb extends StatefulHookConsumerWidget {
 
 class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
   late ParamsBarberShopById getBarberShopModel;
+  CustomerDB? retrievedCustomer;
   @override
   void initState() {
     super.initState();
@@ -73,11 +75,11 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
         return Consumer(
           builder: (context, ref, child) {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
+              retrievedCustomer = LocalStorageManager.getCustomer();
+
               ref.watch(barberShopSelectedProvider.state).state =
                   data.barbershop!;
             });
-            final loginController =
-                ref.read(LoginStateController.provider.notifier);
             return Scaffold(
               backgroundColor: colorBackground181818,
               drawer: DrawerPageWeb(
@@ -88,7 +90,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                 backgroundColor: colorBackground181818,
                 title: Text(data.barbershop!.name ?? ''),
                 actions: [
-                  loginController.user?.customer?.imgProfile == null
+                  retrievedCustomer == null
                       ? Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
@@ -111,7 +113,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               image: NetworkImage(
-                                loginController.user?.customer?.imgProfile,
+                                retrievedCustomer!.image,
                               ),
                               fit: BoxFit.contain,
                             ),
