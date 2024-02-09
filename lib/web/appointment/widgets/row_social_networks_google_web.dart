@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/login/widgets/button_social_network.dart';
-import 'package:navalha/shared/shimmer/shimmer_faq.dart';
 import 'package:navalha/web/appointment/widgets/login_page_web.dart';
-import 'package:navalha/web/appointment/widgets/regiter_social_network_page_web.dart';
+import 'package:navalha/web/appointment/widgets/register_social_network_page_web.dart';
 import 'package:navalha/web/appointment/widgets/resume_page_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -125,6 +123,8 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
         await authLoginController.login(email, id, fBToken.toString());
 
     if (response.status == 'success') {
+      String url = Uri.base.toString();
+      String params = Uri.splitQueryString(url).values.first;
       Future.delayed(const Duration(seconds: 1)).then((value) async {
         navigationWithFadeAnimation(
           const ResumePageWeb(),
@@ -133,19 +133,14 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
       });
     } else {
       if (response.id == 'bad_credentials') {
-        navigationFadePush(const LoginPageWeb(), context);
+        Navigator.of(context).pushNamed('/login');
         final GoogleSignIn googleSignIn = GoogleSignIn();
         await googleSignIn.signOut();
         navigationWithFadeAnimation(const LoginPage(), context);
         showSnackBar(context, 'Esse email já foi cadastrado.');
       } else {
-        navigationFadePush(
-            RegistrationSocialNetworksWeb(
-              email: email,
-              name: name,
-              userId: id,
-            ),
-            context);
+        Navigator.pushNamed(context, '/register-social',
+            arguments: {'email': email, 'name': name, 'userId': id});
       }
     }
   }

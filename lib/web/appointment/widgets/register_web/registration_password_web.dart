@@ -286,10 +286,7 @@ class _MyWidgetState extends ConsumerState<RegistrationPasswordWeb>
                             _state = 2;
                           });
                           if (firtLogin == true) {
-                            navigationWithFadeAnimation(
-                              const LoginPageWeb(),
-                              context,
-                            );
+                            Navigator.of(context).pushNamed('/login');
                             await prefs.setBool('firstLogin', false);
                           } else {
                             if (permission == LocationPermission.always ||

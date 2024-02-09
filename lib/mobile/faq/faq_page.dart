@@ -7,7 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/assets.dart';
 import '../drawer/drawer_page.dart';
 import '../../shared/shows_dialogs/dialog.dart';
-import '../../shared/widgets/bottom_nav_bar.dart';
 
 class FaqPage extends StatefulWidget {
   const FaqPage({Key? key}) : super(key: key);
@@ -59,7 +58,6 @@ class _FaqPageState extends State<FaqPage> {
           ),
           endDrawer: const DrawerPage(),
           body: const FaqBody(),
-          bottomNavigationBar: const BottomNavBar(4),
           floatingActionButton: ScheduleHelpButton(
             labelName: 'Ajuda',
             onPressed: () => showCustomDialog(context, const _FaqDialog()),

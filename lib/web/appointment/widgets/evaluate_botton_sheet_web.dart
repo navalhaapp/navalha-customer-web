@@ -205,8 +205,7 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                             if (response.status == 'success') {
                               Navigator.pop(context);
                               showSnackBar(context, 'Obrigado pela avaliação');
-                              navigationFadePush(
-                                  const CalendarPageWeb(), context);
+                              Navigator.of(context).pushNamed('/calendar');
                             } else {
                               Navigator.pop(context);
                               showSnackBar(context, 'Ops, algo aconteceu');

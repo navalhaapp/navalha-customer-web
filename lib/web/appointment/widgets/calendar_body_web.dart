@@ -6,12 +6,9 @@ import 'package:navalha/mobile/calendar/model/model_get_schedule_customer.dart';
 import 'package:navalha/mobile/calendar/provider/provider_get_schedule_customer.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/shared/widgets/page_transition.dart';
-import 'package:navalha/shared/widgets/top_container_title.dart';
 import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
 import 'package:navalha/web/appointment/widgets/container_calendar_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
-import '../../../core/assets.dart';
-import '../../../core/images_s3.dart';
 import '../../../shared/animation/page_trasition.dart';
 import '../../../shared/shimmer/shimmer_calendar.dart';
 import '../../../shared/widgets/widget_empty.dart';
@@ -48,6 +45,8 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
     Size size = MediaQuery.of(context).size;
     return getSchedule.when(
       data: (data) {
+        String url = Uri.base.toString();
+        String params = Uri.splitQueryString(url).values.first;
         List<ScheduleItemModel> listScheduleItem =
             orderScheduleList(data.result!);
         if (listScheduleItem.isNotEmpty) {
@@ -68,8 +67,10 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
                           IconButton(
                             padding: const EdgeInsets.only(left: 30),
                             onPressed: () {
-                              navigationFadePush(
-                                  const ServicesPageWeb(), context);
+                              Navigator.of(context).pushNamed(
+                                '/',
+                                arguments: {'barbershop_id': params},
+                              );
                             },
                             icon: const Icon(
                               CupertinoIcons.clear,
@@ -118,7 +119,10 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
                           ),
                         ),
                         onPressed: () {
-                          navigationFadePush(const ServicesPageWeb(), context);
+                          Navigator.of(context).pushNamed(
+                            '/',
+                            arguments: {'barbershop_id': params},
+                          );
                         },
                         child: const Padding(
                           padding:

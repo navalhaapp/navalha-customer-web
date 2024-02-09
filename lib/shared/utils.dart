@@ -139,7 +139,10 @@ class UtilValidator {
   }
 }
 
-String getServiceIdByName(String name, List<Service> services) {
+String? getServiceIdByName(String? name, List<Service>? services) {
+  if (name == null || services == null) {
+    return null;
+  }
   for (var service in services) {
     if (service.name == name) {
       return service.serviceId!;

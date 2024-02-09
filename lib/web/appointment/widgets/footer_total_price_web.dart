@@ -188,10 +188,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                                 listResumePayment.state.services,
                               );
                               if (response.status == 'success') {
-                                navigationFadePush(
-                                    ApprovedSchedulePage(
-                                        page: CalendarPageWeb()),
-                                    context);
+                                Navigator.of(context).pushNamed('/approved');
                               } else {
                                 setState(() {
                                   loading = false;
@@ -202,8 +199,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               setState(() => loading = false);
                             });
                           } else {
-                            navigationFadePushReplacement(
-                                const LoginPageWeb(), context);
+                            Navigator.of(context).pushNamed('/login');
                           }
                         },
                       ),

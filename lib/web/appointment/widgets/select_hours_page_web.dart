@@ -4,6 +4,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/home/model/response_get_barber_shop_by_id.dart';
@@ -15,6 +16,7 @@ import 'package:navalha/mobile/schedule/provider/provider_create_cache_service.d
 import 'package:navalha/mobile/schedule/provider/provider_get_open_hours_by_date.dart';
 import 'package:navalha/mobile/use_package/model/service_package_request.dart';
 import 'package:navalha/shared/model/barber_shop_model.dart';
+
 import 'package:navalha/shared/model/open_hour_model.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
@@ -23,16 +25,15 @@ import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/web/appointment/widgets/calendar_web.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
+
 import 'resume_page_web.dart';
 
 class SelectHoursPageWeb extends StatefulWidget {
   const SelectHoursPageWeb({
     Key? key,
-    required this.barberShop,
     this.packageSelected,
   }) : super(key: key);
 
-  final BarberShop barberShop;
   final CustomerPackages? packageSelected;
 
   @override
@@ -43,14 +44,17 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final BarberShop barberShop = args['barbershop'] as BarberShop;
     return Consumer(builder: (context, ref, child) {
       final loginController = ref.read(LoginStateController.provider.notifier);
       return Scaffold(
         backgroundColor: colorBackground181818,
-        drawer: const DrawerPageWeb(),
+        drawer: DrawerPageWeb(barberShopId: barberShop.barbershopId!),
         appBar: AppBar(
           backgroundColor: colorBackground181818,
-          title: Text(widget.barberShop.name!),
+          title: Text(barberShop.name!),
           elevation: 0,
           actions: [
             loginController.user?.customer?.imgProfile == null
@@ -209,7 +213,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                 ResponseCreateCacheService response =
                                     await createCacheController
                                         .createCacheService(
-                                  widget.barberShop.barbershopId!,
+                                  barberShop.barbershopId!,
                                   reservedTime.state.professionalId!,
                                   reservedTime.state.serviceId!,
                                   reservedTime.state.date!,
@@ -305,9 +309,13 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                   }
                                   var barbershop = ref
                                       .watch(barberShopSelectedProvider.state);
-                                  barbershop.state = widget.barberShop;
-                                  navigationFadePush(
-                                      const ResumePageWeb(), context);
+                                  barbershop.state = barberShop;
+                                  Navigator.of(context).pushNamed(
+                                    '/resume',
+                                    arguments: {
+                                      'barbershop_id': barberShop.barbershopId!
+                                    },
+                                  );
                                 } else {
                                   if (response.result ==
                                       'already_cached_service') {

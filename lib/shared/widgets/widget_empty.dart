@@ -14,6 +14,7 @@ class WidgetEmpty extends StatelessWidget {
   final double? titleSize;
   final bool? havebutton;
   final bool? haveIcon;
+  final Color? color;
 
   const WidgetEmpty({
     Key? key,
@@ -26,6 +27,7 @@ class WidgetEmpty extends StatelessWidget {
     this.titleSize,
     this.havebutton,
     this.haveIcon,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -72,7 +74,7 @@ class WidgetEmpty extends StatelessWidget {
                     elevation: 0,
                     minWidth: size.width * 0.8,
                     height: size.height * 0.05,
-                    color: colorContainers242424,
+                    color: color ?? colorContainers242424,
                     onPressed: () => onPressed(),
                     child: Text(
                       text,

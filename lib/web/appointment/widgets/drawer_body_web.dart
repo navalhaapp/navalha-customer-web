@@ -4,34 +4,27 @@ import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:navalha/mobile/calendar/calendar_page.dart';
-import 'package:navalha/mobile/change_password/change_password_page.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/edit_profile/edit_profile_page.dart';
-import 'package:navalha/mobile/faq/faq_page.dart';
-import 'package:navalha/mobile/home/home_page.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
-import 'package:navalha/mobile/login/login_page.dart';
-import 'package:navalha/mobile/login/model/auth_model.dart';
 import 'package:navalha/mobile/payment/provider/provider_refresh.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/shared/onboarding/onboarding_page.dart';
 import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
 import 'package:navalha/web/appointment/widgets/login_page_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../core/images_s3.dart';
-import '../../../shared/shimmer/shimmer_top_container.dart';
 import '../../../shared/utils.dart';
 
 class DrawerBodyWeb extends StatelessWidget {
   const DrawerBodyWeb({
     Key? key,
+    required this.barberShopId,
   }) : super(key: key);
+
+  final String barberShopId;
 
   @override
   Widget build(BuildContext context) {
@@ -72,23 +65,14 @@ class DrawerBodyWeb extends StatelessWidget {
                 _ButtonItem(
                   label: 'Reservar',
                   onPressed: () {
-                    final url = Uri.dataFromString(window.location.href);
-                    Map<String, String> params = url.queryParameters;
-                    var origin = params['id'];
-                    navigationWithFadeAnimation(
-                      ServicesPageWeb(
-                        url: origin,
-                      ),
-                      context,
-                    );
+                    Navigator.of(context).pushNamed('/');
                   },
                   icon: CupertinoIcons.calendar_badge_plus,
                 ),
                 _ButtonItem(
                   label: 'Minha agenda',
                   onPressed: () async {
-                    navigationWithFadeAnimation(
-                        const CalendarPageWeb(), context);
+                    Navigator.of(context).pushNamed('/calendar');
                   },
                   icon: CupertinoIcons.calendar,
                 ),

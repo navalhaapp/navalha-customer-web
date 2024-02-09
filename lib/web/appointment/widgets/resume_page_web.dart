@@ -1,10 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
@@ -20,10 +19,8 @@ import 'package:navalha/web/appointment/widgets/footer_total_price_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 
 class ResumePageWeb extends StatefulWidget {
-  static const route = '/resume-page';
-  const ResumePageWeb({
-    Key? key,
-  }) : super(key: key);
+  // static const route = '/resume-page';
+  const ResumePageWeb({Key? key}) : super(key: key);
 
   @override
   State<ResumePageWeb> createState() => _ResumePageWebState();
@@ -35,6 +32,9 @@ class _ResumePageWebState extends State<ResumePageWeb> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final String barberShopId = args['barbershop_id'];
     return Consumer(
       builder: (context, ref, child) {
         final loginController =
@@ -59,7 +59,7 @@ class _ResumePageWebState extends State<ResumePageWeb> {
         Size size = MediaQuery.of(context).size;
         return Scaffold(
           backgroundColor: colorBackground181818,
-          drawer: const DrawerPageWeb(),
+          drawer: DrawerPageWeb(barberShopId: barberShopId),
           appBar: AppBar(
             title: Text(barberShopProvider.state.name ?? ''),
             elevation: 0,
@@ -171,13 +171,10 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  final url =
-                                      Uri.dataFromString(window.location.href);
-                                  Map<String, String> params =
-                                      url.queryParameters;
-                                  var origin = params['id'];
-                                  navigationFadePush(
-                                      ServicesPageWeb(url: origin), context);
+                                  Navigator.of(context).pushNamed(
+                                    '/',
+                                    arguments: {'barbershop_id': barberShopId},
+                                  );
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(

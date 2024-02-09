@@ -17,21 +17,7 @@ import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import '../../../shared/model/service_model.dart';
 
 class ProfessionalPageWeb extends StatefulWidget {
-  static const route = '/professional-web-page';
-  const ProfessionalPageWeb({
-    Key? key,
-    required this.data,
-    required this.listProfessionals,
-    required this.iService,
-    required this.serviceName,
-    this.packageSelected,
-  }) : super(key: key);
-
-  final ResponseBarberShopById data;
-  final List<Professional> listProfessionals;
-  final int iService;
-  final String serviceName;
-  final CustomerPackages? packageSelected;
+  // static const route = '/professional-web-page';
 
   @override
   State<ProfessionalPageWeb> createState() => _ProfessionalPageWebState();
@@ -39,33 +25,26 @@ class ProfessionalPageWeb extends StatefulWidget {
 
 class _ProfessionalPageWebState extends State<ProfessionalPageWeb> {
   late StateController<ReservedTime> reservedTime;
-  List<Professional> getProfessionalsByService(
-      Service service, List<Professional> professionals) {
-    final String serviceName = service.name!;
 
-    return professionals.where((professional) {
-      final List<Service> professionalServices =
-          professional.professionalServices!;
-
-      final bool hasService = professionalServices.any((service) {
-        return service.name == serviceName && service.activated == true;
-      });
-
-      return hasService;
-    }).toList();
-  }
-
-  bool loading = false;
   @override
   Widget build(BuildContext context) {
+    var args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    final String? serviceName = args?['serviceName'];
+    final ResponseBarberShopById? data = args?['data'];
+    final int? iService = args?['iService'];
+    final List<Professional>? listProfessionals = args?['listProfessionals'];
+    final CustomerPackages? packageSelected = args?['packageSelected'];
+
     return Consumer(builder: (context, ref, child) {
       final loginController = ref.read(LoginStateController.provider.notifier);
       return Scaffold(
         backgroundColor: colorBackground181818,
-        drawer: const DrawerPageWeb(),
+        drawer: DrawerPageWeb(barberShopId: data!.barbershop!.barbershopId!),
         appBar: AppBar(
           elevation: 0,
-          title: Text(widget.data.barbershop!.name!),
+          title: Text(data.barbershop!.name!),
           backgroundColor: colorBackground181818,
           actions: [
             loginController.user?.customer?.imgProfile == null
@@ -160,81 +139,66 @@ class _ProfessionalPageWebState extends State<ProfessionalPageWeb> {
                               child: ListView.builder(
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
-                                  itemCount: widget.listProfessionals.length,
+                                  itemCount: listProfessionals!.length,
                                   itemBuilder: (context, i) {
                                     return GestureDetector(
                                       onTap: () {
                                         reservedTime.state.professionalId =
-                                            widget.listProfessionals[i]
-                                                .professionalId!;
+                                            listProfessionals[i].professionalId;
                                         reservedTime.state.serviceId =
                                             getServiceIdByName(
-                                                widget.serviceName,
-                                                widget.listProfessionals[i]
-                                                    .professionalServices!);
+                                                serviceName ?? '',
+                                                listProfessionals[i]
+                                                    .professionalServices);
                                         resumePayment.state.professionalId =
                                             reservedTime.state.professionalId;
                                         resumePayment
                                                 .state.professionalServiceId =
                                             reservedTime.state.serviceId;
-                                        navigationFadePush(
-                                            SelectHoursPageWeb(
-                                                barberShop:
-                                                    widget.data.barbershop!),
-                                            context);
+
+                                        Navigator.of(context).pushNamed(
+                                          '/select-hour',
+                                          arguments: {
+                                            'barbershop': data.barbershop
+                                          },
+                                        );
                                       },
                                       child: ProfessionalItemWeb(
                                         i: i,
-                                        professionalId: widget
-                                            .listProfessionals[i]
+                                        professionalId: listProfessionals[i]
                                             .professionalId!,
-                                        listProfessionalServices: widget
-                                            .listProfessionals[i]
-                                            .professionalServices!,
+                                        listProfessionalServices:
+                                            listProfessionals[i]
+                                                .professionalServices!,
                                         hidePriceAndTime: true,
-                                        img: widget
-                                            .listProfessionals[i].imgProfile!,
-                                        name: widget.listProfessionals[i].name!,
-                                        rating:
-                                            widget.listProfessionals[i].rating!,
-                                        imgService: widget
-                                            .listProfessionals[i]
-                                            .professionalServices![
-                                                widget.iService]
+                                        img: listProfessionals[i].imgProfile!,
+                                        name: listProfessionals[i].name!,
+                                        rating: listProfessionals[i].rating!,
+                                        imgService: listProfessionals[i]
+                                            .professionalServices![iService!]
                                             .imgProfile,
-                                        listImgServices: widget
-                                            .listProfessionals[i]
+                                        listImgServices: listProfessionals[i]
                                             .professionalServices,
-                                        serviceTime: widget
-                                            .listProfessionals[i]
-                                            .professionalServices![
-                                                widget.iService]
+                                        serviceTime: listProfessionals[i]
+                                            .professionalServices![iService]
                                             .duration,
                                         havePrice: false,
-                                        packageList: widget.packageSelected,
-                                        barberShop: widget.data.barbershop!,
-                                        servicePrice: widget
-                                            .listProfessionals[i]
-                                            .professionalServices![
-                                                widget.iService]
+                                        packageList: packageSelected,
+                                        barberShop: data.barbershop!,
+                                        servicePrice: listProfessionals[i]
+                                            .professionalServices![iService]
                                             .price!,
-                                        serviceName: widget
-                                            .listProfessionals[i]
-                                            .professionalServices![
-                                                widget.iService]
+                                        serviceName: listProfessionals[i]
+                                            .professionalServices![iService]
                                             .name!,
-                                        serviceImg: widget
-                                            .listProfessionals[i]
-                                            .professionalServices![
-                                                widget.iService]
+                                        serviceImg: listProfessionals[i]
+                                            .professionalServices![iService]
                                             .imgProfile!,
                                         listProfessionals:
                                             getProfessionalsByService(
-                                          widget.listProfessionals[i]
-                                                  .professionalServices![
-                                              widget.iService],
-                                          widget
-                                              .data.barbershop!.professionals!,
+                                          listProfessionals[i]
+                                              .professionalServices![iService],
+                                          data.barbershop!.professionals!,
                                         ),
                                         onConfirm: () {
                                           setState(() {});
@@ -257,4 +221,20 @@ class _ProfessionalPageWebState extends State<ProfessionalPageWeb> {
       );
     });
   }
+}
+
+List<Professional> getProfessionalsByService(
+    Service service, List<Professional> professionals) {
+  final String serviceName = service.name!;
+
+  return professionals.where((professional) {
+    final List<Service> professionalServices =
+        professional.professionalServices!;
+
+    final bool hasService = professionalServices.any((service) {
+      return service.name == serviceName && service.activated == true;
+    });
+
+    return hasService;
+  }).toList();
 }

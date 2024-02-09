@@ -141,7 +141,8 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
       _animationController.forward();
       Timer(const Duration(milliseconds: 2000), () {
         if (mounted) {
-          navigationFadePush(widget.page, context);
+          // navigationFadePush(widget.page, context);
+          Navigator.of(context).pushNamed('/calendar');
         }
       });
     });

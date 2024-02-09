@@ -78,7 +78,7 @@ class _AppointmentWebPageState extends ConsumerState<AppointmentWebPage> {
           title: 'Ops, Algo aconteceu!',
           subTitle: 'Houve algum erro, tente novamente mais tarde.',
           onPressed: () {
-            navigationWithFadeAnimation(const AppointmentWebPage(), context);
+            Navigator.of(context).pushNamed('/');
           },
           text: 'Tentar de novo',
         ),

@@ -5,7 +5,6 @@ import 'package:navalha/mobile/drawer/drawer_page.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/registration_types_page/registration_types_page.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/shared/widgets/bottom_nav_bar.dart';
 import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
 import '../home/home_page.dart';
@@ -37,7 +36,6 @@ class _MyPackagesPageState extends State<MyPackagesPage> {
           extendBodyBehindAppBar: true,
           endDrawer: const DrawerPage(),
           backgroundColor: colorBackground181818,
-          bottomNavigationBar: const BottomNavBar(3),
           body: Consumer(
             builder: (context, ref, child) {
               final loginController =

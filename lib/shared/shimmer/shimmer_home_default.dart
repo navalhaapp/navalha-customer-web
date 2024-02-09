@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../widgets/bottom_nav_bar.dart';
-
 class ShimmerHomeDefault extends StatefulWidget {
   const ShimmerHomeDefault({super.key});
 
@@ -159,7 +157,6 @@ class ShimmerHomeDefaultState extends State<ShimmerHomeDefault> {
             ],
           ),
         ),
-        bottomNavigationBar: const BottomNavBar(2),
       ),
     );
   }

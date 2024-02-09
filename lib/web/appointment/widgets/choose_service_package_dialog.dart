@@ -33,7 +33,12 @@ class _ChooseServicePackageState extends State<ChooseServicePackage> {
             description: 'Agende serviços de forma independente.',
             onPressed: () {
               Navigator.pop(context);
-              navigationFadePush(const ServicesPageWeb(), context);
+              Navigator.of(context).pushNamed(
+                '/',
+                arguments: {
+                  'barbershop_id': widget.data.barbershop!.barbershopId!
+                },
+              );
             },
           ),
           Visibility(

@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
-import 'package:navalha/mobile/login/widgets/button_login.dart';
-import 'package:navalha/mobile/login/widgets/row_register_and_forget.dart';
 import 'package:navalha/shared/model/customer_model.dart';
 import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/web/appointment/text_edit_web.dart';
@@ -25,7 +23,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../shared/animation/page_trasition.dart';
 import '../../../shared/providers.dart';
 import '../../../shared/utils.dart';
-import '../../../shared/widgets/text_edit.dart';
 
 class BodyLoginWeb extends StatefulHookConsumerWidget {
   const BodyLoginWeb({super.key});
@@ -169,10 +166,12 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
 
                               Timer(const Duration(milliseconds: 1000), () {
                                 loginController.user = null;
-                                navigationFadePush(
-                                    const LoginPageWeb(), context);
+                                Navigator.of(context).pushNamed(
+                                  '/login',
+                                );
                               });
                             } else if (response.status == 'success') {
+                              // loginController.user.customer = response.customer;
                               _login();
                               setState(() {
                                 _state = 2;
@@ -186,8 +185,14 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
 
                               Future.delayed(const Duration(seconds: 1))
                                   .then((value) async {
-                                navigationWithFadeAnimation(
-                                    const ResumePageWeb(), context);
+                                String url = Uri.base.toString();
+                                String params =
+                                    Uri.splitQueryString(url).values.first;
+
+                                Navigator.of(context).pushNamed(
+                                  '/resume',
+                                  arguments: {'barbershop_id': params},
+                                );
                               });
                             } else {
                               setState(() {

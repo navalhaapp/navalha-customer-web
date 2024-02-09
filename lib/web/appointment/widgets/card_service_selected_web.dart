@@ -271,8 +271,7 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
                       totalPriceProvider.state.clear();
                       totalPriceProvider.state.discount = null;
                     }
-                    navigationFadePushReplacement(
-                        const ResumePageWeb(), context);
+                    Navigator.of(context).pushNamed('/resume');
                   } else {
                     showSnackBar(context, 'Ops, algo aconteceu!');
                   }

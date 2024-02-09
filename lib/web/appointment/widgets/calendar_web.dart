@@ -198,7 +198,6 @@ class CalendarState extends ConsumerState<CalendarWeb> {
                         formatButtonVisible: false),
                     locale: 'pt_BR',
                     onDaySelected: (selectedDay, focusedDay) async {
-                      // navigationFadePush(const ShimmerFaq(), context);
                       reservedTime.state.initialHour = '';
                       selectedIndex = 10000;
                       daySelectedController.state = selectedDay;

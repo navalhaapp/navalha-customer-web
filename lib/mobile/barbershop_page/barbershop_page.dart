@@ -10,7 +10,6 @@ import 'package:navalha/mobile/home/model/response_get_barber_shop_by_id.dart';
 import 'package:navalha/shared/widgets/page_transition.dart';
 
 import '../../shared/providers.dart';
-import '../../shared/widgets/bottom_nav_bar.dart';
 import 'widget/barbershop_body.dart';
 
 class BarbershopPage extends StatefulWidget {
@@ -69,7 +68,6 @@ class _BarbershopPageState extends State<BarbershopPage> {
                 backgroundColor: Colors.transparent,
               ),
               backgroundColor: colorBackground181818,
-              bottomNavigationBar: const BottomNavBar(2),
               floatingActionButton: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,

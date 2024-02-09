@@ -9,7 +9,6 @@ import 'package:navalha/mobile/drawer/drawer_page.dart';
 import 'package:navalha/mobile/home/widget/body_home.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,7 +40,6 @@ class _HomePageState extends State<HomePage> {
       child: SafeArea(
         child: Scaffold(
           endDrawer: const DrawerPage(),
-          bottomNavigationBar: const BottomNavBar(2),
           backgroundColor: colorBackground181818,
           body: const BodyHome(),
           appBar: AppBar(

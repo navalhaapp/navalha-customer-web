@@ -23,7 +23,6 @@ import '../../shared/animation/page_trasition.dart';
 import '../../shared/model/customer_model.dart';
 import '../../shared/providers.dart';
 import '../../shared/utils.dart';
-import '../../shared/widgets/bottom_nav_bar.dart';
 import '../../shared/widgets/text_edit.dart';
 import '../../shared/widgets/widget_empty.dart';
 import 'controller/update_controller_customer.dart';
@@ -166,7 +165,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 ),
               ),
               endDrawer: const DrawerPage(),
-              bottomNavigationBar: const BottomNavBar(1),
               body: loginController.user == null
                   ? Center(
                       child: WidgetEmpty(

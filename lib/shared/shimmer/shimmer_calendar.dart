@@ -30,8 +30,8 @@ class ShimmerCalendarState extends State<ShimmerCalendar> {
                 child: Column(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      height: size.height * 0.17,
+                      margin: const EdgeInsets.only(bottom: 10, top: 10),
+                      height: size.height * 0.16,
                       width: size.width * 0.97,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -40,7 +40,7 @@ class ShimmerCalendarState extends State<ShimmerCalendar> {
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),
-                      height: size.height * 0.17,
+                      height: size.height * 0.16,
                       width: size.width * 0.97,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -49,34 +49,7 @@ class ShimmerCalendarState extends State<ShimmerCalendar> {
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),
-                      height: size.height * 0.17,
-                      width: size.width * 0.97,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: Color.fromARGB(255, 172, 172, 172),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      height: size.height * 0.17,
-                      width: size.width * 0.97,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: Color.fromARGB(255, 172, 172, 172),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      height: size.height * 0.17,
-                      width: size.width * 0.97,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: Color.fromARGB(255, 172, 172, 172),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      height: size.height * 0.17,
+                      height: size.height * 0.16,
                       width: size.width * 0.97,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),

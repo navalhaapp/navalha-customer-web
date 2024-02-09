@@ -6,31 +6,26 @@ import 'package:navalha/mobile/home/model/provider_family_model.dart';
 import 'package:navalha/mobile/home/provider/provider_get_barber_shop_by_id.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/schedule/widgets/body_schedule.dart';
-import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/model/professional_model.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
-import 'package:navalha/web/appointment/appointment_page.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/appointment/widgets/service_item_web.dart';
 import '../../../mobile/home/model/response_get_barber_shop_by_id.dart';
 import '../../../shared/model/service_model.dart';
-import 'professional_page_web.dart';
 
 class ServicesPageWeb extends StatefulHookConsumerWidget {
-  static const route = '/services-page-web';
   const ServicesPageWeb({
     Key? key,
     this.packageSelected,
     this.havePrice,
-    this.url,
+    this.barberShopId,
   }) : super(key: key);
 
   final CustomerPackages? packageSelected;
   final bool? havePrice;
-  final String? url;
+  final String? barberShopId;
 
   @override
   ConsumerState<ServicesPageWeb> createState() => _ServicesPageWebState();
@@ -42,7 +37,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
   void initState() {
     super.initState();
     getBarberShopModel = ParamsBarberShopById(
-      barberShopId: widget.url.toString(),
+      barberShopId: widget.barberShopId!,
       customerId: null,
     );
   }
@@ -85,7 +80,9 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                 ref.read(LoginStateController.provider.notifier);
             return Scaffold(
               backgroundColor: colorBackground181818,
-              drawer: const DrawerPageWeb(),
+              drawer: DrawerPageWeb(
+                barberShopId: widget.barberShopId!,
+              ),
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: colorBackground181818,
@@ -181,27 +178,25 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                                             listServices[iService].name!),
                                       ),
                                       onTap: () {
-                                        navigationFadePush(
-                                          ProfessionalPageWeb(
-                                            serviceName:
+                                        Navigator.of(context).pushNamed(
+                                          '/select-professional',
+                                          arguments: {
+                                            'serviceName':
                                                 listServices[iService].name!,
-                                            data: data,
-                                            iService: iService,
-                                            listProfessionals:
+                                            'data': data,
+                                            'iService': iService,
+                                            'listProfessionals':
                                                 listProfessionals,
-                                            packageSelected:
+                                            'packageSelected':
                                                 widget.packageSelected,
-                                          ),
-                                          context,
+                                          },
                                         );
                                       },
                                     );
                                   },
                                 ),
                               ),
-                              SizedBox(
-                                height: 50,
-                              )
+                              const SizedBox(height: 50)
                             ],
                           ),
                         ),
@@ -220,7 +215,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
           title: 'Ops, Algo asconteceu!',
           subTitle: 'Houve algum erro, tente novamente mais tarde.',
           onPressed: () {
-            navigationWithFadeAnimation(const AppointmentWebPage(), context);
+            Navigator.of(context).pushNamed('/');
           },
           text: 'Tentar de novo',
         ),

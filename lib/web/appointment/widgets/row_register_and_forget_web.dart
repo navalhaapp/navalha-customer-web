@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/web/appointment/widgets/forget_password_page_web.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_page_client_web.dart';
 
 class RowRegisterAndForgetWeb extends StatelessWidget {
@@ -20,8 +19,7 @@ class RowRegisterAndForgetWeb extends StatelessWidget {
         children: [
           TextButton(
             onPressed: () {
-              navigationWithFadeAnimation(
-                  const ForgetPasswordPageWeb(), context);
+              Navigator.of(context).pushNamed('/forget');
             },
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -35,8 +33,7 @@ class RowRegisterAndForgetWeb extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              navigationWithFadeAnimation(
-                  const RegistrationPageClientWeb(), context);
+              Navigator.of(context).pushNamed('/register');
             },
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.transparent),

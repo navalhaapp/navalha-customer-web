@@ -97,7 +97,7 @@ class _CancelAppointmentDialogWebState
                     if (response.status == 'success') {
                       setState(() => loading = false);
                       showSnackBar(context, 'Agendamento cancelado!');
-                      navigationFadePush(const CalendarPageWeb(), context);
+                      Navigator.of(context).pushNamed('/calendar');
                     } else {
                       if (response.result == 'less_than_4_hours_left') {
                         showSnackBar(context,

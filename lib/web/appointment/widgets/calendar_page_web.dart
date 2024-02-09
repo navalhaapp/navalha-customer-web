@@ -25,11 +25,13 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
     return SafeArea(
       top: false,
       child: Consumer(builder: (context, ref, child) {
+        String url = Uri.base.toString();
+        String params = Uri.splitQueryString(url).values.first;
         final loginController =
             ref.read(LoginStateController.provider.notifier);
         return Scaffold(
           backgroundColor: colorBackground181818,
-          drawer: const DrawerPageWeb(),
+          drawer: DrawerPageWeb(barberShopId: params),
           appBar: AppBar(
             elevation: 0,
             title:
@@ -81,14 +83,14 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                   if (loginController.user == null) {
                     return Center(
                       child: WidgetEmpty(
+                        color: colorBackground181818,
                         topSpace: 0,
                         title: 'Você não possui conta!',
                         subTitle:
                             'Crie uma conta para começar a aproveitar o navalha',
                         text: 'Registrar-se',
                         onPressed: () {
-                          navigationWithFadeAnimation(
-                              const LoginPageWeb(), context);
+                          Navigator.of(context).pushNamed('/login');
                         },
                       ),
                     );
