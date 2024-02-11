@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/schedule/model/model_reserved_time.dart';
-import 'package:navalha/mobile/schedule/widgets/container_hours.dart';
 import 'package:navalha/mobile/schedule/widgets/observation_botton_sheet.dart';
 import 'package:navalha/web/appointment/widgets/container_hours.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -46,11 +44,8 @@ class CalendarState extends ConsumerState<CalendarWeb> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Consumer(
       builder: (context, ref, child) {
-        final loginController =
-            ref.read(LoginStateController.provider.notifier);
         final openHoursController =
             ref.watch(GetOpenHoursByDateStateController.provider.notifier);
         reservedTime = ref.watch(reservedTimeProvider.state);

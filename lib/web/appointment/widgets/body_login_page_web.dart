@@ -11,17 +11,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/shared/model/customer_model.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/web/appointment/text_edit_web.dart';
 import 'package:navalha/web/appointment/widgets/button_login_web.dart';
-import 'package:navalha/web/appointment/widgets/login_page_web.dart';
-import 'package:navalha/web/appointment/widgets/resume_page_web.dart';
 import 'package:navalha/web/appointment/widgets/row_register_and_forget_web.dart';
 import 'package:navalha/web/appointment/widgets/row_social_networks_google_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../shared/animation/page_trasition.dart';
 import '../../../shared/providers.dart';
 import '../../../shared/utils.dart';
 
@@ -36,9 +32,7 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
     with TickerProviderStateMixin {
   bool _passwordVisible = false;
   int _state = 0;
-  bool _isLoggedIn = false;
-  String _savedEmail = '';
-  String _savedPassword = '';
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late List<ServicePendingReview>? listReviewsPending;
@@ -58,12 +52,6 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
     await prefs.setString('email', emailController.text.trim());
     await prefs.setString('password', passwordController.text);
     await prefs.setString('fBToken', fbToken);
-
-    setState(() {
-      _isLoggedIn = true;
-      _savedEmail = emailController.text.trim();
-      _savedPassword = passwordController.text;
-    });
   }
 
   @override
@@ -167,9 +155,7 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
 
                               Timer(const Duration(milliseconds: 1000), () {
                                 loginController.user = null;
-                                Navigator.of(context).pushNamed(
-                                  '/login',
-                                );
+                                Navigator.of(context).pushNamed('/login');
                               });
                             } else if (response.status == 'success') {
                               loginController.user.customer = response.customer;
@@ -180,6 +166,7 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
                                   customerId: response.customer.customerId,
                                   token: response.token,
                                   email: response.customer.email,
+                                  birthDate: response.customer.birthDate,
                                 ),
                               );
                               _login();

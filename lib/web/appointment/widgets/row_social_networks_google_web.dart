@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/web/appointment/widgets/login_page_web.dart';
-import 'package:navalha/web/appointment/widgets/register_social_network_page_web.dart';
 import 'package:navalha/web/appointment/widgets/resume_page_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +16,6 @@ import 'package:navalha/mobile/login/model/auth_model.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RowSocialNetworksWeb extends StatefulHookConsumerWidget {
@@ -123,8 +120,6 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
         await authLoginController.login(email, id, fBToken.toString());
 
     if (response.status == 'success') {
-      String url = Uri.base.toString();
-      String params = Uri.splitQueryString(url).values.first;
       Future.delayed(const Duration(seconds: 1)).then((value) async {
         navigationWithFadeAnimation(
           const ResumePageWeb(),
@@ -271,7 +266,6 @@ class _ButtonSocialNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(

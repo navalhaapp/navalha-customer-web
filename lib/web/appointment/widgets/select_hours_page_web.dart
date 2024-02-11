@@ -21,12 +21,10 @@ import 'package:navalha/shared/model/open_hour_model.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/button_pattern_botton_sheet.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/web/appointment/widgets/calendar_web.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
-
-import 'resume_page_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 
 class SelectHoursPageWeb extends StatefulWidget {
   const SelectHoursPageWeb({
@@ -47,8 +45,8 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
     final Map<String, dynamic> args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final BarberShop barberShop = args['barbershop'] as BarberShop;
+    final retrievedCustomer = LocalStorageManager.getCustomer();
     return Consumer(builder: (context, ref, child) {
-      final loginController = ref.read(LoginStateController.provider.notifier);
       return Scaffold(
         backgroundColor: colorBackground181818,
         drawer: DrawerPageWeb(barberShopId: barberShop.barbershopId!),
@@ -57,7 +55,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
           title: Text(barberShop.name!),
           elevation: 0,
           actions: [
-            loginController.user?.customer?.imgProfile == null
+            retrievedCustomer == null
                 ? Container(
                     margin:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -80,7 +78,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: NetworkImage(
-                          loginController.user?.customer?.imgProfile,
+                          retrievedCustomer.image,
                         ),
                         fit: BoxFit.contain,
                       ),
@@ -105,279 +103,273 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
           var daySelectedController = ref.watch(daySelectedProvider.state);
           final packageToUseSelected =
               ref.watch(packageSelectedToUseProvider.state);
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(18),
-                        width: 500,
-                        height: 465,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: colorContainers242424,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: colorContainers242424,
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15),
-                                ),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(18),
+                      width: 500,
+                      height: 465,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: colorContainers242424,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SingleChildScrollView(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: colorContainers242424,
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, top: 20, bottom: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        IconButton(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          icon: const Icon(
-                                            CupertinoIcons.clear,
-                                            color: Colors.white,
-                                          ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, top: 20, bottom: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      IconButton(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        icon: const Icon(
+                                          CupertinoIcons.clear,
+                                          color: Colors.white,
                                         ),
-                                        Text(
-                                          'Escolha uma data',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            shadows: shadow,
-                                            color: Colors.white,
-                                          ),
+                                      ),
+                                      Text(
+                                        'Escolha uma data',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          shadows: shadow,
+                                          color: Colors.white,
                                         ),
-                                        IconButton(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            CupertinoIcons.clear,
-                                            color: Colors.transparent,
-                                          ),
+                                      ),
+                                      IconButton(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          CupertinoIcons.clear,
+                                          color: Colors.transparent,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  const CalendarWeb(),
-                                ],
-                              ),
+                                ),
+                                const CalendarWeb(),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                      ButtonPattern(
-                        margin: const EdgeInsets.symmetric(horizontal: 18),
-                        width: 500,
-                        elevation: false,
-                        child: !loading
-                            ? const Text(
-                                'Confirmar',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                ),
-                              )
-                            : const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
+                    ),
+                    ButtonPattern(
+                      margin: const EdgeInsets.symmetric(horizontal: 18),
+                      width: 500,
+                      elevation: false,
+                      child: !loading
+                          ? const Text(
+                              'Confirmar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
                               ),
-                        onPressed: () async {
-                          EasyDebounce.debounce(
-                            'create-pix',
-                            const Duration(milliseconds: 500),
-                            () async {
-                              if (reservedTime.state.initialHour == '') {
-                                showSnackBar(context, 'Selecione um horário');
-                              } else {
-                                setState(() {
-                                  loading = true;
-                                });
-                                ResponseCreateCacheService response =
-                                    await createCacheController
-                                        .createCacheService(
-                                  barberShop.barbershopId!,
-                                  reservedTime.state.professionalId!,
-                                  reservedTime.state.serviceId!,
-                                  reservedTime.state.date!,
-                                  reservedTime.state.initialHour!,
-                                  reservedTime.state.discount ?? 0,
-                                );
+                            )
+                          : const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            ),
+                      onPressed: () async {
+                        EasyDebounce.debounce(
+                          'create-pix',
+                          const Duration(milliseconds: 500),
+                          () async {
+                            if (reservedTime.state.initialHour == '') {
+                              showSnackBar(context, 'Selecione um horário');
+                            } else {
+                              setState(() {
+                                loading = true;
+                              });
+                              ResponseCreateCacheService response =
+                                  await createCacheController
+                                      .createCacheService(
+                                barberShop.barbershopId!,
+                                reservedTime.state.professionalId!,
+                                reservedTime.state.serviceId!,
+                                reservedTime.state.date!,
+                                reservedTime.state.initialHour!,
+                                reservedTime.state.discount ?? 0,
+                              );
 
-                                if (response.status == 'success') {
-                                  showSnackBar(
-                                      context, 'Adicionado ao carrinho!');
-                                  serviceCache.state.add(response.result!);
-                                  serviceCache
-                                          .state[serviceCache.state.length - 1]
-                                          .observation =
-                                      reservedTime.state.observation;
-                                  serviceCache
-                                          .state[serviceCache.state.length - 1]
-                                          .serviceOriginalPrice =
-                                      response.result!.service!.price!;
-                                  if (widget.packageSelected == null) {
-                                    ServiceRequest resumeItem = ServiceRequest(
-                                      cacheId: response.result.cachedId,
-                                      date: response.result.date!,
-                                      observation:
-                                          reservedTime.state.observation,
-                                      price: response.result!.service!.price! -
-                                          calcDiscount(
-                                              response.result!.service!.price!,
-                                              reservedTime.state.discount ?? 0),
-                                      professionalId:
-                                          reservedTime.state.professionalId!,
-                                      professionalServiceId:
-                                          reservedTime.state.serviceId!,
-                                      promotionalHourDiscount: calcDiscount(
-                                          response.result!.service!.price!,
-                                          reservedTime.state.discount ?? 0),
-                                      promotionalHourPercent:
-                                          reservedTime.state.discount,
-                                      serviceInitialHour:
-                                          response.result.initialHour,
-                                      serviceFinalHour:
-                                          response.result.finalHour,
-                                    );
-                                    listResumePayment.state.services
-                                        .add(resumeItem);
-                                  } else {
-                                    servicesUsePackage.state.add(
-                                        UsePackageServiceRequest(
-                                            cacheId: response.result.cachedId,
-                                            date: response.result.date!,
-                                            professionalId: reservedTime
-                                                .state.professionalId!,
-                                            professionalServiceId:
-                                                reservedTime.state.serviceId!,
-                                            observation:
-                                                reservedTime.state.observation,
-                                            serviceInitialHour:
-                                                response.result.initialHour,
-                                            serviceFinalHour:
-                                                response.result.finalHour,
-                                            customerPackageServiceId:
-                                                servicePackageSelected.state
-                                                    .customerPackageServiceId));
-                                    CustomerPackageServices packageService =
-                                        packageToUseSelected
-                                            .state.customerPackageServices!
-                                            .firstWhere((packageService) =>
-                                                packageService
-                                                    .packageServiceId ==
-                                                servicePackageSelected
-                                                    .state.packageServiceId);
-                                    int indexOf = packageToUseSelected
-                                        .state.customerPackageServices!
-                                        .indexOf(packageService);
-                                    if (packageToUseSelected
-                                            .state
-                                            .customerPackageServices![indexOf]
-                                            .count! >
-                                        1) {
-                                      packageToUseSelected
-                                          .state
-                                          .customerPackageServices![indexOf]
-                                          .count = packageToUseSelected
-                                              .state
-                                              .customerPackageServices![indexOf]
-                                              .count! -
-                                          1;
-                                    } else {
+                              if (response.status == 'success') {
+                                showSnackBar(
+                                    context, 'Adicionado ao carrinho!');
+                                serviceCache.state.add(response.result!);
+                                serviceCache
+                                        .state[serviceCache.state.length - 1]
+                                        .observation =
+                                    reservedTime.state.observation;
+                                serviceCache
+                                        .state[serviceCache.state.length - 1]
+                                        .serviceOriginalPrice =
+                                    response.result!.service!.price!;
+                                if (widget.packageSelected == null) {
+                                  ServiceRequest resumeItem = ServiceRequest(
+                                    cacheId: response.result.cachedId,
+                                    date: response.result.date!,
+                                    observation: reservedTime.state.observation,
+                                    price: response.result!.service!.price! -
+                                        calcDiscount(
+                                            response.result!.service!.price!,
+                                            reservedTime.state.discount ?? 0),
+                                    professionalId:
+                                        reservedTime.state.professionalId!,
+                                    professionalServiceId:
+                                        reservedTime.state.serviceId!,
+                                    promotionalHourDiscount: calcDiscount(
+                                        response.result!.service!.price!,
+                                        reservedTime.state.discount ?? 0),
+                                    promotionalHourPercent:
+                                        reservedTime.state.discount,
+                                    serviceInitialHour:
+                                        response.result.initialHour,
+                                    serviceFinalHour: response.result.finalHour,
+                                  );
+                                  listResumePayment.state.services
+                                      .add(resumeItem);
+                                } else {
+                                  servicesUsePackage.state.add(
+                                      UsePackageServiceRequest(
+                                          cacheId: response.result.cachedId,
+                                          date: response.result.date!,
+                                          professionalId: reservedTime
+                                              .state.professionalId!,
+                                          professionalServiceId: reservedTime
+                                              .state.serviceId!,
+                                          observation: reservedTime
+                                              .state.observation,
+                                          serviceInitialHour:
+                                              response.result.initialHour,
+                                          serviceFinalHour:
+                                              response.result.finalHour,
+                                          customerPackageServiceId:
+                                              servicePackageSelected.state
+                                                  .customerPackageServiceId));
+                                  CustomerPackageServices packageService =
                                       packageToUseSelected
                                           .state.customerPackageServices!
-                                          .removeAt(indexOf);
-                                    }
-                                  }
-                                  var barbershop = ref
-                                      .watch(barberShopSelectedProvider.state);
-                                  barbershop.state = barberShop;
-                                  Navigator.of(context).pushNamed(
-                                    '/resume',
-                                    arguments: {
-                                      'barbershop_id': barberShop.barbershopId!
-                                    },
-                                  );
-                                } else {
-                                  if (response.result ==
-                                      'already_cached_service') {
-                                    showSnackBar(context,
-                                        'Desculpe, mas esse horário já foi agendado.');
-                                    ResponseGetOpenHoursByDate response =
-                                        await openHoursController
-                                            .getOpenHoursByDate(
-                                      token: authLoginController.user!.token!,
-                                      getAbbreviatedWeekday(
-                                          daySelectedController.state.weekday),
-                                      reservedTime.state.professionalId!,
-                                      reservedTime.state.serviceId!,
-                                      formatDate(daySelectedController.state),
-                                    );
-
-                                    if (response.status == 'success') {
-                                      reservedTime.state.date = formatDate(
-                                          daySelectedController.state);
-                                      reservedTime.state.listOpenHours =
-                                          response.result as List<OpenHour>;
-                                    }
-                                  } else if (response.result ==
-                                      'hour_has_passed') {
-                                    showSnackBar(context,
-                                        'Desculpe, mas esse horário já passou.');
-                                    ResponseGetOpenHoursByDate response =
-                                        await openHoursController
-                                            .getOpenHoursByDate(
-                                      token: authLoginController.user!.token!,
-                                      getAbbreviatedWeekday(
-                                          daySelectedController.state.weekday),
-                                      reservedTime.state.professionalId!,
-                                      reservedTime.state.serviceId!,
-                                      formatDate(daySelectedController.state),
-                                    );
-
-                                    if (response.status == 'success') {
-                                      reservedTime.state.date = formatDate(
-                                          daySelectedController.state);
-                                      reservedTime.state.listOpenHours =
-                                          response.result as List<OpenHour>;
-                                    }
+                                          .firstWhere((packageService) =>
+                                              packageService.packageServiceId ==
+                                              servicePackageSelected
+                                                  .state.packageServiceId);
+                                  int indexOf = packageToUseSelected
+                                      .state.customerPackageServices!
+                                      .indexOf(packageService);
+                                  if (packageToUseSelected
+                                          .state
+                                          .customerPackageServices![indexOf]
+                                          .count! >
+                                      1) {
+                                    packageToUseSelected
+                                        .state
+                                        .customerPackageServices![indexOf]
+                                        .count = packageToUseSelected
+                                            .state
+                                            .customerPackageServices![indexOf]
+                                            .count! -
+                                        1;
                                   } else {
-                                    showSnackBar(
-                                        context, 'Ops, algo aconteceu');
+                                    packageToUseSelected
+                                        .state.customerPackageServices!
+                                        .removeAt(indexOf);
                                   }
                                 }
-                                setState(() {
-                                  loading = false;
-                                });
+                                var barbershop =
+                                    ref.watch(barberShopSelectedProvider.state);
+                                barbershop.state = barberShop;
+                                Navigator.of(context).pushNamed(
+                                  '/resume',
+                                  arguments: {
+                                    'barbershop_id': barberShop.barbershopId!
+                                  },
+                                );
+                              } else {
+                                if (response.result ==
+                                    'already_cached_service') {
+                                  showSnackBar(context,
+                                      'Desculpe, mas esse horário já foi agendado.');
+                                  ResponseGetOpenHoursByDate response =
+                                      await openHoursController
+                                          .getOpenHoursByDate(
+                                    token: authLoginController.user!.token!,
+                                    getAbbreviatedWeekday(
+                                        daySelectedController.state.weekday),
+                                    reservedTime.state.professionalId!,
+                                    reservedTime.state.serviceId!,
+                                    formatDate(daySelectedController.state),
+                                  );
+
+                                  if (response.status == 'success') {
+                                    reservedTime.state.date =
+                                        formatDate(daySelectedController.state);
+                                    reservedTime.state.listOpenHours =
+                                        response.result as List<OpenHour>;
+                                  }
+                                } else if (response.result ==
+                                    'hour_has_passed') {
+                                  showSnackBar(context,
+                                      'Desculpe, mas esse horário já passou.');
+                                  ResponseGetOpenHoursByDate response =
+                                      await openHoursController
+                                          .getOpenHoursByDate(
+                                    token: authLoginController.user!.token!,
+                                    getAbbreviatedWeekday(
+                                        daySelectedController.state.weekday),
+                                    reservedTime.state.professionalId!,
+                                    reservedTime.state.serviceId!,
+                                    formatDate(daySelectedController.state),
+                                  );
+
+                                  if (response.status == 'success') {
+                                    reservedTime.state.date =
+                                        formatDate(daySelectedController.state);
+                                    reservedTime.state.listOpenHours =
+                                        response.result as List<OpenHour>;
+                                  }
+                                } else {
+                                  showSnackBar(context, 'Ops, algo aconteceu');
+                                }
                               }
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                              setState(() {
+                                loading = false;
+                              });
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                const DownloadAppPromotion(),
-              ],
-            ),
+              ),
+              const DownloadAppPromotion(),
+            ],
           );
         }),
       );

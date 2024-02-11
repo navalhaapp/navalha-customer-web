@@ -4,10 +4,10 @@ import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/home/model/provider_family_model.dart';
 import 'package:navalha/mobile/home/provider/provider_get_barber_shop_by_id.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/schedule/widgets/body_schedule.dart';
 import 'package:navalha/shared/model/professional_model.dart';
 import 'package:navalha/shared/providers.dart';
+import 'package:navalha/shared/shimmer/shimmer_calendar.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
@@ -122,90 +122,84 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                 ],
               ),
               body: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(18),
-                        width: 500,
-                        height: 500,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: colorContainers242424,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, top: 20, bottom: 20),
-                                child: Text(
-                                  'Escolha um serviço',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    shadows: shadow,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(18),
+                      width: 500,
+                      height: 500,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: colorContainers242424,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, top: 20, bottom: 20),
+                            child: Text(
+                              'Escolha um serviço',
+                              style: TextStyle(
+                                fontSize: 20,
+                                shadows: shadow,
+                                color: Colors.white,
                               ),
-                              SizedBox(
-                                height: 600,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount: listServices.length,
-                                  itemBuilder: (context, iService) {
-                                    List<Professional> listProfessionals =
-                                        getProfessionalsByService(
-                                      listServices[iService],
-                                      data.barbershop!.professionals!,
-                                    );
-                                    return GestureDetector(
-                                      child: ServiceItemWeb(
-                                        havePrice: widget.havePrice,
-                                        packageSelected: widget.packageSelected,
-                                        description:
-                                            listServices[iService].description!,
-                                        duration: getDurationRange(
-                                            getAllServices(data
-                                                .barbershop!.professionals!),
-                                            listServices[iService].name!),
-                                        img: listServices[iService].imgProfile!,
-                                        name: listServices[iService].name!,
-                                        price: getPriceRange(
-                                            getAllServices(data
-                                                .barbershop!.professionals!),
-                                            listServices[iService].name!),
-                                      ),
-                                      onTap: () {
-                                        Navigator.of(context).pushNamed(
-                                          '/select-professional',
-                                          arguments: {
-                                            'serviceName':
-                                                listServices[iService].name!,
-                                            'data': data,
-                                            'iService': iService,
-                                            'listProfessionals':
-                                                listProfessionals,
-                                            'packageSelected':
-                                                widget.packageSelected,
-                                          },
-                                        );
+                            ),
+                          ),
+                          SizedBox(
+                            height: 410,
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: listServices.length,
+                              itemBuilder: (context, iService) {
+                                List<Professional> listProfessionals =
+                                    getProfessionalsByService(
+                                  listServices[iService],
+                                  data.barbershop!.professionals!,
+                                );
+                                return GestureDetector(
+                                  child: ServiceItemWeb(
+                                    havePrice: widget.havePrice,
+                                    packageSelected: widget.packageSelected,
+                                    description:
+                                        listServices[iService].description!,
+                                    duration: getDurationRange(
+                                        getAllServices(
+                                            data.barbershop!.professionals!),
+                                        listServices[iService].name!),
+                                    img: listServices[iService].imgProfile!,
+                                    name: listServices[iService].name!,
+                                    price: getPriceRange(
+                                        getAllServices(
+                                            data.barbershop!.professionals!),
+                                        listServices[iService].name!),
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      '/select-professional',
+                                      arguments: {
+                                        'serviceName':
+                                            listServices[iService].name!,
+                                        'data': data,
+                                        'iService': iService,
+                                        'listProfessionals': listProfessionals,
+                                        'packageSelected':
+                                            widget.packageSelected,
                                       },
                                     );
                                   },
-                                ),
-                              ),
-                              const SizedBox(height: 50)
-                            ],
+                                );
+                              },
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                      const DownloadAppPromotion(),
-                    ],
-                  ),
+                    ),
+                    const DownloadAppPromotion(),
+                  ],
                 ),
               ),
             );
@@ -223,10 +217,8 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
         ),
       ),
       loading: () => const Scaffold(
-          body: SizedBox(
-        child: Center(
-          child: Text('aaa'),
-        ),
+          body: Center(
+        child: SizedBox(width: 500, height: 500, child: ShimmerCalendar()),
       )),
     );
   }
@@ -244,7 +236,7 @@ class DownloadAppPromotion extends StatelessWidget {
       margin: const EdgeInsets.only(top: 18),
       height: 200,
       decoration: BoxDecoration(
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(color: Colors.white10, spreadRadius: 2),
         ],
         borderRadius: const BorderRadius.only(

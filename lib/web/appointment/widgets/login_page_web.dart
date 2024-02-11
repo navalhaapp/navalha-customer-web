@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:navalha/core/assets.dart';
-import 'package:navalha/core/colors.dart';
 import 'package:navalha/web/appointment/widgets/body_login_page_web.dart';
 
 class LoginPageWeb extends StatefulWidget {

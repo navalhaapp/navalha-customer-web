@@ -3,15 +3,10 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:navalha/approved_schedule/approved_schedule_page.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/payment/model/response_schedule.dart';
 import 'package:navalha/mobile/payment/provider/provider_create_schedule.dart';
 import 'package:navalha/mobile/schedule/schedule_page.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
-import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
-import 'package:navalha/web/appointment/widgets/login_page_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import '../../../core/colors.dart';
 import '../../../shared/model/barber_shop_model.dart';

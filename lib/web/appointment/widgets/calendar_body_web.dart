@@ -4,11 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/calendar/model/model_get_schedule_customer.dart';
 import 'package:navalha/mobile/calendar/provider/provider_get_schedule_customer.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
 import 'package:navalha/web/appointment/widgets/container_calendar_web.dart';
-import 'package:navalha/web/appointment/widgets/services_page_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import '../../../shared/animation/page_trasition.dart';
 import '../../../shared/shimmer/shimmer_calendar.dart';
 import '../../../shared/widgets/widget_empty.dart';
@@ -28,21 +26,19 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
   @override
   void initState() {
     super.initState();
-
-    final loginController = ref.read(LoginStateController.provider.notifier);
+    final retrievedCustomer = LocalStorageManager.getCustomer();
 
     getScheduleModel = ProviderFamilyGetScheduleModel(
-      token: loginController.user!.token!,
-      customerId: loginController.user!.customer!.customerId!,
+      token: retrievedCustomer!.token,
+      customerId: retrievedCustomer.customerId,
     );
 
-    setState(() {});
+    // setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final getSchedule = ref.watch(getScheduleCustomerList(getScheduleModel));
-    Size size = MediaQuery.of(context).size;
     return getSchedule.when(
       data: (data) {
         String url = Uri.base.toString();
@@ -52,8 +48,7 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
         if (listScheduleItem.isNotEmpty) {
           return Consumer(
             builder: (context, ref, child) {
-              final loginController =
-                  ref.read(LoginStateController.provider.notifier);
+              final retrievedCustomer = LocalStorageManager.getCustomer();
               return SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -161,13 +156,13 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
                     ),
                     for (int i = 0; i < listScheduleItem.length; i++)
                       ContainerCalendarWeb(
-                        birthDate: loginController.user!.customer!.birthDate!,
+                        birthDate: retrievedCustomer!.birthDate,
                         canceled: listScheduleItem[i].canceled!,
                         reviewed: listScheduleItem[i].reviewed!,
                         professionalId:
                             listScheduleItem[i].professional!.professionalId,
                         serviceId: listScheduleItem[i].scheduleServiceId!,
-                        customerId: loginController.user!.customer!.customerId!,
+                        customerId: retrievedCustomer.customerId,
                         nameService: listScheduleItem[i].service!.name!,
                         priceService: listScheduleItem[i].service!.price,
                         nameBarberShop:

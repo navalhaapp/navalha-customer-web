@@ -141,7 +141,7 @@ class _CupertinoPickerListState extends State<CupertinoPickerListWeb> {
                   )
                 : Text(
                     widget.label,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                     textAlign: TextAlign.left,

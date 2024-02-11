@@ -2,8 +2,6 @@
 // Rovigo               22/08/2022        Extracting register and forget row
 
 import 'package:flutter/material.dart';
-import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/web/appointment/widgets/register_web/registration_page_client_web.dart';
 
 class RowRegisterAndForgetWeb extends StatelessWidget {
   const RowRegisterAndForgetWeb({

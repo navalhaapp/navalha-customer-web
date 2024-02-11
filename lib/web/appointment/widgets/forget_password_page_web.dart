@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/forget_password/provider/provider_reset_password.dart';
 import 'package:navalha/mobile/forget_password/widgets/form_field_email.dart';
-import 'package:navalha/mobile/login/login_page.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';

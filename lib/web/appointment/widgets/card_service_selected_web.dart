@@ -7,8 +7,6 @@ import 'package:navalha/mobile/schedule/model/model_reserved_time.dart';
 import 'package:navalha/mobile/schedule/provider/provider_delete_service_cache.dart';
 import 'package:navalha/shared/model/barber_shop_model.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
-import 'package:navalha/web/appointment/widgets/resume_page_web.dart';
 import '../../../core/assets.dart';
 import '../../../core/colors.dart';
 import '../../../shared/providers.dart';

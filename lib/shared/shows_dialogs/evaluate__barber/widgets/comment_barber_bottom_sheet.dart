@@ -73,9 +73,9 @@ class _CommentBarberBottomSheetState extends State<CommentBarberBottomSheet> {
                           cursorColor: Colors.black,
                           controller: descriptionEditController,
                           obscureText: false,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.050,
-                            color: const Color.fromARGB(255, 0, 0, 0),
+                          style: const TextStyle(
+                            fontSize: 22,
+                            color: Color.fromARGB(255, 0, 0, 0),
                             fontStyle: FontStyle.normal,
                           ),
                           decoration: const InputDecoration(

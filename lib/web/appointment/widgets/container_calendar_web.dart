@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:navalha/mobile/calendar/widget/evaluate_botton_sheet.dart';
 import 'package:navalha/mobile/calendar/widget/status_item.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
@@ -49,8 +48,6 @@ class ContainerCalendarWeb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Column(
       children: [
         Container(
@@ -73,7 +70,6 @@ class ContainerCalendarWeb extends StatelessWidget {
               vertical: 20,
             ),
             child: SizedBox(
-              width: 280,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -92,7 +88,7 @@ class ContainerCalendarWeb extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       SizedBox(
-                        width: 200,
+                        width: 320,
                         child: Text(
                           nameBarberShop,
                           overflow: TextOverflow.ellipsis,
@@ -107,99 +103,109 @@ class ContainerCalendarWeb extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          getStatusContainer(finalized, canceled),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Serviço',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          SizedBox(
-                            width: 100,
-                            child: Text(
-                              nameService,
-                              style: const TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                color: Color.fromARGB(255, 153, 153, 153),
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Profissional',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          SizedBox(
-                            width: 100,
-                            child: Text(
-                              nameProfessional,
-                              style: const TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                color: Color.fromARGB(255, 153, 153, 153),
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Visibility(
-                        visible: priceService != null,
-                        child: Text(
-                          'Total: R\$ ${priceService?.toStringAsFixed(2).replaceAll('.', ',')}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        height: 100,
-                        width: 1,
-                        color: const Color.fromARGB(255, 68, 68, 68),
-                      ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            mouth,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
+                          Row(
+                            children: [
+                              getStatusContainer(finalized, canceled),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Serviço',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 100,
+                                child: Text(
+                                  nameService,
+                                  style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Color.fromARGB(255, 153, 153, 153),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Profissional',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 100,
+                                child: Text(
+                                  nameProfessional,
+                                  style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Color.fromARGB(255, 153, 153, 153),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Visibility(
+                            visible: priceService != null,
+                            child: Text(
+                              'Total: R\$ ${priceService?.toStringAsFixed(2).replaceAll('.', ',')}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                          Text(
-                            day,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 26,
-                            ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 100,
+                            width: 1,
+                            color: const Color.fromARGB(255, 68, 68, 68),
                           ),
-                          Text(
-                            hour,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
+                          Column(
+                            children: [
+                              Text(
+                                mouth,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                day,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 26,
+                                ),
+                              ),
+                              Text(
+                                hour,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -345,8 +351,6 @@ class _ContainerActive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Container(
       height: 35,
       margin: const EdgeInsets.only(
@@ -354,7 +358,6 @@ class _ContainerActive extends StatelessWidget {
         right: 20,
       ),
       decoration: BoxDecoration(
-        // boxShadow: shadow,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
         color: colorContainers353535,
       ),

@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
-import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import '../../../mobile/home/model/response_get_barber_shop_by_id.dart';
 
 class ChooseServicePackage extends StatefulWidget {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class NavalhaTheme {
   static ThemeData get themeData => ThemeData(
+        primarySwatch: Colors.blue,
         useMaterial3: false,
         dividerTheme: const DividerThemeData(
           color: Colors.transparent,
@@ -26,10 +27,10 @@ class NavalhaTheme {
         cupertinoOverrideTheme:
             MaterialBasedCupertinoThemeData(materialTheme: ThemeData()),
         canvasColor: Colors.transparent,
-        scaffoldBackgroundColor: Colors.transparent,
-        colorScheme: const ColorScheme.dark(background: Colors.transparent),
+        scaffoldBackgroundColor: Colors.black,
+        colorScheme: const ColorScheme.dark(background: Colors.black),
         textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.white,
+          cursorColor: Colors.amber,
         ),
       );
 }

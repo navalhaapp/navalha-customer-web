@@ -299,9 +299,7 @@ class _RegistrationSocialNetworksWebState
                           'password',
                           'external_account'
                         ], [
-                          fullNameApple.isNullOrEmpty
-                              ? name ?? 'Usuário'
-                              : fullNameApple,
+                          fullNameApple.isNullOrEmpty ? name : fullNameApple,
                           email,
                           UtilText.formatDate(date),
                           UtilText.registerGener[selectedItem] == 'undefined'

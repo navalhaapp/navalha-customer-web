@@ -6,11 +6,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/mobile/calendar/model/model_create_review.dart';
 import 'package:navalha/mobile/calendar/provider/provider_create_review.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/header_button_sheet_pattern.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
-import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import '../../../core/assets.dart';
 import '../../../core/colors.dart';
 import '../../../shared/shows_dialogs/evaluate__barber/widgets/comment_barber_bottom_sheet.dart';
@@ -54,8 +52,7 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
           onTap: () {},
           child: Consumer(
             builder: (context, ref, child) {
-              final loginController =
-                  ref.read(LoginStateController.provider.notifier);
+              final retrievedCustomer = LocalStorageManager.getCustomer();
               final createReview =
                   ref.watch(CreateReviewStateController.provider.notifier);
               return Container(
@@ -140,7 +137,10 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(CupertinoIcons.pencil_ellipsis_rectangle),
+                            Icon(
+                              CupertinoIcons.pencil_ellipsis_rectangle,
+                              color: Colors.white,
+                            ),
                             SizedBox(width: 10),
                             Text(
                               'Fazer um elogio',
@@ -191,12 +191,13 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                             'Enviar',
                             style: TextStyle(
                               fontSize: 15,
+                              color: Colors.white,
                             ),
                           ),
                           onPressed: () async {
                             ResponseCreateReview response =
                                 await createReview.createReview(
-                              loginController.user!.token!,
+                              retrievedCustomer!.token,
                               description,
                               ratingSelected,
                               widget.serviceId,

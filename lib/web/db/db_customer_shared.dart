@@ -7,6 +7,7 @@ class CustomerDB {
   final String customerId;
   final String token;
   final String email;
+  final String birthDate;
 
   CustomerDB({
     required this.name,
@@ -14,6 +15,7 @@ class CustomerDB {
     required this.customerId,
     required this.token,
     required this.email,
+    required this.birthDate,
   });
 
   // Método para converter os dados em um mapa
@@ -24,6 +26,7 @@ class CustomerDB {
       'customerId': customerId,
       'token': token,
       'email': email,
+      'birthDate': birthDate,
     };
   }
 
@@ -35,6 +38,7 @@ class CustomerDB {
       customerId: map['customerId'],
       token: map['token'],
       email: map['email'],
+      birthDate: map['birthDate'],
     );
   }
 }
@@ -67,6 +71,7 @@ void main() {
       image: 'image_url',
       customerId: '1',
       token: '1',
+      birthDate: '1',
       email: 'test@gmail.com');
 
   LocalStorageManager.saveCustomer(customer);

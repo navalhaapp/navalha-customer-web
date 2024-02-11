@@ -1,21 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
-import 'package:navalha/mobile/payment/provider/provider_refresh.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
 import 'package:navalha/web/appointment/widgets/login_page_web.dart';
-import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import '../../../core/images_s3.dart';
 import '../../../shared/utils.dart';
 
@@ -44,7 +37,6 @@ class DrawerBodyWeb extends StatelessWidget {
       child: Consumer(
         builder: (context, ref, child) {
           CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
-          final refresh = ref.watch(RefreshStateController.provider.notifier);
           return SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -128,7 +120,7 @@ class _ButtonItem extends StatelessWidget {
           const SizedBox(width: 30),
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
             ),
           ),
