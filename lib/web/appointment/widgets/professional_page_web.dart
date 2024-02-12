@@ -39,10 +39,11 @@ class _ProfessionalPageWebState extends State<ProfessionalPageWeb> {
     return Consumer(builder: (context, ref, child) {
       return Scaffold(
         backgroundColor: colorBackground181818,
-        drawer: DrawerPageWeb(barberShopId: data!.barbershop!.barbershopId!),
+        drawer:
+            DrawerPageWeb(barberShopId: data?.barbershop?.barbershopId ?? ''),
         appBar: AppBar(
           elevation: 0,
-          title: Text(data.barbershop!.name!),
+          title: Text(data?.barbershop?.name ?? ''),
           backgroundColor: colorBackground181818,
           actions: [
             retrievedCustomer == null
@@ -155,7 +156,7 @@ class _ProfessionalPageWebState extends State<ProfessionalPageWeb> {
                                       Navigator.of(context).pushNamed(
                                         '/select-hour',
                                         arguments: {
-                                          'barbershop': data.barbershop
+                                          'barbershop': data?.barbershop ?? ''
                                         },
                                       );
                                     },
@@ -180,7 +181,7 @@ class _ProfessionalPageWebState extends State<ProfessionalPageWeb> {
                                           .duration,
                                       havePrice: false,
                                       packageList: packageSelected,
-                                      barberShop: data.barbershop!,
+                                      barberShop: data!.barbershop!,
                                       servicePrice: listProfessionals[i]
                                           .professionalServices![iService]
                                           .price!,

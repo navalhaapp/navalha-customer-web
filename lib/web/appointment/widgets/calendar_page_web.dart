@@ -32,8 +32,8 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
           drawer: DrawerPageWeb(barberShopId: params),
           appBar: AppBar(
             elevation: 0,
-            title:
-                Text(ref.watch(barberShopSelectedProvider.state).state.name!),
+            title: Text(
+                ref.watch(barberShopSelectedProvider.state).state.name ?? ''),
             backgroundColor: colorBackground181818,
             actions: [
               retrievedCustomer == null
