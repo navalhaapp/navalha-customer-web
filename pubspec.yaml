@@ -79,6 +79,9 @@ dependencies:
   flutter_dotenv: ^5.1.0
   carousel_slider: ^4.2.1
   google_sign_in_web: ^0.12.1
+  sembast: ^3.6.0
+  path_provider: ^2.1.2
+  sembast_web: ^2.2.0
 
 dev_dependencies:
   flutter_localizations:
@@ -135,6 +138,5 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 flutter_icons:
-  android: true
-  ios: true
+  web: true
   image_path: "asset/images/icons_393939.png"
