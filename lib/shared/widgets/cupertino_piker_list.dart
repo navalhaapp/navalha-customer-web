@@ -72,9 +72,9 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                     ),
                   ),
                 ),
-                child: SizedBox(
+                child: const SizedBox(
                   width: 500,
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       'Confirmar',
@@ -110,9 +110,7 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
       height: MediaQuery.of(context).size.height * 0.11,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.05,
-        ),
+        padding: const EdgeInsets.only(left: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,9 +121,9 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                     children: [
                       Text(
                         widget.label,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.045,
+                          fontSize: 22,
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -134,9 +132,9 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                             right: MediaQuery.of(context).size.width * 0.05),
                         child: Text(
                           widget.optional!,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontSize: 12,
                           ),
                           textAlign: TextAlign.left,
                         ),
@@ -145,9 +143,9 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                   )
                 : Text(
                     widget.label,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
-                      fontSize: MediaQuery.of(context).size.width * 0.045,
+                      fontSize: 20,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -159,7 +157,7 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
               child: Text(
                 widget.textEdit,
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.045,
+                  fontSize: 20,
                   color: colorWhite255255255,
                   fontStyle: FontStyle.normal,
                 ),

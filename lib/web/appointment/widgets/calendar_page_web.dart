@@ -84,12 +84,11 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                       if (retrievedCustomer == null) {
                         return Center(
                           child: WidgetEmpty(
-                            color: colorBackground181818,
                             topSpace: 0,
-                            title: 'Você não possui conta!',
+                            title: 'Vamos começar!',
                             subTitle:
-                                'Crie uma conta para começar a aproveitar o navalha',
-                            text: 'Registrar-se',
+                                'Por favor, entre ou registre-se para continuar.',
+                            text: 'Entrar',
                             onPressed: () {
                               Navigator.of(context).pushNamed('/login');
                             },

@@ -6,12 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/web/appointment/widgets/resume_page_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
-import 'package:navalha/mobile/login/login_page.dart';
 import 'package:navalha/mobile/login/model/auth_model.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/providers.dart';
@@ -28,11 +27,11 @@ class RowSocialNetworksWeb extends StatefulHookConsumerWidget {
 
 class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   bool? firtLogin = true;
   String? fullNameApple;
   late SharedPreferences prefs;
-
+  CustomerDB? retrievedCustomer;
   @override
   Widget build(BuildContext context) {
     return Consumer(
@@ -79,22 +78,12 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
   }
 
   Future<UserCredential?> signInWithGoogle() async {
-    await Firebase.initializeApp();
     GoogleAuthProvider authProvider = GoogleAuthProvider();
     try {
       final UserCredential userCredential =
           await _auth.signInWithPopup(authProvider);
 
-      // final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-      // final GoogleSignInAuthentication googleAuth =
-      //     await googleUser!.authentication;
-      navigationWithFadeAnimation(ShimmerLoginGoogle(), context);
-
-      // final AuthCredential credential = GoogleAuthProvider.credential(
-      //   accessToken: googleAuth.accessToken,
-      //   idToken: googleAuth.idToken,
-      // );
+      navigationWithFadeAnimation(const ShimmerLoginGoogle(), context);
 
       await _auth.signInWithCredential(userCredential.credential!);
       print(userCredential);
@@ -120,22 +109,35 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
         await authLoginController.login(email, id, fBToken.toString());
 
     if (response.status == 'success') {
-      Future.delayed(const Duration(seconds: 1)).then((value) async {
-        navigationWithFadeAnimation(
-          const ResumePageWeb(),
-          context,
-        );
-      });
+      LocalStorageManager.saveCustomer(
+        CustomerDB(
+          name: response.customer!.name ?? '',
+          image: response.customer!.imgProfile ?? '',
+          customerId: response.customer!.customerId ?? '',
+          token: response.token ?? '',
+          email: response.customer!.email ?? '',
+          birthDate: response.customer!.birthDate ?? '',
+          userID: '',
+        ),
+      );
+      Navigator.of(context).pushNamed('/resume');
     } else {
       if (response.id == 'bad_credentials') {
-        Navigator.of(context).pushNamed('/login');
-        final GoogleSignIn googleSignIn = GoogleSignIn();
-        await googleSignIn.signOut();
-        navigationWithFadeAnimation(const LoginPage(), context);
+        Navigator.of(context).pop();
         showSnackBar(context, 'Esse email já foi cadastrado.');
       } else {
-        Navigator.pushNamed(context, '/register-social',
-            arguments: {'email': email, 'name': name, 'userId': id});
+        LocalStorageManager.saveCustomer(
+          CustomerDB(
+            name: name ?? '',
+            image: '',
+            customerId: '',
+            token: '',
+            email: email,
+            birthDate: '',
+            userID: id,
+          ),
+        );
+        Navigator.pushNamed(context, '/register-social');
       }
     }
   }

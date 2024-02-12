@@ -98,18 +98,17 @@ class _CupertinoDataPickerState extends State<CupertinoDataPicker> {
       height: MediaQuery.of(context).size.height * 0.11,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.05,
-        ),
+        padding: const EdgeInsets.only(left: 20),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               widget.label,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
-                fontSize: MediaQuery.of(context).size.width * 0.045,
+                fontSize: 22,
               ),
               textAlign: TextAlign.left,
             ),
@@ -135,7 +134,7 @@ class _CupertinoDataPickerState extends State<CupertinoDataPicker> {
               child: Text(
                 '${widget.date.day} / ${widget.date.month} / ${widget.date.year}',
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.045,
+                  fontSize: 20,
                   color: colorWhite255255255,
                   fontStyle: FontStyle.normal,
                 ),

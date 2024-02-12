@@ -1,14 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/web/appointment/widgets/login_page_web.dart';
 import '../../../core/images_s3.dart';
 import '../../../shared/utils.dart';
 
@@ -33,7 +33,7 @@ class DrawerBodyWeb extends StatelessWidget {
           topRight: Radius.circular(25),
         ),
       ),
-      width: 250,
+      width: 280,
       child: Consumer(
         builder: (context, ref, child) {
           CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
@@ -73,8 +73,16 @@ class DrawerBodyWeb extends StatelessWidget {
                 _ButtonItem(
                   label: 'Sair',
                   onPressed: () async {
+                    final GoogleSignIn _googleSignIn = GoogleSignIn(
+                      //TODO: tentar remover para ver se realmente necessario
+                      clientId:
+                          '503923325128-ms8brondqnsrld6bu5vcptsireonda6t.apps.googleusercontent.com',
+                    );
+                    await _googleSignIn.disconnect();
+                    await _googleSignIn.signOut();
+
                     retrievedCustomer = null;
-                    navigationWithFadeAnimation(const LoginPageWeb(), context);
+                    Navigator.of(context).pushNamed('/login');
                   },
                   icon: Icons.exit_to_app_rounded,
                 ),
@@ -180,7 +188,7 @@ class _ImageProfile extends StatelessWidget {
         adressEmail == ""
             ? const SizedBox()
             : Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20, right: 10),
                 child: Text(
                   adressEmail,
                   style: const TextStyle(

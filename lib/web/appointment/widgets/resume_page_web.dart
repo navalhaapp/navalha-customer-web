@@ -30,9 +30,9 @@ class _ResumePageWebState extends State<ResumePageWeb> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final String barberShopId = args['barbershop_id'];
+    String url = Uri.base.toString();
+    String params = Uri.splitQueryString(url).values.first;
+    final String barberShopId = params;
     return Consumer(
       builder: (context, ref, child) {
         final retrievedCustomer = LocalStorageManager.getCustomer();

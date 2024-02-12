@@ -182,6 +182,8 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                                 listResumePayment.state.services,
                               );
                               if (response.status == 'success') {
+                                serviceCache.state.clear();
+                                listResumePayment.state.clear();
                                 Navigator.of(context).pushNamed('/approved');
                               } else {
                                 setState(() {
@@ -194,6 +196,8 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                             });
                           } else {
                             Navigator.of(context).pushNamed('/login');
+                            showSnackBar(context,
+                                'Faça o login para agendar o serviço!');
                           }
                         },
                       ),

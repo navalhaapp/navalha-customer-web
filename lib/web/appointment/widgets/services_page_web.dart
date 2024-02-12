@@ -207,13 +207,15 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
         );
       },
       error: (error, stackTrace) => Scaffold(
-        body: WidgetEmpty(
-          title: 'Ops, Algo asconteceu!',
-          subTitle: 'Houve algum erro, tente novamente mais tarde.',
-          onPressed: () {
-            Navigator.of(context).pushNamed('/');
-          },
-          text: 'Tentar de novo',
+        body: Center(
+          child: WidgetEmpty(
+            title: 'Ops, Algo aconteceu!',
+            subTitle: 'Houve algum erro, tente novamente mais tarde.',
+            onPressed: () {
+              Navigator.of(context).pushNamed('/');
+            },
+            text: 'Tentar de novo',
+          ),
         ),
       ),
       loading: () => const Scaffold(

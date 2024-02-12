@@ -23,8 +23,6 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return WillPopScope(
       onWillPop: () async {
         Navigator.pushNamed(context, HomePage.route);

@@ -68,169 +68,168 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
     var fBTokenController = ref.watch(fBTokenProvider.state);
     fbToken = fBTokenController.state;
     Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Center(
-            child: Container(
-              margin: const EdgeInsets.all(18),
-              width: 500,
-              height: 500,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: colorContainers242424,
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Form(
-                      child: TextEditPatternWeb(
-                        label: 'Email',
-                        obscure: false,
-                        maxLength: 300,
-                        controller: emailController,
-                        hint: 'Digite o seu email',
-                        keyboardType: TextInputType.emailAddress,
-                      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Center(
+          child: Container(
+            margin: const EdgeInsets.all(18),
+            width: 500,
+            height: 500,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: colorContainers242424,
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Form(
+                    child: TextEditPatternWeb(
+                      label: 'Email',
+                      obscure: false,
+                      maxLength: 300,
+                      controller: emailController,
+                      hint: 'Digite o seu email',
+                      keyboardType: TextInputType.emailAddress,
                     ),
-                    const SizedBox(height: 20),
-                    TextEditPatternWeb(
-                      maxLength: 30,
-                      label: 'Senha',
-                      controller: passwordController,
-                      hint: 'Informe sua senha',
-                      keyboardType: TextInputType.visiblePassword,
-                      obscure: !_passwordVisible,
-                      suffixIcon: IconButton(
-                        padding: EdgeInsets.only(right: size.width * 0.0),
-                        splashColor: Colors.transparent,
-                        icon: Icon(
-                          _passwordVisible
-                              ? CupertinoIcons.eye_solid
-                              : CupertinoIcons.eye_slash_fill,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                        ),
-                        onPressed: () {
+                  ),
+                  const SizedBox(height: 20),
+                  TextEditPatternWeb(
+                    maxLength: 30,
+                    label: 'Senha',
+                    controller: passwordController,
+                    hint: 'Informe sua senha',
+                    keyboardType: TextInputType.visiblePassword,
+                    obscure: !_passwordVisible,
+                    suffixIcon: IconButton(
+                      padding: EdgeInsets.only(right: size.width * 0.0),
+                      splashColor: Colors.transparent,
+                      icon: Icon(
+                        _passwordVisible
+                            ? CupertinoIcons.eye_solid
+                            : CupertinoIcons.eye_slash_fill,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const RowRegisterAndForgetWeb(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    child: ButtonLoginWeb(
+                      child: setUpButtonChild(),
+                      onPressed: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        firtLogin = prefs.getBool('firstLogin') ?? true;
+                        locationModel.state.clear();
+                        if (!EmailValidator.validate(
+                            emailController.text.trim())) {
+                          showSnackBar(context, 'Digite um email válido');
+                        } else if (passwordController.text.trim().isEmpty) {
+                          showSnackBar(context, 'Digite uma senha!');
+                        } else {
                           setState(() {
-                            _passwordVisible = !_passwordVisible;
+                            _state = 1;
                           });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    const RowRegisterAndForgetWeb(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 20),
-                      child: ButtonLoginWeb(
-                        child: setUpButtonChild(),
-                        onPressed: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          firtLogin = prefs.getBool('firstLogin') ?? true;
-                          locationModel.state.clear();
-                          if (!EmailValidator.validate(
-                              emailController.text.trim())) {
-                            showSnackBar(context, 'Digite um email válido');
-                          } else if (passwordController.text.trim().isEmpty) {
-                            showSnackBar(context, 'Digite uma senha!');
-                          } else {
+
+                          var response = await loginController.login(
+                            emailController.text.trim(),
+                            passwordController.text,
+                            fbToken,
+                          );
+
+                          if (response.runtimeType == DioError) {
                             setState(() {
-                              _state = 1;
+                              _state = 0;
                             });
 
-                            var response = await loginController.login(
-                              emailController.text.trim(),
-                              passwordController.text,
-                              fbToken,
+                            Timer(const Duration(milliseconds: 1000), () {
+                              loginController.user = null;
+                              Navigator.of(context).pushNamed('/login');
+                            });
+                          } else if (response.status == 'success') {
+                            loginController.user.customer = response.customer;
+                            LocalStorageManager.saveCustomer(
+                              CustomerDB(
+                                name: response.customer.name,
+                                image: response.customer.imgProfile,
+                                customerId: response.customer.customerId,
+                                token: response.token,
+                                email: response.customer.email,
+                                birthDate: response.customer.birthDate,
+                                userID: '',
+                              ),
                             );
-
-                            if (response.runtimeType == DioError) {
+                            _login();
+                            setState(() {
+                              _state = 2;
+                            });
+                            Future.delayed(const Duration(seconds: 1))
+                                .then((value) {
                               setState(() {
                                 _state = 0;
                               });
+                            });
 
-                              Timer(const Duration(milliseconds: 1000), () {
-                                loginController.user = null;
-                                Navigator.of(context).pushNamed('/login');
-                              });
-                            } else if (response.status == 'success') {
-                              loginController.user.customer = response.customer;
-                              LocalStorageManager.saveCustomer(
-                                CustomerDB(
-                                  name: response.customer.name,
-                                  image: response.customer.imgProfile,
-                                  customerId: response.customer.customerId,
-                                  token: response.token,
-                                  email: response.customer.email,
-                                  birthDate: response.customer.birthDate,
-                                ),
+                            Future.delayed(const Duration(seconds: 1))
+                                .then((value) async {
+                              String url = Uri.base.toString();
+                              String params =
+                                  Uri.splitQueryString(url).values.first;
+
+                              Navigator.of(context).pushNamed(
+                                '/resume',
+                                arguments: {'barbershop_id': params},
                               );
-                              _login();
-                              setState(() {
-                                _state = 2;
-                              });
-                              Future.delayed(const Duration(seconds: 1))
-                                  .then((value) {
-                                setState(() {
-                                  _state = 0;
-                                });
-                              });
-
-                              Future.delayed(const Duration(seconds: 1))
-                                  .then((value) async {
-                                String url = Uri.base.toString();
-                                String params =
-                                    Uri.splitQueryString(url).values.first;
-
-                                Navigator.of(context).pushNamed(
-                                  '/resume',
-                                  arguments: {'barbershop_id': params},
-                                );
-                              });
+                            });
+                          } else {
+                            setState(() {
+                              _state = 0;
+                            });
+                            if (response.id ==
+                                'external_account_bad_credendials') {
+                              showSnackBar(context,
+                                  'Sua conta foi criada usando o Google. Por favor, clique em Continuar com o Google para fazer login.');
+                            } else if (response.id == 'bad_credentials') {
+                              showSnackBar(context,
+                                  'Suas credenciais estão incorretas.');
+                            } else if (response.id == 'not_found') {
+                              showSnackBar(context,
+                                  'Suas credenciais estão incorretas.');
                             } else {
-                              setState(() {
-                                _state = 0;
-                              });
-                              if (response.id ==
-                                  'external_account_bad_credendials') {
-                                showSnackBar(context,
-                                    'Sua conta foi criada usando o Google. Por favor, clique em Continuar com o Google para fazer login.');
-                              } else if (response.id == 'bad_credentials') {
-                                showSnackBar(context,
-                                    'Suas credenciais estão incorretas.');
-                              } else if (response.id == 'not_found') {
-                                showSnackBar(context,
-                                    'Suas credenciais estão incorretas.');
-                              } else {
-                                showSnackBar(context, 'Ops, algo aconteceu!');
-                              }
+                              showSnackBar(context, 'Ops, algo aconteceu!');
                             }
                           }
-                        },
-                      ),
+                        }
+                      },
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        bottom: 20,
-                      ),
-                      child: Text(
-                        'ou',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      bottom: 20,
                     ),
-                    const RowSocialNetworksWeb(),
-                  ],
-                ),
+                    child: Text(
+                      'ou',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  const RowSocialNetworksWeb(),
+                ],
               ),
             ),
           ),
-          const DownloadAppPromotion(),
-        ],
-      ),
+        ),
+        const DownloadAppPromotion(),
+      ],
     );
   }
 

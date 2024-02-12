@@ -13,9 +13,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -33,6 +33,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     String params = Uri.splitQueryString(url).values.first;
 
     return MaterialApp(
+      title: 'Navalha',
       debugShowCheckedModeBanner: false,
       theme: NavalhaTheme.themeData,
       color: Colors.black,

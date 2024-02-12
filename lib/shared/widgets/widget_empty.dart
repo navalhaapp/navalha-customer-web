@@ -71,7 +71,7 @@ class WidgetEmpty extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    elevation: 0,
+                    elevation: 10,
                     minWidth: size.width * 0.8,
                     height: size.height * 0.05,
                     color: color ?? colorContainers242424,

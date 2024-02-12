@@ -19,13 +19,13 @@ class TextEditPattern extends HookConsumerWidget {
   final Function? onChange;
   final double? width;
   final int? maxLines;
-
+  final EdgeInsetsGeometry? padding;
   final double? height;
+  final double? sizeLabel;
+  final double? sizeHint;
 
   const TextEditPattern({
-    this.height,
-    this.maxLines,
-    super.key,
+    this.padding,
     required this.label,
     this.obscure,
     required this.controller,
@@ -38,6 +38,10 @@ class TextEditPattern extends HookConsumerWidget {
     this.margin,
     this.onChange,
     this.width,
+    this.maxLines,
+    this.height,
+    this.sizeLabel,
+    this.sizeHint,
   });
 
   @override
@@ -56,20 +60,21 @@ class TextEditPattern extends HookConsumerWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.02,
-          left: MediaQuery.of(context).size.width * 0.05,
-          bottom: MediaQuery.of(context).size.height * 0.004,
-        ),
+        padding: padding ??
+            EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.02,
+              left: MediaQuery.of(context).size.width * 0.05,
+              bottom: MediaQuery.of(context).size.height * 0.004,
+            ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 17,
+                fontSize: sizeLabel ?? 17,
               ),
             ),
             InkWell(
@@ -100,7 +105,7 @@ class TextEditPattern extends HookConsumerWidget {
                   controller: controller,
                   maxLines: obscure == false ? maxLines : 1,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: sizeHint ?? 12,
                     color: const Color.fromARGB(255, 255, 255, 255),
                     fontStyle: FontStyle.normal,
                   ),
