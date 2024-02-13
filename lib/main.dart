@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:navalha/core/app_routes.dart';
+import 'package:navalha/core/navalha_routes.dart';
 import 'package:navalha/core/theme.dart';
 import 'package:navalha/firebase_options.dart';
 

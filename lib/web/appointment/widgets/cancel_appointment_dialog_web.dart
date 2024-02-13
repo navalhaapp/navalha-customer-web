@@ -65,62 +65,66 @@ class _CancelAppointmentDialogWebState
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ButtonPatternDialog(
-                    width: 200,
-                    color: colorContainers242424,
-                    child: const Text(
-                      'Voltar',
-                      style: TextStyle(fontSize: 15, color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ButtonPatternDialog(
+                      color: colorContainers242424,
+                      child: const Text(
+                        'Voltar',
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
                   ),
-                  ButtonPatternDialog(
-                    width: 200,
-                    onPressed: () async {
-                      setState(() {
-                        loading = true;
-                      });
-                      ResponseCancelAppointment response =
-                          await cancelAppointment.cancelAppointment(
-                        retrievedCustomer!.token,
-                        widget.scheduleServiceId,
-                        retrievedCustomer.customerId,
-                      );
-                      if (response.status == 'success') {
-                        setState(() => loading = false);
-                        showSnackBar(context, 'Agendamento cancelado!');
-                        Navigator.of(context).pushNamed('/calendar');
-                      } else {
-                        if (response.result == 'less_than_4_hours_left') {
-                          showSnackBar(context,
-                              'Agendamento só pode ser cancelado com 4 horas de antecedência!');
-                          Navigator.pop(context);
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ButtonPatternDialog(
+                      onPressed: () async {
+                        setState(() {
+                          loading = true;
+                        });
+                        ResponseCancelAppointment response =
+                            await cancelAppointment.cancelAppointment(
+                          retrievedCustomer!.token,
+                          widget.scheduleServiceId,
+                          retrievedCustomer.customerId,
+                        );
+                        if (response.status == 'success') {
+                          setState(() => loading = false);
+                          showSnackBar(context, 'Agendamento cancelado!');
+                          Navigator.of(context).pushNamed('/calendar');
                         } else {
-                          Navigator.pop(context);
-                          showSnackBar(context, 'Ops, algo aconteceu');
+                          if (response.result == 'less_than_4_hours_left') {
+                            showSnackBar(context,
+                                'Agendamento só pode ser cancelado com 4 horas de antecedência!');
+                            Navigator.pop(context);
+                          } else {
+                            Navigator.pop(context);
+                            showSnackBar(context, 'Ops, algo aconteceu');
+                          }
+                          setState(() => loading = false);
                         }
-                        setState(() => loading = false);
-                      }
-                    },
-                    color: colorContainers242424,
-                    child: !loading
-                        ? Text(
-                            'Confirmar',
-                            style: TextStyle(
-                              color: colorRed1765959,
-                              fontSize: 15,
+                      },
+                      color: colorContainers242424,
+                      child: !loading
+                          ? Text(
+                              'Confirmar',
+                              style: TextStyle(
+                                color: colorRed1765959,
+                                fontSize: 15,
+                              ),
+                            )
+                          : const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
                             ),
-                          )
-                        : const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          ),
+                    ),
                   ),
                 ],
               ),

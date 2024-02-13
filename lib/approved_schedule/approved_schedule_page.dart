@@ -29,7 +29,7 @@ class ApprovedSchedulePage extends StatelessWidget {
             page: page,
             curve: Curves.elasticOut,
             delayStart: const Duration(milliseconds: 500),
-            animationDuration: const Duration(milliseconds: 2000),
+            animationDuration: const Duration(milliseconds: 3000),
             offset: -3.0,
             direction: Direction.vertical,
             child: SizedBox(

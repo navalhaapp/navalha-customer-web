@@ -67,42 +67,44 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                     ),
             ],
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.all(18),
-                  width: 500,
-                  height: 500,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: colorContainers242424,
-                  ),
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      if (retrievedCustomer == null) {
-                        return Center(
-                          child: WidgetEmpty(
-                            topSpace: 0,
-                            title: 'Vamos começar!',
-                            subTitle:
-                                'Por favor, entre ou registre-se para continuar.',
-                            text: 'Entrar',
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/login');
-                            },
-                          ),
-                        );
-                      } else {
-                        return const BodyCalendarWeb();
-                      }
-                    },
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.all(18),
+                    width: 500,
+                    height: 500,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: colorContainers242424,
+                    ),
+                    child: Consumer(
+                      builder: (context, ref, child) {
+                        if (retrievedCustomer == null) {
+                          return Center(
+                            child: WidgetEmpty(
+                              topSpace: 0,
+                              title: 'Vamos começar!',
+                              subTitle:
+                                  'Por favor, entre ou registre-se para continuar.',
+                              text: 'Entrar',
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/login');
+                              },
+                            ),
+                          );
+                        } else {
+                          return const BodyCalendarWeb();
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-              const DownloadAppPromotion(),
-            ],
+                const DownloadAppPromotion(),
+              ],
+            ),
           ),
         );
       }),

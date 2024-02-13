@@ -58,9 +58,8 @@ class DrawerWebBody extends StatelessWidget {
                       const EditProfilePage(), context),
                   icon: CupertinoIcons.person_alt_circle,
                 ),
-
                 _ButtonItem(
-                  label: 'Minha agenda',
+                  label: 'Meus agendamentos',
                   onPressed: () async {},
                   icon: CupertinoIcons.calendar,
                 ),

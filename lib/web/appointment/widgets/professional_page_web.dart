@@ -77,142 +77,145 @@ class _ProfessionalPageWebState extends State<ProfessionalPageWeb> {
                   ),
           ],
         ),
-        body: Consumer(
-          builder: (context, ref, child) {
-            reservedTime = ref.watch(reservedTimeProvider.state);
-            final resumePayment = ref.watch(resumePaymentProvider.state);
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(18),
-                    width: 500,
-                    height: 500,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: colorContainers242424,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, top: 20, bottom: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(
-                                    CupertinoIcons.clear,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  'Escolha um profissional',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    shadows: shadow,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                IconButton(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    CupertinoIcons.clear,
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 600,
-                            child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: listProfessionals!.length,
-                                itemBuilder: (context, i) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      reservedTime.state.professionalId =
-                                          listProfessionals[i].professionalId;
-                                      reservedTime.state.serviceId =
-                                          getServiceIdByName(
-                                              serviceName ?? '',
-                                              listProfessionals[i]
-                                                  .professionalServices);
-                                      resumePayment.state.professionalId =
-                                          reservedTime.state.professionalId;
-                                      resumePayment
-                                              .state.professionalServiceId =
-                                          reservedTime.state.serviceId;
-
-                                      Navigator.of(context).pushNamed(
-                                        '/select-hour',
-                                        arguments: {
-                                          'barbershop': data?.barbershop ?? ''
-                                        },
-                                      );
+        body: SingleChildScrollView(
+          child: Consumer(
+            builder: (context, ref, child) {
+              reservedTime = ref.watch(reservedTimeProvider.state);
+              final resumePayment = ref.watch(resumePaymentProvider.state);
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(18),
+                      width: 500,
+                      height: 500,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: colorContainers242424,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, top: 20, bottom: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                    padding: const EdgeInsets.only(left: 30),
+                                    onPressed: () {
+                                      Navigator.pop(context);
                                     },
-                                    child: ProfessionalItemWeb(
-                                      i: i,
-                                      professionalId:
-                                          listProfessionals[i].professionalId!,
-                                      listProfessionalServices:
-                                          listProfessionals[i]
-                                              .professionalServices!,
-                                      hidePriceAndTime: true,
-                                      img: listProfessionals[i].imgProfile!,
-                                      name: listProfessionals[i].name!,
-                                      rating: listProfessionals[i].rating!,
-                                      imgService: listProfessionals[i]
-                                          .professionalServices![iService!]
-                                          .imgProfile,
-                                      listImgServices: listProfessionals[i]
-                                          .professionalServices,
-                                      serviceTime: listProfessionals[i]
-                                          .professionalServices![iService]
-                                          .duration,
-                                      havePrice: false,
-                                      packageList: packageSelected,
-                                      barberShop: data!.barbershop!,
-                                      servicePrice: listProfessionals[i]
-                                          .professionalServices![iService]
-                                          .price!,
-                                      serviceName: listProfessionals[i]
-                                          .professionalServices![iService]
-                                          .name!,
-                                      serviceImg: listProfessionals[i]
-                                          .professionalServices![iService]
-                                          .imgProfile!,
-                                      listProfessionals:
-                                          getProfessionalsByService(
-                                        listProfessionals[i]
-                                            .professionalServices![iService],
-                                        data.barbershop!.professionals!,
-                                      ),
-                                      onConfirm: () {
-                                        setState(() {});
-                                      },
+                                    icon: const Icon(
+                                      CupertinoIcons.clear,
+                                      color: Colors.white,
                                     ),
-                                  );
-                                }),
-                          ),
-                        ],
+                                  ),
+                                  Text(
+                                    'Escolha um profissional',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      shadows: shadow,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    padding: const EdgeInsets.only(left: 30),
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      CupertinoIcons.clear,
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 600,
+                              child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: listProfessionals!.length,
+                                  itemBuilder: (context, i) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        reservedTime.state.professionalId =
+                                            listProfessionals[i].professionalId;
+                                        reservedTime.state.serviceId =
+                                            getServiceIdByName(
+                                                serviceName ?? '',
+                                                listProfessionals[i]
+                                                    .professionalServices);
+                                        resumePayment.state.professionalId =
+                                            reservedTime.state.professionalId;
+                                        resumePayment
+                                                .state.professionalServiceId =
+                                            reservedTime.state.serviceId;
+
+                                        Navigator.of(context).pushNamed(
+                                          '/select-hour',
+                                          arguments: {
+                                            'barbershop': data?.barbershop ?? ''
+                                          },
+                                        );
+                                      },
+                                      child: ProfessionalItemWeb(
+                                        i: i,
+                                        professionalId: listProfessionals[i]
+                                            .professionalId!,
+                                        listProfessionalServices:
+                                            listProfessionals[i]
+                                                .professionalServices!,
+                                        hidePriceAndTime: true,
+                                        img: listProfessionals[i].imgProfile!,
+                                        name: listProfessionals[i].name!,
+                                        rating: listProfessionals[i].rating!,
+                                        imgService: listProfessionals[i]
+                                            .professionalServices![iService!]
+                                            .imgProfile,
+                                        listImgServices: listProfessionals[i]
+                                            .professionalServices,
+                                        serviceTime: listProfessionals[i]
+                                            .professionalServices![iService]
+                                            .duration,
+                                        havePrice: false,
+                                        packageList: packageSelected,
+                                        barberShop: data!.barbershop!,
+                                        servicePrice: listProfessionals[i]
+                                            .professionalServices![iService]
+                                            .price!,
+                                        serviceName: listProfessionals[i]
+                                            .professionalServices![iService]
+                                            .name!,
+                                        serviceImg: listProfessionals[i]
+                                            .professionalServices![iService]
+                                            .imgProfile!,
+                                        listProfessionals:
+                                            getProfessionalsByService(
+                                          listProfessionals[i]
+                                              .professionalServices![iService],
+                                          data.barbershop!.professionals!,
+                                        ),
+                                        onConfirm: () {
+                                          setState(() {});
+                                        },
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const DownloadAppPromotion(),
-                ],
-              ),
-            );
-          },
+                    const DownloadAppPromotion(),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       );
     });

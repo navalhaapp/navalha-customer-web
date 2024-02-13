@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/assets.dart';
@@ -82,9 +83,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
             });
             return Scaffold(
               backgroundColor: colorBackground181818,
-              drawer: DrawerPageWeb(
-                barberShopId: widget.barberShopId!,
-              ),
+              drawer: DrawerPageWeb(barberShopId: widget.barberShopId!),
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: colorBackground181818,
@@ -121,81 +120,86 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                         ),
                 ],
               ),
-              body: Center(
+              body: SingleChildScrollView(
+                padding: EdgeInsets.zero,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.all(18),
-                      width: 500,
-                      height: 500,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: colorContainers242424,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, top: 20, bottom: 20),
-                            child: Text(
-                              'Escolha um serviço',
-                              style: TextStyle(
-                                fontSize: 20,
-                                shadows: shadow,
-                                color: Colors.white,
+                    Center(
+                      child: Container(
+                        margin: const EdgeInsets.all(18),
+                        width: 500,
+                        height: 500,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: colorContainers242424,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, top: 20, bottom: 20),
+                              child: Text(
+                                'Escolha um serviço',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  shadows: shadow,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 410,
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              itemCount: listServices.length,
-                              itemBuilder: (context, iService) {
-                                List<Professional> listProfessionals =
-                                    getProfessionalsByService(
-                                  listServices[iService],
-                                  data.barbershop!.professionals!,
-                                );
-                                return GestureDetector(
-                                  child: ServiceItemWeb(
-                                    havePrice: widget.havePrice,
-                                    packageSelected: widget.packageSelected,
-                                    description:
-                                        listServices[iService].description!,
-                                    duration: getDurationRange(
-                                        getAllServices(
-                                            data.barbershop!.professionals!),
-                                        listServices[iService].name!),
-                                    img: listServices[iService].imgProfile!,
-                                    name: listServices[iService].name!,
-                                    price: getPriceRange(
-                                        getAllServices(
-                                            data.barbershop!.professionals!),
-                                        listServices[iService].name!),
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      '/select-professional',
-                                      arguments: {
-                                        'serviceName':
-                                            listServices[iService].name!,
-                                        'data': data,
-                                        'iService': iService,
-                                        'listProfessionals': listProfessionals,
-                                        'packageSelected':
-                                            widget.packageSelected,
-                                      },
-                                    );
-                                  },
-                                );
-                              },
+                            SizedBox(
+                              height: 410,
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                itemCount: listServices.length,
+                                itemBuilder: (context, iService) {
+                                  List<Professional> listProfessionals =
+                                      getProfessionalsByService(
+                                    listServices[iService],
+                                    data.barbershop!.professionals!,
+                                  );
+                                  return GestureDetector(
+                                    child: ServiceItemWeb(
+                                      havePrice: widget.havePrice,
+                                      packageSelected: widget.packageSelected,
+                                      description:
+                                          listServices[iService].description!,
+                                      duration: getDurationRange(
+                                          getAllServices(
+                                              data.barbershop!.professionals!),
+                                          listServices[iService].name!),
+                                      img: listServices[iService].imgProfile!,
+                                      name: listServices[iService].name!,
+                                      price: getPriceRange(
+                                          getAllServices(
+                                              data.barbershop!.professionals!),
+                                          listServices[iService].name!),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        '/select-professional',
+                                        arguments: {
+                                          'serviceName':
+                                              listServices[iService].name!,
+                                          'data': data,
+                                          'iService': iService,
+                                          'listProfessionals':
+                                              listProfessionals,
+                                          'packageSelected':
+                                              widget.packageSelected,
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     const DownloadAppPromotion(),
@@ -235,7 +239,7 @@ class DownloadAppPromotion extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.only(top: 18),
+      margin: const EdgeInsets.only(top: 88),
       height: 200,
       decoration: BoxDecoration(
         boxShadow: const [

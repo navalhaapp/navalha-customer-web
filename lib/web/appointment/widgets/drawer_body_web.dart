@@ -59,7 +59,7 @@ class DrawerBodyWeb extends StatelessWidget {
                   icon: CupertinoIcons.calendar_badge_plus,
                 ),
                 _ButtonItem(
-                  label: 'Minha agenda',
+                  label: 'Meus agendamentos',
                   onPressed: () async {
                     Navigator.of(context).pushNamed('/calendar');
                   },

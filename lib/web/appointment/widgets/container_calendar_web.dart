@@ -69,7 +69,7 @@ class ContainerCalendarWeb extends StatelessWidget {
               horizontal: 20,
               vertical: 20,
             ),
-            child: SizedBox(
+            child: Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -87,8 +87,7 @@ class ContainerCalendarWeb extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 5),
-                      SizedBox(
-                        width: 320,
+                      Expanded(
                         child: Text(
                           nameBarberShop,
                           overflow: TextOverflow.ellipsis,

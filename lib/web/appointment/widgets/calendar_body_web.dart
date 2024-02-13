@@ -73,7 +73,7 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
                             ),
                           ),
                           Text(
-                            'Minha agenda',
+                            'Meus agendamentos',
                             style: TextStyle(
                               fontSize: 20,
                               shadows: shadow,
