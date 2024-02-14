@@ -204,7 +204,8 @@ class _MyWidgetState extends ConsumerState<RegistrationPasswordWeb>
                           RichText(
                             text: TextSpan(
                               text: 'Ao aceitar, você concorda em cumprir os\n',
-                              style: TextStyle(color: colorFontUnable116116116),
+                              style: const TextStyle(
+                                  fontSize: 11, color: Colors.white),
                               children: [
                                 TextSpan(
                                   text: 'Termos e Condições',
