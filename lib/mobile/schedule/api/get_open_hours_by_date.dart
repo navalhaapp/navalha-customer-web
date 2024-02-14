@@ -19,7 +19,8 @@ class GetOpenHoursByDateEndPoint {
       "service_detail": {
         "weekday": weekday,
         "professional_id": professionalId,
-        "service_id": serviceId
+        "service_id": serviceId,
+        "fit_service": false
       }
     };
     try {
