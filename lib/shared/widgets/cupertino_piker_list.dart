@@ -54,7 +54,6 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              width: 500,
               height: MediaQuery.of(context).size.height * 0.05,
               color: Colors.transparent,
               child: ElevatedButton(
@@ -72,10 +71,9 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                     ),
                   ),
                 ),
-                child: const SizedBox(
-                  width: 500,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(
                     child: Text(
                       'Confirmar',
                       style: TextStyle(

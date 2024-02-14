@@ -171,7 +171,7 @@ class _RegistrationSocialNetworksWebState
                         ),
                         label: 'Gênero',
                         list: _listgener,
-                        optional: '*Opcional',
+                        optional: 'opcional',
                         textEdit: _listgener[selectedItem],
                         color: const Color.fromARGB(255, 28, 28, 28),
                         marginHorizontal: 30,
@@ -244,7 +244,7 @@ class _RegistrationSocialNetworksWebState
                             text: TextSpan(
                               text: 'Ao aceitar, você concorda em cumprir os\n',
                               style: const TextStyle(
-                                  fontSize: 16.0, color: Colors.white),
+                                  fontSize: 11, color: Colors.white),
                               children: [
                                 TextSpan(
                                   text: 'Termos e Condições',

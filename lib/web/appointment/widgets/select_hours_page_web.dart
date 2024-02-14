@@ -309,12 +309,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                   var barbershop = ref
                                       .watch(barberShopSelectedProvider.state);
                                   barbershop.state = barberShop;
-                                  Navigator.of(context).pushNamed(
-                                    '/resume',
-                                    arguments: {
-                                      'barbershop_id': barberShop.barbershopId!
-                                    },
-                                  );
+                                  Navigator.of(context).pushNamed('/resume');
                                 } else {
                                   if (response.result ==
                                       'already_cached_service') {

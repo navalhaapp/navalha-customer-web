@@ -135,7 +135,7 @@ class _RegistrationPageClientSecondWebState
                               ),
                               label: 'Gênero',
                               list: _listgener,
-                              optional: '*Opcional',
+                              optional: 'opcional',
                               textEdit: _listgener[selectedItem],
                               color: colorContainers353535,
                               marginHorizontal: 20,

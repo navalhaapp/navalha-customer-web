@@ -22,7 +22,6 @@ class ContainerHoursWeb extends StatefulHookConsumerWidget {
 class _ContainerHoursWebState extends ConsumerState<ContainerHoursWeb> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         widget.onPressed();
@@ -54,20 +53,23 @@ class _ContainerHoursWebState extends ConsumerState<ContainerHoursWeb> {
           ),
           widget.dicount != null
               ? Positioned(
-                  left: size.width * 0.13,
+                  right: -5,
+                  top: -2,
                   child: Container(
-                    height: size.height * 0.02,
-                    width: size.height * 0.045,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Center(
-                      child: Text(
-                        '${widget.dicount!.toInt().toString()}%',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: size.width * 0.03,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 2),
+                        child: Text(
+                          '${widget.dicount!.toInt().toString()}%',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
                         ),
                       ),
                     ),
