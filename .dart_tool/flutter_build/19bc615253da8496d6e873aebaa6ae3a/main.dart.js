@@ -119407,7 +119407,7 @@ a6v(a,b,c,d,e){var s=0,r=A.q(t.z),q,p=2,o,n=this,m,l,k,j,i,h,g
 var $async$fW=A.r(function(f,a0){if(f===1){o=a0
 s=p}while(true)switch(s){case 0:j=t.N
 i=A.ao(["Authorization",e],j,t.C)
-h=A.ao(["service_detail",A.ao(["weekday",a,"professional_id",b,"service_id",c],j,j)],j,t.GU)
+h=A.ao(["service_detail",A.ao(["weekday",a,"professional_id",b,"service_id",c,"fit_service",!1],j,t.K)],j,t.nf)
 p=4
 s=7
 return A.m(n.a.Pm(0,$.e8()+"/professional/open/hours/date/"+d,h,A.fV(i,null,null),t.z),$async$fW)

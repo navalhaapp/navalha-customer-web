@@ -10,7 +10,12 @@ import '../model/model_reserved_time.dart';
 class ObservationBottomSheet extends StatefulWidget {
   const ObservationBottomSheet({
     Key? key,
+    required this.onChanged,
+    required this.initialObservation,
   }) : super(key: key);
+
+  final ValueChanged<String> onChanged;
+  final String initialObservation;
 
   @override
   State<ObservationBottomSheet> createState() => _ObservationBottomSheetState();
@@ -20,6 +25,12 @@ class _ObservationBottomSheetState extends State<ObservationBottomSheet> {
   late StateController<ReservedTime> reservedTime;
   TextEditingController observationController = TextEditingController();
   bool loading = false;
+  @override
+  void initState() {
+    super.initState();
+    observationController.text = widget.initialObservation;
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -71,6 +82,9 @@ class _ObservationBottomSheetState extends State<ObservationBottomSheet> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 8),
                           child: TextFormField(
+                            onChanged: (value) {
+                              widget.onChanged(value);
+                            },
                             controller: observationController,
                             maxLines: 5,
                             maxLength: 250,

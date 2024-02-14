@@ -401,17 +401,17 @@ class CalendarState extends ConsumerState<Calendar> {
                             ],
                           ),
                           onPressed: () {
-                            showModalBottomSheet<void>(
-                              backgroundColor: Colors.black,
-                              isScrollControlled: true,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const ObservationBottomSheet();
-                              },
-                            );
+                            // showModalBottomSheet<void>(
+                            //   backgroundColor: Colors.black,
+                            //   isScrollControlled: true,
+                            //   shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.circular(20),
+                            //   ),
+                            //   context: context,
+                            //   builder: (BuildContext context) {
+                            //     return const ObservationBottomSheet();
+                            //   },
+                            // );
                           },
                         ),
                       ),

@@ -14,6 +14,7 @@ import 'package:navalha/mobile/schedule/model/model_create_cache_service.dart';
 import 'package:navalha/mobile/schedule/model/model_get_open_hours_by_date.dart';
 import 'package:navalha/mobile/schedule/provider/provider_create_cache_service.dart';
 import 'package:navalha/mobile/schedule/provider/provider_get_open_hours_by_date.dart';
+import 'package:navalha/mobile/schedule/widgets/observation_botton_sheet.dart';
 import 'package:navalha/mobile/use_package/model/service_package_request.dart';
 import 'package:navalha/shared/model/barber_shop_model.dart';
 
@@ -39,6 +40,7 @@ class SelectHoursPageWeb extends StatefulWidget {
 }
 
 class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
+  String observation = '';
   bool loading = false;
   @override
   Widget build(BuildContext context) {
@@ -112,7 +114,8 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                   child: Column(
                     children: [
                       Container(
-                        margin: const EdgeInsets.all(18),
+                        margin:
+                            const EdgeInsets.only(left: 18, right: 18, top: 18),
                         width: 500,
                         height: 465,
                         decoration: BoxDecoration(
@@ -178,6 +181,94 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                           ),
                         ),
                       ),
+                      Visibility(
+                        visible: reservedTime.state.date != '',
+                        child: SizedBox(
+                          width: 500,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: colorContainers242424,
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.zero),
+                                      overlayColor:
+                                          MaterialStateProperty.all<Color>(
+                                        colorContainers353535,
+                                      ),
+                                      elevation: MaterialStateProperty.all(10),
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.transparent),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(width: 10),
+                                        const Icon(Icons.add,
+                                            size: 17, color: Colors.white),
+                                        const SizedBox(width: 3),
+                                        Text(
+                                          '${observation.isNotEmpty ? 'Editar' : 'Adicionar'} uma observação',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      showModalBottomSheet<void>(
+                                        backgroundColor: Colors.black,
+                                        isScrollControlled: true,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ObservationBottomSheet(
+                                            initialObservation: observation,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                observation = value;
+                                              });
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: observation.isNotEmpty,
+                                  child: SizedBox(
+                                    width: 500,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 5),
+                                      child: Text(observation),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       ButtonPattern(
                         margin: const EdgeInsets.symmetric(horizontal: 18),
                         width: 500,
@@ -225,9 +316,8 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                       context, 'Adicionado ao carrinho!');
                                   serviceCache.state.add(response.result!);
                                   serviceCache
-                                          .state[serviceCache.state.length - 1]
-                                          .observation =
-                                      reservedTime.state.observation;
+                                      .state[serviceCache.state.length - 1]
+                                      .observation = observation;
                                   serviceCache
                                           .state[serviceCache.state.length - 1]
                                           .serviceOriginalPrice =
@@ -236,8 +326,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                     ServiceRequest resumeItem = ServiceRequest(
                                       cacheId: response.result.cachedId,
                                       date: response.result.date!,
-                                      observation:
-                                          reservedTime.state.observation,
+                                      observation: observation,
                                       price: response.result!.service!.price! -
                                           calcDiscount(
                                               response.result!.service!.price!,

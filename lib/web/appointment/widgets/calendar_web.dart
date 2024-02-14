@@ -354,53 +354,65 @@ class CalendarState extends ConsumerState<CalendarWeb> {
                                 ),
                               ),
                             ),
-                      Visibility(
-                        visible: reservedTime.state.date != '',
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.all<Color>(
-                                colorContainers353535,
-                              ),
-                              elevation: MaterialStateProperty.all(0),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.transparent),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                            child: const Row(
-                              children: [
-                                Icon(Icons.add, size: 17, color: Colors.white),
-                                SizedBox(width: 3),
-                                Text(
-                                  'Adicionar uma observação',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              showModalBottomSheet<void>(
-                                backgroundColor: Colors.black,
-                                isScrollControlled: true,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const ObservationBottomSheet();
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                      // Visibility(
+                      //   visible: reservedTime.state.date != '',
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(vertical: 10),
+                      //     child: ElevatedButton(
+                      //       style: ButtonStyle(
+                      //         overlayColor: MaterialStateProperty.all<Color>(
+                      //           colorContainers353535,
+                      //         ),
+                      //         elevation: MaterialStateProperty.all(0),
+                      //         backgroundColor: MaterialStateProperty.all<Color>(
+                      //             Colors.transparent),
+                      //         shape: MaterialStateProperty.all<
+                      //             RoundedRectangleBorder>(
+                      //           RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(12),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       child: const Row(
+                      //         children: [
+                      //           Icon(Icons.add, size: 17, color: Colors.white),
+                      //           SizedBox(width: 3),
+                      //           Text(
+                      //             'Adicionar uma observação',
+                      //             style: TextStyle(
+                      //               color: Colors.white,
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       onPressed: () {
+                      //         showModalBottomSheet<void>(
+                      //           backgroundColor: Colors.black,
+                      //           isScrollControlled: true,
+                      //           shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //           ),
+                      //           context: context,
+                      //           builder: (BuildContext context) {
+                      //             return ObservationBottomSheet(
+                      //               initialObservation: observation,
+                      //               onChanged: (value) {
+                      //                 setState(() {
+                      //                   observation = value;
+                      //                 });
+                      //               },
+                      //             );
+                      //           },
+                      //         );
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //       horizontal: 20, vertical: 5),
+                      //   child: Text(observation),
+                      // )
                     ],
                   )
                 ],
