@@ -73,13 +73,12 @@ class DrawerBodyWeb extends StatelessWidget {
                 _ButtonItem(
                   label: 'Sair',
                   onPressed: () async {
-                    final GoogleSignIn _googleSignIn = GoogleSignIn(
-                      //TODO: tentar remover para ver se realmente necessario
-                      clientId:
-                          '503923325128-ms8brondqnsrld6bu5vcptsireonda6t.apps.googleusercontent.com',
-                    );
-                    await _googleSignIn.disconnect();
-                    await _googleSignIn.signOut();
+                    // final GoogleSignIn _googleSignIn = GoogleSignIn(
+                    //     // clientId:
+                    //     //     '503923325128-ms8brondqnsrld6bu5vcptsireonda6t.apps.googleusercontent.com',
+                    //     );
+                    // await _googleSignIn.disconnect();
+                    // await _googleSignIn.signOut();
 
                     retrievedCustomer = null;
                     Navigator.of(context).pushNamed('/login');
