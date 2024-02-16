@@ -252,17 +252,13 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               if (response.status == 'success') {
                                 _trackFinalizeEvent(
                                     retrievedCustomer.customerId);
+
+                                Navigator.of(context).pushNamed('/approved');
                                 serviceCache.state.clear();
                                 listResumePayment.state.clear();
-                                Navigator.of(context).pushNamed('/approved');
                               } else {
-                                setState(() {
-                                  loading = false;
-                                });
                                 showSnackBar(context, 'Erro ao marcar serviço');
                               }
-
-                              setState(() => loading = false);
                             });
                           } else {
                             LocalStorageManagerLastPage.saveResumeLastPage(
