@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/db/db_resume_last_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
@@ -79,7 +80,8 @@ class DrawerBodyWeb extends StatelessWidget {
                     //     );
                     // await _googleSignIn.disconnect();
                     // await _googleSignIn.signOut();
-
+                    LocalStorageManagerLastPage.saveResumeLastPage(
+                        ResumeLastPage(false));
                     retrievedCustomer = null;
                     Navigator.of(context).pushNamed('/login');
                   },

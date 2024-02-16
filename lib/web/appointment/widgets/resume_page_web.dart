@@ -7,7 +7,6 @@ import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/schedule/model/model_reserved_time.dart';
 import 'package:navalha/mobile/schedule/schedule_page.dart';
-import 'package:navalha/mobile/schedule/widgets/add_coupon_botton_sheet.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/web/appointment/widgets/card_service_selected_web.dart';

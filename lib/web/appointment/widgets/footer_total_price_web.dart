@@ -6,12 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/mobile/payment/model/response_schedule.dart';
 import 'package:navalha/mobile/payment/provider/provider_create_schedule.dart';
-import 'package:navalha/mobile/schedule/model/model_service_cache.dart';
-import 'package:navalha/mobile/schedule/model/model_total_price.dart';
 import 'package:navalha/mobile/schedule/schedule_page.dart';
 import 'package:navalha/mobile/schedule/widgets/add_coupon_botton_sheet.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/db/db_resume_last_page.dart';
 import '../../../core/colors.dart';
 import '../../../shared/model/barber_shop_model.dart';
 import '../../../shared/providers.dart';
@@ -266,6 +265,8 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               setState(() => loading = false);
                             });
                           } else {
+                            LocalStorageManagerLastPage.saveResumeLastPage(
+                                ResumeLastPage(true));
                             Navigator.of(context).pushNamed('/login');
                             showSnackBar(context,
                                 'Faça o login para agendar o serviço!');

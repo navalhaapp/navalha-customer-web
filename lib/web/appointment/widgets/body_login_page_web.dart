@@ -17,6 +17,7 @@ import 'package:navalha/web/appointment/widgets/row_register_and_forget_web.dart
 import 'package:navalha/web/appointment/widgets/row_social_networks_google_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/db/db_resume_last_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../shared/providers.dart';
 import '../../../shared/utils.dart';
@@ -187,10 +188,17 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
                                 String params =
                                     Uri.splitQueryString(url).values.first;
 
-                                Navigator.of(context).pushNamed(
-                                  '/resume',
-                                  arguments: {'barbershop_id': params},
-                                );
+                                bool? resumeLastPageValue =
+                                    LocalStorageManagerLastPage
+                                        .getResumeLastPage();
+                                if (resumeLastPageValue) {
+                                  Navigator.of(context).pushNamed(
+                                    '/resume',
+                                    arguments: {'barbershop_id': params},
+                                  );
+                                } else {
+                                  Navigator.pushNamed(context, '/');
+                                }
                               });
                             } else {
                               setState(() {

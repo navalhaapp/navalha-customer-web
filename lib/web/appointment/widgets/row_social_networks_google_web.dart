@@ -1,9 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
@@ -27,7 +25,6 @@ class RowSocialNetworksWeb extends StatefulHookConsumerWidget {
 
 class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
   bool? firtLogin = true;
   String? fullNameApple;
   late SharedPreferences prefs;

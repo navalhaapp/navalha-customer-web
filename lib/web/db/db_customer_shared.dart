@@ -67,27 +67,3 @@ class LocalStorageManager {
     return null;
   }
 }
-
-void main() {
-  // Exemplo de como salvar os dados
-  final customer = CustomerDB(
-      name: 'Barber Shop Name',
-      image: 'image_url',
-      customerId: '1',
-      token: '1',
-      birthDate: '1',
-      userID: '1',
-      email: 'test@gmail.com');
-
-  LocalStorageManager.saveCustomer(customer);
-
-  // Exemplo de como recuperar os dados
-  final retrievedCustomer = LocalStorageManager.getCustomer();
-  if (retrievedCustomer != null) {
-    print(retrievedCustomer.name);
-    print(retrievedCustomer.image);
-    print(retrievedCustomer.customerId);
-  } else {
-    print('Nenhum objeto CustomerDB encontrado no LocalStorage.');
-  }
-}
