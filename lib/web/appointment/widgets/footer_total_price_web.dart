@@ -1,11 +1,15 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:firebase_analytics_web/firebase_analytics_web.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/mobile/payment/model/response_schedule.dart';
 import 'package:navalha/mobile/payment/provider/provider_create_schedule.dart';
+import 'package:navalha/mobile/schedule/model/model_service_cache.dart';
+import 'package:navalha/mobile/schedule/model/model_total_price.dart';
 import 'package:navalha/mobile/schedule/schedule_page.dart';
+import 'package:navalha/mobile/schedule/widgets/add_coupon_botton_sheet.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import '../../../core/colors.dart';
@@ -33,6 +37,18 @@ class FooterTotalPriceWeb extends StatefulWidget {
 }
 
 class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
+  FirebaseAnalyticsWeb analytics = FirebaseAnalyticsWeb();
+  String? couponName;
+
+  void _trackFinalizeEvent(String customerId) {
+    analytics.logEvent(
+      name: 'finalize_service',
+      parameters: <String, dynamic>{
+        'customer_id': customerId,
+      },
+    );
+  }
+
   bool loading = false;
   @override
   Widget build(BuildContext context) {
@@ -66,6 +82,59 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              GestureDetector(
+                onTap: () async {
+                  showModalBottomSheet<void>(
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    isDismissible: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: AddCouponHourBottonSheet(
+                          barberShop: barberShopProvider.state,
+                          onChanged: (value) {
+                            setState(() {
+                              couponName = value;
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Visibility(
+                  visible: serviceCache.state.isNotEmpty,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, bottom: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          couponName == null
+                              ? 'Adicionar cupom de desconto'
+                              : 'Trocar cupom de desconto',
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Visibility(
+                          visible: couponName != null,
+                          child: Text(
+                            ': $couponName',
+                            style: TextStyle(
+                              color: colorFontUnable116116116,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -182,6 +251,8 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                                 listResumePayment.state.services,
                               );
                               if (response.status == 'success') {
+                                _trackFinalizeEvent(
+                                    retrievedCustomer.customerId);
                                 serviceCache.state.clear();
                                 listResumePayment.state.clear();
                                 Navigator.of(context).pushNamed('/approved');

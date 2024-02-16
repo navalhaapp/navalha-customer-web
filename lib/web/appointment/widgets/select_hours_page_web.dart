@@ -189,7 +189,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: colorContainers242424,
+                              color: const Color.fromARGB(255, 28, 28, 28),
                             ),
                             child: Column(
                               children: [
@@ -218,14 +218,15 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                     ),
                                     child: Row(
                                       children: [
-                                        const SizedBox(width: 10),
-                                        const Icon(Icons.add,
-                                            size: 17, color: Colors.white),
+                                        const SizedBox(width: 20),
+                                        Icon(Icons.add,
+                                            size: 17,
+                                            color: colorFontUnable116116116),
                                         const SizedBox(width: 3),
                                         Text(
                                           '${observation.isNotEmpty ? 'Editar' : 'Adicionar'} uma observação',
-                                          style: const TextStyle(
-                                            color: Colors.white,
+                                          style: TextStyle(
+                                            color: colorFontUnable116116116,
                                           ),
                                         ),
                                       ],

@@ -8,10 +8,6 @@
 		<data>
 		pC4CIB6iS7GcMBjK9iAJIRH7/tA=
 		</data>
-		<key>Headers/FLTVideoPlayerPlugin.h</key>
-		<data>
-		/TikdUF6KZ/6ZWoPA3uxFXN+YU8=
-		</data>
 		<key>Headers/FVPDisplayLink.h</key>
 		<data>
 		20RA0DYL2MwgAPeF/8FmLZURNTQ=
@@ -34,7 +30,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ndpqobtyiz6fOR14Ih66ZjTnE0w=
+		AZ8CKkIAlxbSuOALGXZR8KDelGg=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -48,13 +44,6 @@
 			<key>hash2</key>
 			<data>
 			hnFqocZRLoEtznAXiLG75Pwviu9rPZ1OfFBOAbwKuh0=
-			</data>
-		</dict>
-		<key>Headers/FLTVideoPlayerPlugin.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			t/4E9xwTzk0ZJ73spSD6LVhxMtG58Xgu7lKWY9zlcdA=
 			</data>
 		</dict>
 		<key>Headers/FVPDisplayLink.h</key>

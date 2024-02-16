@@ -101,7 +101,7 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                   child: Container(
                     margin: const EdgeInsets.all(18),
                     width: 500,
-                    height: 500,
+                    height: 550,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: colorContainers242424,
@@ -215,137 +215,40 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                             ),
                             serviceCache.state.isNotEmpty
                                 ? SizedBox(
-                                    height: 300,
+                                    height: 290,
                                     child: ListView.builder(
                                       padding: EdgeInsets.only(
                                           top: size.height * 0.005),
                                       itemCount: serviceCache.state.length,
                                       itemBuilder: (context, index) {
-                                        return Column(
-                                          children: [
-                                            CardServiceSelectedWeb(
-                                              barberShop:
-                                                  barberShopProvider.state,
-                                              date: serviceCache
-                                                  .state[index].date!,
-                                              finalHour: serviceCache
-                                                  .state[index].finalHour!,
-                                              initialHour: serviceCache
-                                                  .state[index].initialHour!,
-                                              price: serviceCache
-                                                  .state[index].servicePrice!,
-                                              originalprice: serviceCache
-                                                      .state[index]
-                                                      .serviceOriginalPrice ??
-                                                  0,
-                                              professionalImg: serviceCache
+                                        return CardServiceSelectedWeb(
+                                          barberShop: barberShopProvider.state,
+                                          date: serviceCache.state[index].date!,
+                                          finalHour: serviceCache
+                                              .state[index].finalHour!,
+                                          initialHour: serviceCache
+                                              .state[index].initialHour!,
+                                          price: serviceCache
+                                              .state[index].servicePrice!,
+                                          originalprice: serviceCache
                                                   .state[index]
-                                                  .professional!
-                                                  .imgProfile!,
-                                              professionalName: serviceCache
-                                                  .state[index]
-                                                  .professional!
-                                                  .name!,
-                                              observation: serviceCache
-                                                      .state[index]
-                                                      .observation ??
-                                                  '',
-                                              nameService: serviceCache
-                                                  .state[index].service!.name!,
-                                              cacheId: serviceCache
-                                                  .state[index].cachedId!,
-                                              i: index,
-                                              onConfirm: () => setState(() {}),
-                                            ),
-                                            serviceCache.state.length - 1 ==
-                                                    index
-                                                ? GestureDetector(
-                                                    onTap: () async {
-                                                      showModalBottomSheet<
-                                                          void>(
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        isScrollControlled:
-                                                            true,
-                                                        isDismissible: true,
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child:
-                                                                AddCouponHourBottonSheet(
-                                                              barberShop:
-                                                                  barberShopProvider
-                                                                      .state,
-                                                              onConfirm: () {
-                                                                // setState(() {});
-                                                              },
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: size.width * .01,
-                                                        right: size.width * .03,
-                                                        top: size.width * .01,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      child: Visibility(
-                                                        visible: serviceCache
-                                                            .state.isNotEmpty,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  left: 25,
-                                                                  bottom: 10),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                totalPriceProvider.state.discount ==
-                                                                            null ||
-                                                                        totalPriceProvider.state.discount ==
-                                                                            0
-                                                                    ? 'Adicionar cupom de desconto'
-                                                                    : 'Trocar cupom de desconto',
-                                                                style:
-                                                                    const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : const SizedBox(),
-                                            SizedBox(
-                                              height:
-                                                  serviceCache.state.length -
-                                                              1 ==
-                                                          index
-                                                      ? size.height * 0.12
-                                                      : 0,
-                                            ),
-                                          ],
+                                                  .serviceOriginalPrice ??
+                                              0,
+                                          professionalImg: serviceCache
+                                              .state[index]
+                                              .professional!
+                                              .imgProfile!,
+                                          professionalName: serviceCache
+                                              .state[index].professional!.name!,
+                                          observation: serviceCache
+                                                  .state[index].observation ??
+                                              '',
+                                          nameService: serviceCache
+                                              .state[index].service!.name!,
+                                          cacheId: serviceCache
+                                              .state[index].cachedId!,
+                                          i: index,
+                                          onConfirm: () => setState(() {}),
                                         );
                                       },
                                     ),

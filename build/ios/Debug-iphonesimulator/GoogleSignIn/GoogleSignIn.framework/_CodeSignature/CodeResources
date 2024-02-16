@@ -6,7 +6,7 @@
 	<dict>
 		<key>GoogleSignIn.bundle/Info.plist</key>
 		<data>
-		MSUBD6c0fritGuXzxX13JRH472Y=
+		+mlAKMerfGXWBH+53D5PEjC99O8=
 		</data>
 		<key>GoogleSignIn.bundle/Roboto-Bold.ttf</key>
 		<data>
@@ -366,10 +366,6 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Headers/GIDAuthentication.h</key>
-		<data>
-		brnfPO7s16eKt4DxnGsZxcBx904=
-		</data>
 		<key>Headers/GIDConfiguration.h</key>
 		<data>
 		jZBGv9Ak7DhBuhOQm6L3j9pyK/E=
@@ -408,7 +404,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		JrI6hVFh6+HbF6ebguFaqK1RJUA=
+		PTgdoG5QN6w+hSWwrxFKs1oO6IQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -421,11 +417,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MSUBD6c0fritGuXzxX13JRH472Y=
+			+mlAKMerfGXWBH+53D5PEjC99O8=
 			</data>
 			<key>hash2</key>
 			<data>
-			GBsLJHf31ByRKKe8WAFRbo4FehoJ6pH3sBuDtUcIkis=
+			Fgnq3NsqxF5h5Ndnuq3B2jdmW2pUEB5RVwRfha4XCxs=
 			</data>
 		</dict>
 		<key>GoogleSignIn.bundle/Roboto-Bold.ttf</key>
@@ -965,17 +961,6 @@
 			</data>
 			<key>optional</key>
 			<true/>
-		</dict>
-		<key>Headers/GIDAuthentication.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			brnfPO7s16eKt4DxnGsZxcBx904=
-			</data>
-			<key>hash2</key>
-			<data>
-			9HxLPDaUBHAJzK2AuEng7dABwlCNkpbWTNWrUybq8Zo=
-			</data>
 		</dict>
 		<key>Headers/GIDConfiguration.h</key>
 		<dict>

@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/FirebaseCoreInternal-Swift.h</key>
 		<data>
-		RG+HGbXUOlHhVsMaIJphgSWV0qA=
+		h5OpzkElylXrGZEhrj3wjR8bsvA=
 		</data>
 		<key>Headers/FirebaseCoreInternal-umbrella.h</key>
 		<data>
@@ -14,15 +14,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		qqpsn/hgkCQOhVKfB5w4Z27uTS4=
+		VhEq2L9rnaEMkVFgS1YK92VaYk8=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		qr7hI9JiuNbZ7TDch0N16vDEAWk=
+		AVoYRfcQkmyPMUdgQXtBxoHDvww=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		Sa/vTIoBqwsdLvke/dcKtgK7/Bw=
+		nFBYtbZ7LY2ZpjPs45ADOa5YHiM=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -30,11 +30,11 @@
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		tswpb0v/ukRi7HJ7J4nA07xBAQM=
+		rGdtpRKOwa0PrS8h8LRC9p+fTlQ=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		0TPbvnDU9SBVY2s6k1zR9MKY2BM=
+		dvbrqSmXHu7Fb6US8VEM34P4D8M=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -42,11 +42,11 @@
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		dNb6Z5guNtzplFzxttU//LhbncI=
+		BzN2o1Z9Uuk4dMg/DVnMp+Hj2xQ=
 		</data>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		TRkxarN+5UZWgaKsDmBguQT/cXk=
+		LpzlDi8Cx/NQfMEra3FzTxhEKQo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -59,11 +59,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RG+HGbXUOlHhVsMaIJphgSWV0qA=
+			h5OpzkElylXrGZEhrj3wjR8bsvA=
 			</data>
 			<key>hash2</key>
 			<data>
-			aEJ3r1idv8EpufhEx6boJvnhQ+xorHesugSViQDkGso=
+			VX68AdjKu+cSGJ/VoPhgsFjWvxmDXC41o1qajGxvV6Q=
 			</data>
 		</dict>
 		<key>Headers/FirebaseCoreInternal-umbrella.h</key>
@@ -81,22 +81,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qr7hI9JiuNbZ7TDch0N16vDEAWk=
+			AVoYRfcQkmyPMUdgQXtBxoHDvww=
 			</data>
 			<key>hash2</key>
 			<data>
-			QKSe3S86NAQ16CEvKnYEtLLFfd8nRhc1gI3lWGmj9D4=
+			LWvtgjGy/j8k+VVtCW6vnCTvNISTIdUma4FJeAk/zd8=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Sa/vTIoBqwsdLvke/dcKtgK7/Bw=
+			nFBYtbZ7LY2ZpjPs45ADOa5YHiM=
 			</data>
 			<key>hash2</key>
 			<data>
-			B9Y19wwY+HJp3FZzr52eR0NZB0m+CFcgjPn/MxI+grY=
+			pWmz6Lnm+E3b/bf1Kb2FavDXFAknL8Kv6cBhbuWDuDY=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -114,22 +114,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			tswpb0v/ukRi7HJ7J4nA07xBAQM=
+			rGdtpRKOwa0PrS8h8LRC9p+fTlQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			xoQpoCxlS/qARxIuFwL70O1NtTF17Hu9DPDP6bn8Gdw=
+			Qtmhz+NMyOwh5gEWuV4qDG0d8q4Li/s1hws4d5Wqs58=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			0TPbvnDU9SBVY2s6k1zR9MKY2BM=
+			dvbrqSmXHu7Fb6US8VEM34P4D8M=
 			</data>
 			<key>hash2</key>
 			<data>
-			ebcj4fFRW+amOgD84okQ9ejmHftbKMdbvBxXetW/ZV4=
+			2LwZ5GFrnbYfHp+LMi0ZqA8LTZuN/O6O27ZT3nSM7Ms=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -147,22 +147,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dNb6Z5guNtzplFzxttU//LhbncI=
+			BzN2o1Z9Uuk4dMg/DVnMp+Hj2xQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			zL94qvfR19puUgRTP6pSkrE1QpJMkmpzlxho8C5cceY=
+			bisdJfDN/3H2ikSoDyY+TJ7ZvXuU53Oyu35MqI+uDaM=
 			</data>
 		</dict>
 		<key>Modules/FirebaseCoreInternal.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TRkxarN+5UZWgaKsDmBguQT/cXk=
+			LpzlDi8Cx/NQfMEra3FzTxhEKQo=
 			</data>
 			<key>hash2</key>
 			<data>
-			yXHR3MyDNPBrXgnAajh7WVaIMyj1V96j99Bb8+Lvh7w=
+			TicL3BqO6zcpx/HjBwZhAf+DA/iTxl9XKrA7XMD5rJ0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

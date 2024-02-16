@@ -8,6 +8,7 @@ import 'package:navalha/mobile/schedule/provider/provider_get_promotional_code.d
 import 'package:navalha/mobile/schedule/schedule_page.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/page_transition.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 
 import '../../../core/colors.dart';
 import '../../login/controller/login_controller.dart';
@@ -19,10 +20,10 @@ import '../../../shared/widgets/header_button_sheet_pattern.dart';
 class AddCouponHourBottonSheet extends StatefulWidget {
   const AddCouponHourBottonSheet({
     Key? key,
-    required this.onConfirm,
+    required this.onChanged,
     required this.barberShop,
   }) : super(key: key);
-  final Function onConfirm;
+  final ValueChanged<String> onChanged;
   final BarberShop barberShop;
 
   @override
@@ -44,8 +45,7 @@ class _AddCouponHourBottonSheetState extends State<AddCouponHourBottonSheet> {
           onTap: (() {}),
           child: Consumer(
             builder: (context, ref, child) {
-              final authLoginController =
-                  ref.watch(LoginStateController.provider.notifier);
+              CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
               final promotionalCodeController = ref
                   .watch(GetPromotionalCodeStateController.provider.notifier);
               var totalPriceProvider =
@@ -128,25 +128,33 @@ class _AddCouponHourBottonSheetState extends State<AddCouponHourBottonSheet> {
                             ),
                           ),
                           onPressed: () async {
-                            ResponseGetPromotionalCode response =
-                                await promotionalCodeController
-                                    .getPromotionalCode(
-                                        authLoginController.user!.token!,
-                                        codeController.text,
-                                        widget.barberShop.barbershopId!);
-                            if (response.status == 'success') {
-                              totalPriceProvider.state.discount =
-                                  response.result.discount;
-                              showSnackBar(context, 'Desconto aplicado');
-                              widget.onConfirm();
-                              navigationFadePushReplacement(
-                                  const SchedulePage(), context);
-                            } else if (response.result ==
-                                'promotional_code_not_found') {
-                              showSnackBar(
-                                  context, 'Cupom de desconto não encontrado');
+                            if (retrievedCustomer == null) {
+                              showSnackBar(context,
+                                  'Você precisa fazer o login para adicionar cupom de desconto!');
+                              Navigator.pushNamed(context, '/login');
                             } else {
-                              showSnackBar(context, 'Ops, algo aconteceu');
+                              ResponseGetPromotionalCode response =
+                                  await promotionalCodeController
+                                      .getPromotionalCode(
+                                          retrievedCustomer.token,
+                                          codeController.text,
+                                          widget.barberShop.barbershopId!);
+                              if (response.status == 'success') {
+                                widget.onChanged(codeController.text);
+
+                                totalPriceProvider.state.discount =
+                                    response.result.discount;
+                                showSnackBar(context, 'Desconto aplicado');
+                                Navigator.of(context).pop();
+                              } else if (response.result ==
+                                  'promotional_code_not_found') {
+                                showSnackBar(context,
+                                    'Cupom de desconto não encontrado');
+                                Navigator.of(context).pop();
+                              } else {
+                                showSnackBar(context, 'Ops, algo aconteceu');
+                                Navigator.of(context).pop();
+                              }
                             }
                           },
                         ),

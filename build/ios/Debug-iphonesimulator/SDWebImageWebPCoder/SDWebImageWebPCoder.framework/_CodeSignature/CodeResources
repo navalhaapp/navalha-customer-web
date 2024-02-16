@@ -22,11 +22,19 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		zCEFf42Hq7W8vtfbfVtFHig/9gQ=
+		EFdTtZSpkJPTj9tAk+Arish6zcE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		PDSMMtQxrZ27U5lQQkXGK7N7aTI=
+		</data>
+		<key>PrivateHeaders/SDInternalMacros.h</key>
+		<data>
+		kq5JJh47Ybyaaui758s55l7ryoc=
+		</data>
+		<key>PrivateHeaders/SDmetamacros.h</key>
+		<data>
+		/UCzmRZdtlxqZdIiubMLZeAL5oo=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -84,6 +92,28 @@
 			<key>hash2</key>
 			<data>
 			fN+fgrLdW4BHF8zpxvkdx39EtPbyFpp9HsRHAKKi4Fc=
+			</data>
+		</dict>
+		<key>PrivateHeaders/SDInternalMacros.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			kq5JJh47Ybyaaui758s55l7ryoc=
+			</data>
+			<key>hash2</key>
+			<data>
+			UXoneUefWEfso5klg+8CZ8jKyJ6pUBnTzUNsyL+keF0=
+			</data>
+		</dict>
+		<key>PrivateHeaders/SDmetamacros.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			/UCzmRZdtlxqZdIiubMLZeAL5oo=
+			</data>
+			<key>hash2</key>
+			<data>
+			woZuhByGlpU1DSRGoXvfFNTGkSSvobL7ky23jPzEDxY=
 			</data>
 		</dict>
 	</dict>

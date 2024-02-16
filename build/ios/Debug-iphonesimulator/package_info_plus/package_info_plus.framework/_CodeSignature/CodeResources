@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/FLTPackageInfoPlusPlugin.h</key>
-		<data>
-		9EyQUN4L/s5/QspxhLatiiV+By4=
-		</data>
 		<key>Headers/FPPPackageInfoPlusPlugin.h</key>
 		<data>
 		TDgjwrW3MT/E6oBIQZm5Rf5hiGY=
@@ -18,7 +14,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		2nKRPwc3SoGxINsNckgtqonyxTo=
+		gLStLbnMwkJOoLioKV5SO8DJK3k=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -27,13 +23,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/FLTPackageInfoPlusPlugin.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			Sq4KpNVjcJb38Wxrc12czitn1bfSZoRJ9lC6vgwu8P8=
-			</data>
-		</dict>
 		<key>Headers/FPPPackageInfoPlusPlugin.h</key>
 		<dict>
 			<key>hash2</key>

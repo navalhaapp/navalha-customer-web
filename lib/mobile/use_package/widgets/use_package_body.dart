@@ -150,26 +150,26 @@ class _UsePackageBodyState extends ConsumerState<UsePackageBody> {
                               serviceCache.state.length - 1 == index
                                   ? GestureDetector(
                                       onTap: () async {
-                                        showModalBottomSheet<void>(
-                                          backgroundColor: Colors.transparent,
-                                          isScrollControlled: true,
-                                          isDismissible: true,
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: AddCouponHourBottonSheet(
-                                                barberShop:
-                                                    barberShopProvider.state,
-                                                onConfirm: () {
-                                                  // setState(() {});
-                                                },
-                                              ),
-                                            );
-                                          },
-                                        );
+                                        // showModalBottomSheet<void>(
+                                        //   backgroundColor: Colors.transparent,
+                                        //   isScrollControlled: true,
+                                        //   isDismissible: true,
+                                        //   context: context,
+                                        //   builder: (BuildContext context) {
+                                        //     return GestureDetector(
+                                        //       onTap: () {
+                                        //         Navigator.of(context).pop();
+                                        //       },
+                                        //       child: AddCouponHourBottonSheet(
+                                        //         barberShop:
+                                        //             barberShopProvider.state,
+                                        //         onConfirm: () {
+                                        //           // setState(() {});
+                                        //         },
+                                        //       ),
+                                        //     );
+                                        //   },
+                                        // );
                                       },
                                       child: Container(
                                         margin: EdgeInsets.only(
