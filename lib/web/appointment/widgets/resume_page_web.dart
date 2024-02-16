@@ -215,7 +215,7 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                             ),
                             serviceCache.state.isNotEmpty
                                 ? SizedBox(
-                                    height: 290,
+                                    height: 310,
                                     child: ListView.builder(
                                       padding: EdgeInsets.only(
                                           top: size.height * 0.005),
