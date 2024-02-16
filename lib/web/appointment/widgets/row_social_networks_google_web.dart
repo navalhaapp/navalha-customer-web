@@ -27,7 +27,6 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool? firtLogin = true;
   String? fullNameApple;
-  late SharedPreferences prefs;
   CustomerDB? retrievedCustomer;
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,6 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
                       userCredential.user!.email!,
                       userCredential.user!.uid,
                       fBTokenController.state,
-                      prefs,
                       firtLogin,
                       ref,
                     );
@@ -96,7 +94,6 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
     String email,
     String id,
     String fBToken,
-    SharedPreferences prefs,
     bool? firtLogin,
     WidgetRef ref,
   ) async {
