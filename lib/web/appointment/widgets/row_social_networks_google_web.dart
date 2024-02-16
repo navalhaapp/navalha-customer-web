@@ -39,10 +39,8 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _ButtonSocialNetwork(
+          child: ButtonSocialNetwork(
             onTap: () async {
-              prefs = await SharedPreferences.getInstance();
-              firtLogin = prefs.getBool('firstLogin') ?? true;
               UserCredential? userCredential = await signInWithGoogle();
               userCredential == null
                   ? null
@@ -247,22 +245,23 @@ class ShimmerLoginGoogle extends StatelessWidget {
   }
 }
 
-class _ButtonSocialNetwork extends StatelessWidget {
-  const _ButtonSocialNetwork({
+class ButtonSocialNetwork extends StatelessWidget {
+  const ButtonSocialNetwork({
     Key? key,
     required this.label,
-    required this.img,
+    this.img,
+    this.icon,
     required this.color,
     required this.textColor,
     required this.onTap,
   }) : super(key: key);
 
   final Widget label;
-  final String img;
+  final String? img;
   final Color color;
   final Color textColor;
   final Function onTap;
-
+  final Icon? icon;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -277,8 +276,8 @@ class _ButtonSocialNetwork extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
-              height: 20,
-              child: Image.asset(img),
+              width: 20,
+              child: img != null ? Image.asset(img!) : icon,
             ),
             label,
             const SizedBox()

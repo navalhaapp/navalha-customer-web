@@ -232,6 +232,24 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
                       ),
                     ),
                     const RowSocialNetworksWeb(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      child: ButtonSocialNetwork(
+                        color: Colors.white,
+                        icon: const Icon(CupertinoIcons.mail_solid,
+                            color: Colors.black),
+                        label: const Text(
+                          'Cadastrar com Email',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () => Navigator.pushNamed(context, '/register'),
+                        textColor: Colors.white,
+                      ),
+                    )
                   ],
                 ),
               ),

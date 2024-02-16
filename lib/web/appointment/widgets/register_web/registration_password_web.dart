@@ -6,25 +6,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/change_password/change_password_page.dart';
-import 'package:navalha/mobile/home/home_page.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/register/api/create_customer_endpoint.dart';
 import 'package:navalha/mobile/register/model/req_create_customer.dart';
 import 'package:navalha/mobile/register/provider/register_customer_provider.dart';
 import 'package:navalha/mobile/register/repository/registration_repository.dart';
 import 'package:navalha/mobile/register/usecase/create_customer_usecase.dart';
-import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/text_edit.dart';
 import 'package:navalha/web/appointment/text_edit_web.dart';
-import 'package:navalha/web/appointment/widgets/login_page_web.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_page_client_web.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RegistrationPasswordWeb extends StatefulHookConsumerWidget {
@@ -240,9 +235,6 @@ class _MyWidgetState extends ConsumerState<RegistrationPasswordWeb>
                     ),
                     child: setUpButtonChild(),
                     onPressed: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-
                       if (passwordController.text.isEmpty) {
                         showSnackBar(context, 'Digite uma senha');
                       } else if (!widget.passedTest) {
@@ -274,48 +266,35 @@ class _MyWidgetState extends ConsumerState<RegistrationPasswordWeb>
                             customerEndPoint: CustomerEndPoint(dio),
                           ),
                         ).execute(customer);
-                        firtLogin = prefs.getBool('firstLogin') ?? true;
-                        LocationPermission permission =
-                            await Geolocator.checkPermission();
                         if (createCustomerResponse.status == 'success') {
-                          await loginController.login(
+                          var response = await loginController.login(
                             customer.email!,
                             customer.password!,
                             fBTokenController.state,
                           );
-                          setState(() {
-                            _state = 2;
-                          });
-                          if (firtLogin == true) {
+                          if (response.runtimeType == DioError) {
+                            setState(() {
+                              _state = 0;
+                            });
+
+                            loginController.user = null;
                             Navigator.of(context).pushNamed('/login');
-                            await prefs.setBool('firstLogin', false);
-                          } else {
-                            if (permission == LocationPermission.always ||
-                                permission == LocationPermission.whileInUse) {
-                              navigationWithFadeAnimation(
-                                  const HomePage(), context);
-                            } else if (permission ==
-                                LocationPermission.deniedForever) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  duration: Duration(seconds: 5),
-                                  backgroundColor: Colors.white,
-                                  content: Text(
-                                    'Você negou as permissões de localização permanentemente, mude isso nas configurações do seu dispositivo, para ver as barbearias mais próximas a você',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              );
-                              Timer(const Duration(milliseconds: 1000), () {
-                                navigationWithFadeAnimation(
-                                    const LoginPageWeb(), context);
-                              });
-                            } else {
-                              navigationWithFadeAnimation(
-                                const LoginPageWeb(),
-                                context,
-                              );
-                            }
+                          } else if (response.status == 'success') {
+                            LocalStorageManager.saveCustomer(
+                              CustomerDB(
+                                name: response.customer.name,
+                                image: response.customer.imgProfile,
+                                customerId: response.customer.customerId,
+                                token: response.token,
+                                email: response.customer.email,
+                                birthDate: response.customer.birthDate,
+                                userID: '',
+                              ),
+                            );
+                            setState(() {
+                              _state = 2;
+                            });
+                            Navigator.pushNamed(context, '/');
                           }
                         } else {
                           showSnackBar(
