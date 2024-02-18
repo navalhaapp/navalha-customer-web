@@ -115,7 +115,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                     children: [
                       Container(
                         margin:
-                            const EdgeInsets.only(left: 18, right: 18, top: 18),
+                            const EdgeInsets.only(left: 20, right: 20, top: 18),
                         width: 500,
                         height: 465,
                         decoration: BoxDecoration(
@@ -186,7 +186,8 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                         child: SizedBox(
                           width: 500,
                           child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: const Color.fromARGB(255, 28, 28, 28),
@@ -271,7 +272,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                         ),
                       ),
                       ButtonPattern(
-                        margin: const EdgeInsets.symmetric(horizontal: 18),
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
                         width: 500,
                         elevation: false,
                         child: !loading

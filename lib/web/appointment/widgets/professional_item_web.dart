@@ -67,128 +67,106 @@ class ProfessionalItemWeb extends StatelessWidget {
             color: Color.fromARGB(255, 28, 28, 28),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 10, right: 10, top: 10),
-                      width: 50,
-                      height: 50,
-                      child: ClipOval(
-                        child: FadeInImage.assetNetwork(
-                          placeholder: imgLoading3,
-                          image: img,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 5, top: 10),
+                  width: 50,
+                  height: 50,
+                  child: ClipOval(
+                    child: FadeInImage.assetNetwork(
+                      placeholder: imgLoading3,
+                      image: img,
+                      fit: BoxFit.cover,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.sizeOf(context).height > 700
-                              ? 140
-                              : 50,
-                          child: AutoSizeText(
-                            textAlign: TextAlign.start,
-                            name,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: const TextStyle(
-                              color: Colors.white,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        hidePriceAndTime
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        CupertinoIcons.clock_fill,
-                                        color: Colors.white,
-                                        size: 14,
-                                      ),
-                                      Text(
-                                        ' ${serviceTime}min',
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      havePrice == null
-                                          ? Text(
-                                              'R\$ ${servicePrice?.toStringAsFixed(2).replaceAll('.', ',')}',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          : const SizedBox()
-                                    ],
-                                  ),
-                                ],
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 5,
-                        top: 5,
-                        bottom: 5,
-                      ),
-                      child: RatingBar.builder(
-                        initialRating: rating,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemSize: 15,
-                        ignoreGestures: true,
-                        unratedColor: const Color.fromARGB(80, 255, 255, 255),
-                        itemBuilder: (context, _) => const Icon(
-                          CupertinoIcons.star_fill,
-                          color: Colors.white,
-                        ),
-                        onRatingUpdate: (rating) {},
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        for (int i = 0; i < listImgServicess.length; i++)
-                          Container(
-                            margin: const EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                               right: 5,
                               top: 5,
                               bottom: 5,
                             ),
-                            width: 20,
-                            height: 20,
-                            child: ClipOval(
-                              child: FadeInImage.assetNetwork(
-                                placeholder: imgLoading3,
-                                image: listImgServices![i].imgProfile!,
-                                fit: BoxFit.fill,
+                            child: RatingBar.builder(
+                              initialRating: rating,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemSize: 15,
+                              ignoreGestures: true,
+                              unratedColor:
+                                  const Color.fromARGB(80, 255, 255, 255),
+                              itemBuilder: (context, _) => const Icon(
+                                CupertinoIcons.star_fill,
+                                color: Colors.white,
                               ),
+                              onRatingUpdate: (rating) {},
                             ),
                           ),
-                      ],
-                    )
-                  ],
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                CupertinoIcons.clock_fill,
+                                color: Colors.white,
+                                size: 14,
+                              ),
+                              Text(
+                                ' ${serviceTime}min',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              for (int i = 0; i < listImgServicess.length; i++)
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    right: 5,
+                                    top: 5,
+                                    bottom: 5,
+                                  ),
+                                  width: 20,
+                                  height: 20,
+                                  child: ClipOval(
+                                    child: FadeInImage.assetNetwork(
+                                      placeholder: imgLoading3,
+                                      image: listImgServices![i].imgProfile!,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -198,3 +176,30 @@ class ProfessionalItemWeb extends StatelessWidget {
     );
   }
 }
+
+//  Row(
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 children: [
+//                   Text('data'),
+//                   Expanded(
+//                     child: Column(
+//                       children: [
+//                         Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: [
+//                             Text('data'),
+//                             Text('data'),
+//                           ],
+//                         ),
+//                         Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: [
+//                             Text('data'),
+//                             Text('data'),
+//                           ],
+//                         )
+//                       ],
+//                     ),
+//                   )
+//                 ],
+//               )
