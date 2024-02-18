@@ -183,91 +183,87 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                       ),
                       Visibility(
                         visible: reservedTime.state.date != '',
-                        child: SizedBox(
+                        child: Container(
                           width: 500,
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: const Color.fromARGB(255, 28, 28, 28),
-                            ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      padding: MaterialStateProperty.all(
-                                          EdgeInsets.zero),
-                                      overlayColor:
-                                          MaterialStateProperty.all<Color>(
-                                        colorContainers353535,
-                                      ),
-                                      elevation: MaterialStateProperty.all(10),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.transparent),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color.fromARGB(255, 28, 28, 28),
+                          ),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.zero),
+                                    overlayColor:
+                                        MaterialStateProperty.all<Color>(
+                                      colorContainers353535,
+                                    ),
+                                    elevation: MaterialStateProperty.all(10),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.transparent),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
-                                    child: Row(
-                                      children: [
-                                        const SizedBox(width: 20),
-                                        Icon(Icons.add,
-                                            size: 17,
-                                            color: colorFontUnable116116116),
-                                        const SizedBox(width: 3),
-                                        Text(
-                                          '${observation.isNotEmpty ? 'Editar' : 'Adicionar'} uma observação',
-                                          style: TextStyle(
-                                            color: colorFontUnable116116116,
-                                          ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 20),
+                                      Icon(Icons.add,
+                                          size: 17,
+                                          color: colorFontUnable116116116),
+                                      const SizedBox(width: 3),
+                                      Text(
+                                        '${observation.isNotEmpty ? 'Editar' : 'Adicionar'} uma observação',
+                                        style: TextStyle(
+                                          color: colorFontUnable116116116,
                                         ),
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      showModalBottomSheet<void>(
-                                        backgroundColor: Colors.black,
-                                        isScrollControlled: true,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return ObservationBottomSheet(
-                                            initialObservation: observation,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                observation = value;
-                                              });
-                                            },
-                                          );
-                                        },
-                                      );
-                                    },
+                                      ),
+                                    ],
+                                  ),
+                                  onPressed: () {
+                                    showModalBottomSheet<void>(
+                                      backgroundColor: Colors.black,
+                                      isScrollControlled: true,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ObservationBottomSheet(
+                                          initialObservation: observation,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              observation = value;
+                                            });
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              Visibility(
+                                visible: observation.isNotEmpty,
+                                child: SizedBox(
+                                  width: 500,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 5),
+                                    child: Text(observation),
                                   ),
                                 ),
-                                Visibility(
-                                  visible: observation.isNotEmpty,
-                                  child: SizedBox(
-                                    width: 500,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 5),
-                                      child: Text(observation),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
