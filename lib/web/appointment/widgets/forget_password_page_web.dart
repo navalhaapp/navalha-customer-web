@@ -3,12 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
+import 'package:navalha/mobile/forget_password/model/reset_password_model.dart';
 import 'package:navalha/mobile/forget_password/provider/provider_reset_password.dart';
 import 'package:navalha/mobile/forget_password/widgets/form_field_email.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
-import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/web/appointment/widgets/login_page_web.dart';
+import 'package:navalha/shared/widgets/header_button_sheet_pattern.dart';
+import 'package:navalha/web/appointment/reset_page/reset_page.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ForgetPasswordPageWeb extends StatefulWidget {
   static const route = '/forget-password-page';
@@ -21,7 +23,7 @@ class ForgetPasswordPageWeb extends StatefulWidget {
 
 class _ForgetPasswordPageWebState extends State<ForgetPasswordPageWeb> {
   final TextEditingController emailController = TextEditingController();
-
+  final TextEditingController codeController = TextEditingController();
   int _state = 0;
 
   @override
@@ -93,8 +95,9 @@ class _ForgetPasswordPageWebState extends State<ForgetPasswordPageWeb> {
                           _state = 1;
                         });
                         if (emailController.text.length > 3) {
-                          final adressEmail = await resetPasswordController
-                              .resetPassword(emailController.text.trim());
+                          ResetPasswordModel adressEmail =
+                              await resetPasswordController
+                                  .resetPassword(emailController.text.trim());
                           setState(() {
                             _state = 0;
                           });
@@ -105,12 +108,20 @@ class _ForgetPasswordPageWebState extends State<ForgetPasswordPageWeb> {
                               _state = 0;
                             });
                           } else if (adressEmail.status == 'success') {
-                            showCustomDialog(
-                              context,
-                              _ForgetDialog(
-                                addresEmail: emailController.text,
-                              ),
+                            print(adressEmail.result!.verificationCode);
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return _ConfirmEmailBottonSheet(
+                                  customerId: adressEmail.result!.customerId!,
+                                  resultCode:
+                                      adressEmail.result!.verificationCode!,
+                                  email: emailController.text.trim(),
+                                  codeController: codeController,
+                                );
+                              },
                             );
+
                             setState(() {
                               _state = 2;
                             });
@@ -196,96 +207,134 @@ class _FloatingForget extends StatelessWidget {
   }
 }
 
-class _ForgetDialog extends StatelessWidget {
-  const _ForgetDialog({
+class _ConfirmEmailBottonSheet extends StatelessWidget {
+  const _ConfirmEmailBottonSheet({
     Key? key,
-    required this.addresEmail,
+    required this.codeController,
+    required this.email,
+    required this.resultCode,
+    required this.customerId,
   }) : super(key: key);
 
-  final String addresEmail;
+  final TextEditingController codeController;
+  final String email;
+  final String resultCode;
+  final String customerId;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
-    return AlertDialog(
-      alignment: Alignment.center,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(32.0),
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          color: colorBackground181818,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
         ),
-      ),
-      scrollable: true,
-      backgroundColor: colorBackground181818,
-      title: const Text(
-        textAlign: TextAlign.center,
-        'Sucesso!',
-        style: TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
-        ),
-      ),
-      content: Column(
-        children: [
-          const Text(
-            textAlign: TextAlign.center,
-            'Instruções enviadas para o e-mail: ',
-            style: TextStyle(
-              color: Color.fromARGB(255, 192, 192, 192),
-              fontSize: 15,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            textAlign: TextAlign.center,
-            addresEmail,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-            ),
-          ),
-          const SizedBox(height: 10),
-          const Icon(
-            Icons.check_circle_rounded,
-            color: Colors.white,
-            size: 80,
-          ),
-        ],
-      ),
-      actions: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              width: size.width * 0.3,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all<Color>(
-                    colorContainers353535,
+        child: Padding(
+          padding: const EdgeInsets.all(22),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const HeaderBottonSheetPattern(),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Por favor, digite o codigo que enviamos para:',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 204, 204, 204),
+                    fontSize: 17,
                   ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(colorContainers242424),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 0),
+                child: Text(
+                  email,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: SizedBox(
+                  width: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: PinCodeTextField(
+                      appContext: context,
+                      pastedTextStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      length: 5,
+                      obscureText: false,
+                      obscuringCharacter: '*',
+                      autoDismissKeyboard: true,
+                      blinkWhenObscuring: false,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      textStyle: const TextStyle(color: Colors.white),
+                      animationType: AnimationType.fade,
+                      autoDisposeControllers: false,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(5),
+                        fieldHeight: 50,
+                        fieldWidth: 40,
+                        activeFillColor: Colors.white,
+                        activeColor: Colors.white,
+                        disabledColor: Colors.white,
+                        errorBorderColor: Colors.black,
+                        inactiveColor: colorFontUnable116116116,
+                        selectedColor: Colors.white,
+                      ),
+                      cursorColor: Colors.white,
+                      animationDuration: const Duration(milliseconds: 300),
+                      controller: codeController,
+                      keyboardType: TextInputType.number,
+                      onCompleted: (code) {
+                        if (resultCode == codeController.text) {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/reset-password',
+                              arguments: {
+                                'customer_id': customerId,
+                              });
+                          showSnackBar(context, 'Email confirmado!');
+                          codeController.dispose();
+                        } else {
+                          Navigator.pop(context);
+                          showSnackBar(context, 'Código incorreto');
+                        }
+                      },
+                      onChanged: (value) {
+                        debugPrint(value);
+                      },
                     ),
                   ),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Text(
-                    'Ok',
-                    style: TextStyle(color: Colors.white),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Text(
+                  'Não encontrou? Confira a aba de Promoções ou Spam do seu e-mail',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: colorFontUnable116116116,
+                    fontSize: 15,
                   ),
                 ),
-                onPressed: () {
-                  navigationWithFadeAnimation(const LoginPageWeb(), context);
-                },
               ),
-            )
-          ],
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }

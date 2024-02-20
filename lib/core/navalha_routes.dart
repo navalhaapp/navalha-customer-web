@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navalha/approved_schedule/approved_schedule_page.dart';
+import 'package:navalha/web/appointment/reset_page/reset_page.dart';
 import 'package:navalha/web/appointment/widgets/calendar_page_web.dart';
 import 'package:navalha/web/appointment/widgets/forget_password_page_web.dart';
 import 'package:navalha/web/appointment/widgets/login_page_web.dart';
@@ -25,6 +26,7 @@ class NavalhaRoutes {
       '/forget': (context) => const ForgetPasswordPageWeb(),
       '/register': (context) => const RegistrationPageClientWeb(),
       '/register-social': (context) => const RegistrationSocialNetworksWeb(),
+      '/reset-password': (context) => ResetPasswordPage(),
       '/approved': (context) =>
           const ApprovedSchedulePage(page: CalendarPageWeb()),
     };

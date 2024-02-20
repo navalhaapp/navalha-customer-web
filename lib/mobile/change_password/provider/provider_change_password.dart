@@ -41,7 +41,7 @@ class ChangePasswordStateController extends StateNotifier<ChangePasswordState> {
           (ref) => ChangePasswordStateController(ref.read, null));
 
   Future<ChangePasswordResponse> changePassword(String customerId,
-      String currentPassword, String newPassword, String token) async {
+      String? currentPassword, String newPassword, String? token) async {
     state = ChangePasswordState.loading;
 
     userChangePassword = await _read(changePasswordCustomerUseCase)

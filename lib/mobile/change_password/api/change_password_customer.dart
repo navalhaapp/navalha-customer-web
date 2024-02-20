@@ -7,11 +7,11 @@ class ChangePasswordCustomerEndPoint {
   final Dio _dio;
   ChangePasswordCustomerEndPoint(this._dio);
 
-  Future changePassword(String customerId, String currentPassword,
-      String newPassword, String token) async {
-    String authorization = token;
+  Future changePassword(String customerId, String? currentPassword,
+      String newPassword, String? token) async {
+    String? authorization = token;
 
-    Map<String, String> data = {
+    var data = {
       "current_password": currentPassword,
       "new_password": newPassword,
     };
@@ -37,7 +37,7 @@ class ChangePasswordCustomerRepository {
       {required this.changePasswordCustomerEndPoint});
 
   Future<ChangePasswordResponse> changePassword(String customerId,
-      String currentPassword, String newPassword, String token) async {
+      String? currentPassword, String newPassword, String? token) async {
     final result = await changePasswordCustomerEndPoint.changePassword(
         customerId, currentPassword, newPassword, token);
     if (result.runtimeType == DioError) {
@@ -54,7 +54,7 @@ class ChangePasswordCustomerUseCase {
   ChangePasswordCustomerUseCase({required this.repository});
 
   Future<ChangePasswordResponse> execute(String customerId,
-      String currentPassword, String newPassword, String token) async {
+      String? currentPassword, String newPassword, String? token) async {
     final response = await repository.changePassword(
         customerId, currentPassword, newPassword, token);
 
