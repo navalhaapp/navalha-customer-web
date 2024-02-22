@@ -66,71 +66,86 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             title: const Text('Trocar senha', style: TextStyle(fontSize: 18)),
             centerTitle: true,
           ),
-          body: Column(
-            children: [
-              TextEditPattern(
-                sizeHint: 17,
-                sizeLabel: 18,
-                controller: newPasswordController,
-                obscure: !_passwordVisible,
-                maxLength: 30,
-                label: 'Nova senha',
-                hint: 'Informe a nova senha',
-                keyboardType: TextInputType.visiblePassword,
-                color: colorContainers242424,
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: IconButton(
-                    splashColor: Colors.transparent,
-                    icon: Icon(
-                      _passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _passwordVisible = !_passwordVisible;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              TextEditPattern(
-                sizeHint: 17,
-                sizeLabel: 18,
-                controller: confirmPasswordController,
-                obscure: !_passwordVisible,
-                maxLength: 30,
-                label: 'Confirme sua senha',
-                hint: 'Confirme a nova senha',
-                keyboardType: TextInputType.visiblePassword,
+          body: Center(
+            child: Container(
+              margin: const EdgeInsets.all(18),
+              width: 500,
+              height: 500,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
                 color: colorContainers242424,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.08,
-                ),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: FlutterPwValidator(
-                    key: validatorKey,
+              child: Column(
+                children: [
+                  TextEditPattern(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    sizeHint: 17,
+                    sizeLabel: 18,
                     controller: newPasswordController,
-                    strings: FlutterPwValidatorNavalha(),
-                    minLength: 8,
-                    uppercaseCharCount: 1,
-                    numericCharCount: 1,
-                    failureColor: const Color.fromARGB(255, 227, 90, 80),
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.17,
-                    onSuccess: () {
-                      widget.passedTest = true;
-                    },
-                    onFail: () {},
+                    obscure: !_passwordVisible,
+                    maxLength: 30,
+                    label: 'Nova senha',
+                    hint: 'Informe a nova senha',
+                    keyboardType: TextInputType.visiblePassword,
+                    color: const Color.fromARGB(255, 28, 28, 28),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: IconButton(
+                        splashColor: Colors.transparent,
+                        icon: Icon(
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  TextEditPattern(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    sizeHint: 17,
+                    sizeLabel: 18,
+                    controller: confirmPasswordController,
+                    obscure: !_passwordVisible,
+                    maxLength: 30,
+                    label: 'Confirme sua senha',
+                    hint: 'Confirme a nova senha',
+                    keyboardType: TextInputType.visiblePassword,
+                    color: const Color.fromARGB(255, 28, 28, 28),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: FlutterPwValidator(
+                        key: validatorKey,
+                        controller: newPasswordController,
+                        strings: FlutterPwValidatorNavalha(),
+                        minLength: 8,
+                        uppercaseCharCount: 1,
+                        numericCharCount: 1,
+                        failureColor: const Color.fromARGB(255, 227, 90, 80),
+                        width: 400,
+                        height: 100,
+                        onSuccess: () {
+                          widget.passedTest = true;
+                        },
+                        onFail: () {},
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
           floatingActionButton: Consumer(
             builder: (context, ref, child) {
