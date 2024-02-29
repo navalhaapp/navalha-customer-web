@@ -8,7 +8,10 @@ import 'package:navalha/mobile/payment/model/response_schedule.dart';
 import 'package:navalha/mobile/payment/provider/provider_create_schedule.dart';
 import 'package:navalha/mobile/schedule/schedule_page.dart';
 import 'package:navalha/mobile/schedule/widgets/add_coupon_botton_sheet.dart';
+import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';
+import 'package:navalha/shared/widgets/text_edit.dart';
+import 'package:navalha/web/appointment/widgets/body_login_page_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:navalha/web/db/db_resume_last_page.dart';
 import '../../../core/colors.dart';
@@ -263,9 +266,11 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                           } else {
                             LocalStorageManagerLastPage.saveResumeLastPage(
                                 ResumeLastPage(true));
-                            Navigator.of(context).pushNamed('/login');
-                            showSnackBar(context,
-                                'Faça o login para agendar o serviço!');
+                            showCustomDialog(
+                                context, const FittingServiceDialog());
+                            // Navigator.of(context).pushNamed('/login');
+                            // showSnackBar(context,
+                            //     'Faça o login para agendar o serviço!');
                           }
                         },
                       ),
@@ -277,6 +282,40 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
           ),
         );
       },
+    );
+  }
+}
+
+class FittingServiceDialog extends StatelessWidget {
+  const FittingServiceDialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      alignment: Alignment.center,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(32.0),
+        ),
+      ),
+      scrollable: true,
+      backgroundColor: colorBackground181818,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: SizedBox(
+          width: 22,
+          child: const Text(
+            textAlign: TextAlign.center,
+            'Falta pouco...',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      content: BodyLoginWeb(isloginDialog: true),
     );
   }
 }

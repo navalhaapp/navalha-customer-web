@@ -18,7 +18,7 @@ class _LoginPageWebState extends State<LoginPageWeb> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 20, 20, 20),
-      body: const BodyLoginWeb(),
+      body: const BodyLoginWeb(isloginDialog: false),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color.fromARGB(255, 20, 20, 20),

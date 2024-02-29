@@ -3,11 +3,14 @@
 // ignore_for_file: use_build_context_synchronously, curly_braces_in_flow_control_structures
 
 import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/shared/model/customer_model.dart';
@@ -18,12 +21,16 @@ import 'package:navalha/web/appointment/widgets/row_social_networks_google_web.d
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:navalha/web/db/db_resume_last_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../shared/providers.dart';
 import '../../../shared/utils.dart';
 
 class BodyLoginWeb extends StatefulHookConsumerWidget {
-  const BodyLoginWeb({super.key});
+  const BodyLoginWeb({
+    super.key,
+    required this.isloginDialog,
+  });
+  final bool isloginDialog;
 
   @override
   ConsumerState<BodyLoginWeb> createState() => _BodyLoginWebState();
@@ -255,7 +262,10 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
               ),
             ),
           ),
-          const DownloadAppPromotion(),
+          Visibility(
+            visible: !widget.isloginDialog,
+            child: const DownloadAppPromotion(),
+          ),
         ],
       ),
     );

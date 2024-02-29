@@ -66,4 +66,8 @@ class LocalStorageManager {
     }
     return null;
   }
+
+  static void clearCustomer() {
+    window.localStorage.remove(KEY_CUSTOMER);
+  }
 }

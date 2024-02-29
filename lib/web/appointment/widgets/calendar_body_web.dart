@@ -38,6 +38,7 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
 
   @override
   Widget build(BuildContext context) {
+    CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
     final getSchedule = ref.watch(getScheduleCustomerList(getScheduleModel));
     return getSchedule.when(
       data: (data) {
@@ -48,7 +49,6 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
         if (listScheduleItem.isNotEmpty) {
           return Consumer(
             builder: (context, ref, child) {
-              final retrievedCustomer = LocalStorageManager.getCustomer();
               return SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -162,7 +162,7 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
                         professionalId:
                             listScheduleItem[i].professional!.professionalId,
                         serviceId: listScheduleItem[i].scheduleServiceId!,
-                        customerId: retrievedCustomer.customerId,
+                        customerId: retrievedCustomer!.customerId,
                         nameService: listScheduleItem[i].service!.name!,
                         priceService: listScheduleItem[i].service!.price,
                         nameBarberShop:
@@ -204,7 +204,8 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
         title: 'Ops, Algo aconteceu!',
         subTitle: 'Houve algum erro, tente novamente mais tarde.',
         onPressed: () {
-          navigationWithFadeAnimation(const CalendarPageWeb(), context);
+          Navigator.pushNamed(context, '/login');
+          LocalStorageManager.clearCustomer();
         },
         text: 'Tentar de novo',
       ),

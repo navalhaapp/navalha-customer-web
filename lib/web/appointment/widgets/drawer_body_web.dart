@@ -82,7 +82,7 @@ class DrawerBodyWeb extends StatelessWidget {
                     // await _googleSignIn.signOut();
                     LocalStorageManagerLastPage.saveResumeLastPage(
                         ResumeLastPage(false));
-                    retrievedCustomer = null;
+                    LocalStorageManager.clearCustomer();
                     Navigator.of(context).pushNamed('/login');
                   },
                   icon: Icons.exit_to_app_rounded,
