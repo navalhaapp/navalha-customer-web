@@ -110,6 +110,7 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
           email: response.customer!.email ?? '',
           birthDate: response.customer!.birthDate ?? '',
           userID: '',
+          password: response.customer!.password!,
         ),
       );
       Navigator.of(context).pushNamed('/resume');
@@ -127,6 +128,7 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
             email: email,
             birthDate: '',
             userID: id,
+            password: response.customer!.password!,
           ),
         );
         Navigator.pushNamed(context, '/register-social');

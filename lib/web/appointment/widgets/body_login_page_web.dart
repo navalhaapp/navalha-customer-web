@@ -176,6 +176,7 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
                                   email: response.customer.email,
                                   birthDate: response.customer.birthDate,
                                   userID: '',
+                                  password: passwordController.text,
                                 ),
                               );
                               _login();

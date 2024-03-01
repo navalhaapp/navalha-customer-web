@@ -289,6 +289,7 @@ class _MyWidgetState extends ConsumerState<RegistrationPasswordWeb>
                                 email: response.customer.email,
                                 birthDate: response.customer.birthDate,
                                 userID: '',
+                                password: customer.password!,
                               ),
                             );
                             setState(() {

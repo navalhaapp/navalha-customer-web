@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -5,6 +6,7 @@ import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/home/model/provider_family_model.dart';
 import 'package:navalha/mobile/home/provider/provider_get_barber_shop_by_id.dart';
+import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/schedule/widgets/body_schedule.dart';
 import 'package:navalha/shared/model/professional_model.dart';
 import 'package:navalha/shared/providers.dart';
@@ -50,9 +52,39 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
   Widget build(BuildContext context) {
     final getBarbershopController =
         ref.watch(getAllBarberShopById(getBarberShopModel));
-
+    final loginController = ref.read(LoginStateController.provider.notifier);
     return getBarbershopController.when(
       data: (data) {
+        void loginCustomer() async {
+          var response = await loginController.login(
+            retrievedCustomer!.email,
+            retrievedCustomer!.password,
+            '',
+          );
+          if (response.runtimeType == DioError) {
+            showSnackBar(context, 'Sua acesso expirou, faça o login novamente');
+            Navigator.of(context).pushNamed('/login');
+          } else if (response.status == 'success') {
+            LocalStorageManager.saveCustomer(
+              CustomerDB(
+                name: response.customer.name,
+                image: response.customer.imgProfile,
+                customerId: response.customer.customerId,
+                token: response.token,
+                email: response.customer.email,
+                birthDate: response.customer.birthDate,
+                userID: '',
+                password: response.customer!.password!,
+              ),
+            );
+          }
+        }
+
+        retrievedCustomer = LocalStorageManager.getCustomer();
+        if (retrievedCustomer != null) {
+          loginCustomer();
+        }
+
         List<Professional> getProfessionalsByService(
             Service service, List<Professional> professionals) {
           final String serviceName = service.name!;
@@ -76,8 +108,6 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
         return Consumer(
           builder: (context, ref, child) {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
-              retrievedCustomer = LocalStorageManager.getCustomer();
-
               ref.watch(barberShopSelectedProvider.state).state =
                   data.barbershop!;
             });

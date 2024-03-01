@@ -9,6 +9,7 @@ class CustomerDB {
   final String email;
   final String birthDate;
   final String userID;
+  final String password;
 
   CustomerDB({
     required this.name,
@@ -18,6 +19,7 @@ class CustomerDB {
     required this.email,
     required this.birthDate,
     required this.userID,
+    required this.password,
   });
 
   // Método para converter os dados em um mapa
@@ -30,6 +32,7 @@ class CustomerDB {
       'email': email,
       'birthDate': birthDate,
       'userID': userID,
+      'password': password,
     };
   }
 
@@ -43,6 +46,7 @@ class CustomerDB {
       email: map['email'],
       birthDate: map['birthDate'],
       userID: map['userID'],
+      password: map['password'],
     );
   }
 }

@@ -408,6 +408,7 @@ class _RegistrationSocialNetworksWebState
                                     birthDate:
                                         response.customer!.birthDate ?? '',
                                     userID: '',
+                                    password: customer.password!,
                                   ),
                                 );
                                 Navigator.of(context).pushNamed('/resume');
