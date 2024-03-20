@@ -12,7 +12,7 @@ class ApprovedSchedulePage extends StatelessWidget {
     this.title,
     this.subTitle,
   }) : super(key: key);
-  final Widget page;
+  final String page;
   final String? title;
   final String? subTitle;
 

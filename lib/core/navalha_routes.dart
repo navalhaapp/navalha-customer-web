@@ -27,8 +27,9 @@ class NavalhaRoutes {
       '/register': (context) => const RegistrationPageClientWeb(),
       '/register-social': (context) => const RegistrationSocialNetworksWeb(),
       '/reset-password': (context) => ResetPasswordPage(),
-      '/approved': (context) =>
-          const ApprovedSchedulePage(page: CalendarPageWeb()),
+      '/approved': (context) => const ApprovedSchedulePage(page: '/calendar'),
+      '/approved/fit-service': (context) =>
+          const ApprovedSchedulePage(page: '/'),
     };
   }
 }

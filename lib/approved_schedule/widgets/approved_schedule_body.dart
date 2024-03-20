@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-
-import 'package:navalha/shared/widgets/page_transition.dart';
 
 class ApprovedScheduleBody extends StatelessWidget {
   const ApprovedScheduleBody({
@@ -13,7 +10,7 @@ class ApprovedScheduleBody extends StatelessWidget {
     this.subTitle,
   }) : super(key: key);
 
-  final Widget page;
+  final String page;
   final String? title;
   final String? subTitle;
 
@@ -81,7 +78,7 @@ class SlideFadeTransition extends StatefulWidget {
   final Direction direction;
   final Duration delayStart;
   final Duration animationDuration;
-  final Widget page;
+  final String page;
 
   const SlideFadeTransition({
     Key? key,
@@ -142,7 +139,7 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
       Timer(const Duration(milliseconds: 2000), () {
         if (mounted) {
           // navigationFadePush(widget.page, context);
-          Navigator.of(context).pushNamed('/calendar');
+          Navigator.of(context).pushNamed(widget.page);
         }
       });
     });

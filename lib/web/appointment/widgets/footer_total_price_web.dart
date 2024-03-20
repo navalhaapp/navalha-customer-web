@@ -2,6 +2,7 @@
 
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_analytics_web/firebase_analytics_web.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/mobile/payment/model/response_schedule.dart';
@@ -10,10 +11,9 @@ import 'package:navalha/mobile/schedule/schedule_page.dart';
 import 'package:navalha/mobile/schedule/widgets/add_coupon_botton_sheet.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/text_edit.dart';
-import 'package:navalha/web/appointment/widgets/body_login_page_web.dart';
+import 'package:navalha/web/appointment/fit_service/provider/provider_create_schedule.dart';
+import 'package:navalha/web/appointment/text_edit_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
-import 'package:navalha/web/db/db_resume_last_page.dart';
 import '../../../core/colors.dart';
 import '../../../shared/model/barber_shop_model.dart';
 import '../../../shared/providers.dart';
@@ -264,13 +264,12 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               }
                             });
                           } else {
-                            LocalStorageManagerLastPage.saveResumeLastPage(
-                                ResumeLastPage(true));
                             showCustomDialog(
-                                context, const FittingServiceDialog());
-                            // Navigator.of(context).pushNamed('/login');
-                            // showSnackBar(context,
-                            //     'Faça o login para agendar o serviço!');
+                              context,
+                              FittingServiceDialog(
+                                barberShop: widget.barberShop,
+                              ),
+                            );
                           }
                         },
                       ),
@@ -286,36 +285,152 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
   }
 }
 
-class FittingServiceDialog extends StatelessWidget {
+class FittingServiceDialog extends StatefulWidget {
   const FittingServiceDialog({
     Key? key,
+    required this.barberShop,
   }) : super(key: key);
+
+  final BarberShop barberShop;
+
+  @override
+  State<FittingServiceDialog> createState() => _FittingServiceDialogState();
+}
+
+class _FittingServiceDialogState extends State<FittingServiceDialog> {
+  var loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      titlePadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.zero,
-      alignment: Alignment.center,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(32.0),
-        ),
-      ),
-      scrollable: true,
-      backgroundColor: colorBackground181818,
-      title: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: SizedBox(
-          width: 22,
-          child: const Text(
-            textAlign: TextAlign.center,
-            'Falta pouco...',
-            style: TextStyle(color: Colors.white),
+    TextEditingController nameController = TextEditingController();
+    return Consumer(
+      builder: (context, ref, child) {
+        final createSchedule =
+            ref.watch(CreateScheduleFitStateController.provider.notifier);
+        var serviceCache = ref.watch(listServicesCacheProvider.state);
+        final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
+        return SizedBox(
+          width: 500,
+          child: AlertDialog(
+            titlePadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.zero,
+            alignment: Alignment.center,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(32.0),
+              ),
+            ),
+            scrollable: true,
+            backgroundColor: colorBackground181818,
+            title: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: SizedBox(
+                width: 22,
+                child: const Text(
+                  textAlign: TextAlign.center,
+                  'Falta pouco...',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            content: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: TextEditPatternWeb(
+                    label: 'Nome',
+                    obscure: false,
+                    maxLength: 300,
+                    controller: nameController,
+                    hint: 'Digite o seu nome',
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.all<Color>(
+                        colorContainers353535,
+                      ),
+                      elevation: MaterialStateProperty.all(0),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 28, 28, 28)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      if (nameController.text == '') {
+                        showSnackBar(context, 'Digite um nome');
+                      } else {
+                        setState(() => loading = true);
+                        ResponseCreateSchedule response =
+                            await createSchedule.createSchedule(
+                          nameController.text,
+                          widget.barberShop.barbershopId!,
+                          listResumePayment.state.transactionAmount!,
+                          listResumePayment.state.promotionalCodeDiscount ?? 0,
+                          listResumePayment.state.promotionalCodePercent ?? 0,
+                          listResumePayment.state.services,
+                        );
+                        if (response.status == 'success') {
+                          setState(() => loading = false);
+                          Navigator.of(context)
+                              .pushNamed('/approved/fit-service');
+                          serviceCache.state.clear();
+                          listResumePayment.state.clear();
+                        } else {
+                          setState(() => loading = false);
+                          showSnackBar(context, 'Erro ao marcar serviço');
+                        }
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 5),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            loading
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Row(
+                                    children: const [
+                                      Icon(
+                                        CupertinoIcons.check_mark,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: 15),
+                                      Text(
+                                        'Agendar',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-      content: BodyLoginWeb(isloginDialog: true),
+        );
+      },
     );
   }
 }

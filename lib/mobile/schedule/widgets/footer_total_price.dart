@@ -168,9 +168,9 @@ class _FooterTotalPriceState extends State<FooterTotalPrice> {
                               listResumePayment.state.services,
                             );
                             if (response.status == 'success') {
-                              navigationFadePush(
-                                  ApprovedSchedulePage(page: CalendarPage()),
-                                  context);
+                              // navigationFadePush(
+                              //     ApprovedSchedulePage(page: CalendarPage()),
+                              //     context);
                             } else {
                               setState(() {
                                 loading = false;

@@ -163,14 +163,14 @@ class _FooterTotalPriceState extends State<FooterPackagePage> {
                                   ),
                                 );
                                 if (response.status == 'success') {
-                                  navigationFadePush(
-                                      const ApprovedSchedulePage(
-                                        page: MyPackagesPage(),
-                                        title: 'Compra realizada!',
-                                        subTitle:
-                                            'Compra realizada com sucesso!',
-                                      ),
-                                      context);
+                                  // navigationFadePush(
+                                  //     const ApprovedSchedulePage(
+                                  //       page: MyPackagesPage(),
+                                  //       title: 'Compra realizada!',
+                                  //       subTitle:
+                                  //           'Compra realizada com sucesso!',
+                                  //     ),
+                                  //     context);
                                 } else {
                                   showSnackBar(context, 'Ops, algo aconteceu');
                                 }

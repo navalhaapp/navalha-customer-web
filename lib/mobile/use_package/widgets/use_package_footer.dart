@@ -137,9 +137,9 @@ class _UsePackageFooter extends State<UsePackageFooter> {
                                 servicesUsePackage.state,
                               );
                               if (request.hasSucess()) {
-                                navigationFadePush(
-                                    ApprovedSchedulePage(page: CalendarPage()),
-                                    context);
+                                // navigationFadePush(
+                                //     ApprovedSchedulePage(page: CalendarPage()),
+                                //     context);
 
                                 servicesUsePackage.state.clear();
                               } else {
