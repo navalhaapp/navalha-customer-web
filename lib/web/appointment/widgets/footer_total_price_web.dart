@@ -299,7 +299,8 @@ class FittingServiceDialog extends StatefulWidget {
 
 class _FittingServiceDialogState extends State<FittingServiceDialog> {
   var loading = false;
-
+  static final RegExp nameRegExp =
+      RegExp(r'^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$');
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
@@ -338,11 +339,11 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TextEditPatternWeb(
-                    label: 'Nome',
+                    label: 'Nome completo',
                     obscure: false,
                     maxLength: 300,
                     controller: nameController,
-                    hint: 'Digite o seu nome',
+                    hint: 'Digite o seu nome completo',
                     keyboardType: TextInputType.emailAddress,
                   ),
                 ),
@@ -364,8 +365,17 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                       ),
                     ),
                     onPressed: () async {
-                      if (nameController.text == '') {
-                        showSnackBar(context, 'Digite um nome');
+                      if (nameController.text.trim().isEmpty) {
+                        showSnackBar(context, 'Digite seu nome');
+                      } else if (nameController.text.length < 4) {
+                        showSnackBar(context, 'Nome muito curto');
+                      } else if (!nameRegExp.hasMatch(nameController.text)) {
+                        showSnackBar(context, 'Nome inválido');
+                      } else if (!nameController.text.contains(' ')) {
+                        showSnackBar(
+                          context,
+                          'Digite o nome completo',
+                        );
                       } else {
                         setState(() => loading = true);
                         ResponseCreateSchedule response =
