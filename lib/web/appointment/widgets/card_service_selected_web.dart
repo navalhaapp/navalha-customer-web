@@ -86,14 +86,18 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          widget.nameService,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17,
+                        SizedBox(
+                          width: 180,
+                          child: Text(
+                            widget.nameService,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 17,
+                            ),
                           ),
                         ),
                         Visibility(

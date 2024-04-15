@@ -374,7 +374,7 @@ class CalendarState extends ConsumerState<Calendar> {
                         child: ElevatedButton(
                           style: ButtonStyle(
                             overlayColor: MaterialStateProperty.all<Color>(
-                              colorContainers353535,
+                              Colors.transparent,
                             ),
                             elevation: MaterialStateProperty.all(0),
                             backgroundColor: MaterialStateProperty.all<Color>(

@@ -65,10 +65,13 @@ class ServiceItemWeb extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AutoSizeText(
-                          name,
-                          style: const TextStyle(
-                            color: Colors.white,
+                        SizedBox(
+                          width: 200,
+                          child: Text(
+                            name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
