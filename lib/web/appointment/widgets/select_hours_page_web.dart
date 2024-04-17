@@ -400,6 +400,9 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                 } else {
                                   if (response.result ==
                                       'already_cached_service') {
+                                    setState(() {
+                                      loading = false;
+                                    });
                                     showSnackBar(context,
                                         'Desculpe, mas esse horário já foi agendado.');
                                     ResponseGetOpenHoursByDate response =
@@ -421,6 +424,9 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                     }
                                   } else if (response.result ==
                                       'hour_has_passed') {
+                                    setState(() {
+                                      loading = false;
+                                    });
                                     showSnackBar(context,
                                         'Desculpe, mas esse horário já passou.');
                                     ResponseGetOpenHoursByDate response =
@@ -441,6 +447,9 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                           response.result as List<OpenHour>;
                                     }
                                   } else {
+                                    setState(() {
+                                      loading = false;
+                                    });
                                     showSnackBar(
                                         context, 'Ops, algo aconteceu');
                                   }
