@@ -170,7 +170,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
-                                  left: 10, top: 20, bottom: 20),
+                                  left: 10, top: 20, bottom: 10),
                               child: Text(
                                 'Escolha um serviço',
                                 style: TextStyle(
@@ -180,8 +180,16 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                                 ),
                               ),
                             ),
+                            const Center(
+                              child: AlertContainer(
+                                backgroundColor: Colors.black54,
+                                message:
+                                    'Atenção: para agendar ou comprar um pacote, baixe o nosso aplicativo.',
+                              ),
+                            ),
+                            const SizedBox(height: 10),
                             SizedBox(
-                              height: 410,
+                              height: 360,
                               child: ListView.builder(
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
@@ -341,6 +349,48 @@ class DownloadAppPromotion extends StatelessWidget {
               padding: const EdgeInsets.only(right: 50),
               child: SizedBox(height: 120, child: Image.asset(imgStore)),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AlertContainer extends StatelessWidget {
+  final String message;
+  final Color backgroundColor;
+  final Color textColor;
+
+  const AlertContainer({
+    super.key,
+    required this.message,
+    this.backgroundColor = Colors.blue,
+    this.textColor = Colors.white,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      color: backgroundColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(
+            Icons.info_outline,
+            color: textColor,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(color: textColor),
+            ),
+          ),
+          const Icon(
+            size: 1,
+            Icons.info_outline,
+            color: Colors.transparent,
           ),
         ],
       ),
