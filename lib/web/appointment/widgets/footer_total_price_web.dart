@@ -1,18 +1,36 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_analytics_web/firebase_analytics_web.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:navalha/mobile/change_password/change_password_page.dart';
+import 'package:navalha/mobile/edit_profile/edit_profile_page.dart';
+import 'package:navalha/mobile/login/controller/login_controller.dart';
 import 'package:navalha/mobile/payment/model/response_schedule.dart';
 import 'package:navalha/mobile/payment/provider/provider_create_schedule.dart';
+import 'package:navalha/mobile/register/api/create_customer_endpoint.dart';
+import 'package:navalha/mobile/register/model/req_create_customer.dart';
+import 'package:navalha/mobile/register/provider/provider_auth_email.dart';
+import 'package:navalha/mobile/register/provider/register_customer_provider.dart';
+import 'package:navalha/mobile/register/repository/registration_repository.dart';
+import 'package:navalha/mobile/register/usecase/create_customer_usecase.dart';
 import 'package:navalha/mobile/schedule/schedule_page.dart';
 import 'package:navalha/mobile/schedule/widgets/add_coupon_botton_sheet.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';
+import 'package:navalha/shared/widgets/button_pattern_dialog.dart';
+import 'package:navalha/shared/widgets/cupertino_date_picker.dart';
+import 'package:navalha/shared/widgets/cupertino_piker_list.dart';
 import 'package:navalha/web/appointment/fit_service/provider/provider_create_schedule.dart';
 import 'package:navalha/web/appointment/text_edit_web.dart';
+import 'package:navalha/web/appointment/widgets/register_web/registration_page_client_second_web.dart';
+import 'package:navalha/web/appointment/widgets/register_web/registration_password_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import '../../../core/colors.dart';
 import '../../../shared/model/barber_shop_model.dart';
@@ -286,11 +304,11 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
 }
 
 class FittingServiceDialog extends StatefulWidget {
-  const FittingServiceDialog({
+  FittingServiceDialog({
     Key? key,
     required this.barberShop,
   }) : super(key: key);
-
+  bool passedTest = false;
   final BarberShop barberShop;
 
   @override
@@ -298,142 +316,455 @@ class FittingServiceDialog extends StatefulWidget {
 }
 
 class _FittingServiceDialogState extends State<FittingServiceDialog> {
+  final dio = Dio(BaseOptions(
+    baseUrl: baseURLV1,
+  ));
   var loading = false;
+  int _state = 0;
   static final RegExp nameRegExp =
       RegExp(r'^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$');
+  int selectedItem = 0;
+  String birthdate = '2000-07-06';
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailEditController = TextEditingController();
+  DateTime date = DateTime(2018, 28, 10);
+  final GlobalKey<FlutterPwValidatorState> validatorKey =
+      GlobalKey<FlutterPwValidatorState>();
+
+  final List<String> _listgener = <String>[
+    'Selecione o gênero',
+    'Masculino',
+    'Feminino'
+  ];
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
+    ReqCreateCustomerModel customer;
     return Consumer(
       builder: (context, ref, child) {
+        final authEmailController =
+            ref.read(AuthEmailStateController.provider.notifier);
+        final customerRegisterController =
+            ref.watch(customerRegisterProvider.notifier);
+        final loginController =
+            ref.read(LoginStateController.provider.notifier);
+        var fBTokenController = ref.watch(fBTokenProvider.state);
         final createSchedule =
             ref.watch(CreateScheduleFitStateController.provider.notifier);
         var serviceCache = ref.watch(listServicesCacheProvider.state);
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
-        return SizedBox(
-          width: 500,
-          child: AlertDialog(
-            titlePadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            alignment: Alignment.center,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(32.0),
+        return Dialog(
+          insetPadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          child: SingleChildScrollView(
+            child: SizedBox(
+              width: 500,
+              child: SingleChildScrollView(
+                child: AlertDialog(
+                  titlePadding: EdgeInsets.zero,
+                  contentPadding: EdgeInsets.zero,
+                  alignment: Alignment.center,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(32.0),
+                    ),
+                  ),
+                  scrollable: true,
+                  backgroundColor: colorBackground181818,
+                  title: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: SizedBox(
+                      width: 22,
+                      child: const Text(
+                        textAlign: TextAlign.center,
+                        'Falta pouco...',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 10),
+                          child: TextEditPatternWeb(
+                            label: 'Nome completo',
+                            obscure: false,
+                            maxLength: 100,
+                            controller: nameController,
+                            hint: 'Digite o seu nome completo',
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: TextEditPatternWeb(
+                            label: 'E-mail',
+                            obscure: false,
+                            maxLength: 100,
+                            controller: emailEditController,
+                            hint: 'Digite seu e-mail',
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: CupertinoDataPicker(
+                            label: 'Data de nascimento',
+                            color: const Color.fromARGB(255, 30, 30, 30),
+                            marginHorizontal: 20,
+                            date: parseStringYYYYmmDDtoDateTime(birthdate),
+                            picker: CupertinoDatePicker(
+                              dateOrder: DatePickerDateOrder.dmy,
+                              initialDateTime:
+                                  parseStringYYYYmmDDtoDateTime(birthdate),
+                              mode: CupertinoDatePickerMode.date,
+                              use24hFormat: true,
+                              maximumYear: DateTime.now().year,
+                              onDateTimeChanged: (DateTime newDate) {
+                                setState(() {
+                                  birthdate =
+                                      parseDateTimeToStringYYYYmmDD(newDate);
+                                  date = newDate;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: TextEditPatternWeb(
+                            mask: TelefoneInputFormatter(),
+                            maxLength: 30,
+                            controller: phoneController,
+                            label: 'Telefone / WhatsApp',
+                            hint: 'Digite o telefone',
+                            obscure: false,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: TextEditPatternWeb(
+                            label: 'Senha',
+                            obscure: false,
+                            maxLength: 50,
+                            controller: passwordController,
+                            hint: 'Digite uma senha',
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: FlutterPwValidator(
+                              key: validatorKey,
+                              controller: passwordController,
+                              strings: FlutterPwValidatorNavalha(),
+                              minLength: 8,
+                              uppercaseCharCount: 1,
+                              numericCharCount: 1,
+                              failureColor:
+                                  const Color.fromARGB(255, 227, 90, 80),
+                              width: 300,
+                              height: 80,
+                              onSuccess: () {
+                                widget.passedTest = true;
+                              },
+                              onFail: () {},
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 20),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                colorContainers353535,
+                              ),
+                              elevation: MaterialStateProperty.all(0),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color.fromARGB(255, 28, 28, 28)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (nameController.text.trim().isEmpty) {
+                                showSnackBar(context, 'Digite seu nome');
+                              } else if (nameController.text.length < 4) {
+                                showSnackBar(context, 'Nome muito curto');
+                              } else if (!nameRegExp
+                                  .hasMatch(nameController.text)) {
+                                showSnackBar(context, 'Nome inválido');
+                              } else if (!nameController.text.contains(' ')) {
+                                showSnackBar(
+                                  context,
+                                  'Digite o nome completo',
+                                );
+                              } else if (!EmailValidator.validate(
+                                  emailEditController.text)) {
+                                showSnackBar(context, 'Digite um email válido');
+                              } else if (verificarDataFutura(
+                                  UtilText.formatDate(date))) {
+                                showSnackBar(context,
+                                    'Não é possível adicionar datas futuras!');
+                              } else if (DateTime(2020, 4, 10, 0, 0, 0, 0, 0) ==
+                                  date) {
+                                showSnackBar(context,
+                                    'Selecione uma data de nascimento!');
+                              } else if (phoneController.text.length < 14) {
+                                showSnackBar(context, 'Telefone inválido');
+                              } else if (passwordController.text.isEmpty) {
+                                showSnackBar(context, 'Digite uma senha');
+                              } else if (!widget.passedTest) {
+                                showSnackBar(context, 'Senha não segura');
+                              } else if (!possuiLetraMaiuscula(
+                                  passwordController.text.trim())) {
+                                showSnackBar(context,
+                                    'A senha deve conter alguma letra maiúscula!');
+                              } else {
+                                setState(() => loading = true);
+
+//verifica email
+                                final adressEmail = await authEmailController
+                                    .authEmail(emailEditController.text.trim());
+                                if (adressEmail.result == 'already_exists') {
+                                  //apresentar dialog
+                                  showCustomDialog(context,
+                                      const AlreadyExistsEmailDialog());
+                                  setState(() {
+                                    loading = false;
+                                    emailEditController.text = '';
+                                  });
+                                } else if (adressEmail.result !=
+                                    'already_exists') {
+                                  customer = ReqCreateCustomerModel(
+                                    birthDate: UtilText.formatDate(date),
+                                    email: emailEditController.text.trim(),
+                                    externalAccount: false,
+                                    gener: null,
+                                    name: nameController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                    phone: phoneController.text.trim(),
+                                    postalCode: '89041080',
+                                  );
+                                  final createCustomerResponse =
+                                      await CreateCustomerUseCase(
+                                    repository: CustomerRepository(
+                                      customerEndPoint: CustomerEndPoint(dio),
+                                    ),
+                                  ).execute(customer);
+                                  if (createCustomerResponse.status ==
+                                      'success') {
+                                    var response = await loginController.login(
+                                      customer.email!,
+                                      customer.password!,
+                                      fBTokenController.state,
+                                    );
+                                    if (response.runtimeType == DioError) {
+                                      setState(() {
+                                        _state = 0;
+                                      });
+
+                                      loginController.user = null;
+                                      Navigator.of(context).pushNamed('/login');
+                                    } else if (response.status == 'success') {
+                                      LocalStorageManager.saveCustomer(
+                                        CustomerDB(
+                                          name: response.customer.name,
+                                          image: response.customer.imgProfile,
+                                          customerId:
+                                              response.customer.customerId,
+                                          token: response.token,
+                                          email: response.customer.email,
+                                          birthDate:
+                                              response.customer.birthDate,
+                                          userID: '',
+                                          password: customer.password!,
+                                        ),
+                                      );
+                                      setState(() {
+                                        _state = 2;
+                                      });
+                                    }
+                                    //marcando serviço
+                                    ResponseCreateSchedule
+                                        responseCreateAppointment =
+                                        await createSchedule.createSchedule(
+                                      nameController.text,
+                                      widget.barberShop.barbershopId!,
+                                      listResumePayment
+                                          .state.transactionAmount!,
+                                      listResumePayment
+                                              .state.promotionalCodeDiscount ??
+                                          0,
+                                      listResumePayment
+                                              .state.promotionalCodePercent ??
+                                          0,
+                                      listResumePayment.state.services,
+                                    );
+                                    if (responseCreateAppointment.status ==
+                                        'success') {
+                                      setState(() => loading = false);
+                                      Navigator.of(context)
+                                          .pushNamed('/approved/fit-service');
+                                      serviceCache.state.clear();
+                                      listResumePayment.state.clear();
+                                    } else {
+                                      setState(() => loading = false);
+                                      showSnackBar(
+                                          context, 'Erro ao marcar serviço');
+                                    }
+                                  } else {
+                                    setState(() => loading = false);
+                                    showSnackBar(
+                                      context,
+                                      'Desculpe, ocorreu um problema. Por favor, entre em contato com o suporte pelo site para que possamos resolver o seu problema de cadastro.',
+                                    );
+                                  }
+                                }
+//verifica email
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 5),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    loading
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 2,
+                                            ),
+                                          )
+                                        : Row(
+                                            children: const [
+                                              Icon(
+                                                CupertinoIcons.check_mark,
+                                                color: Colors.white,
+                                              ),
+                                              SizedBox(width: 15),
+                                              Text(
+                                                'Agendar',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
-            scrollable: true,
-            backgroundColor: colorBackground181818,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: SizedBox(
-                width: 22,
-                child: const Text(
+          ),
+        );
+      },
+    );
+  }
+}
+
+class AlreadyExistsEmailDialog extends StatefulWidget {
+  const AlreadyExistsEmailDialog({Key? key}) : super(key: key);
+
+  @override
+  State<AlreadyExistsEmailDialog> createState() =>
+      _AlreadyExistsEmailDialogState();
+}
+
+class _AlreadyExistsEmailDialogState extends State<AlreadyExistsEmailDialog> {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Consumer(
+      builder: (context, ref, child) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: SizedBox(
+            width: 500,
+            child: AlertDialog(
+              alignment: Alignment.center,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(32.0),
+                ),
+              ),
+              scrollable: true,
+              backgroundColor: colorBackground181818,
+              title: const Center(
+                // Centraliza o título
+                child: Text(
+                  'Você já possui conta!',
                   textAlign: TextAlign.center,
-                  'Falta pouco...',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-            ),
-            content: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: TextEditPatternWeb(
-                    label: 'Nome completo',
-                    obscure: false,
-                    maxLength: 300,
-                    controller: nameController,
-                    hint: 'Digite o seu nome completo',
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all<Color>(
-                        colorContainers353535,
-                      ),
-                      elevation: MaterialStateProperty.all(0),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 28, 28, 28)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+              content: Text(
+                'O que você deseja fazer?',
+                textAlign: TextAlign.center,
+                style:
+                    TextStyle(color: const Color.fromARGB(255, 188, 188, 188)),
+              ),
+              actionsAlignment: MainAxisAlignment.center, // Centraliza as ações
+              actions: [
+                Center(
+                  child: Column(
+                    // Coluna para centralizar os botões
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ButtonPatternDialog(
+                        width: size.width * 0.35,
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/login');
+                        },
+                        color: colorContainers242424,
+                        child: const Text(
+                          'Fazer login',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    onPressed: () async {
-                      if (nameController.text.trim().isEmpty) {
-                        showSnackBar(context, 'Digite seu nome');
-                      } else if (nameController.text.length < 4) {
-                        showSnackBar(context, 'Nome muito curto');
-                      } else if (!nameRegExp.hasMatch(nameController.text)) {
-                        showSnackBar(context, 'Nome inválido');
-                      } else if (!nameController.text.contains(' ')) {
-                        showSnackBar(
-                          context,
-                          'Digite o nome completo',
-                        );
-                      } else {
-                        setState(() => loading = true);
-                        ResponseCreateSchedule response =
-                            await createSchedule.createSchedule(
-                          nameController.text,
-                          widget.barberShop.barbershopId!,
-                          listResumePayment.state.transactionAmount!,
-                          listResumePayment.state.promotionalCodeDiscount ?? 0,
-                          listResumePayment.state.promotionalCodePercent ?? 0,
-                          listResumePayment.state.services,
-                        );
-                        if (response.status == 'success') {
-                          setState(() => loading = false);
-                          Navigator.of(context)
-                              .pushNamed('/approved/fit-service');
-                          serviceCache.state.clear();
-                          listResumePayment.state.clear();
-                        } else {
-                          setState(() => loading = false);
-                          showSnackBar(context, 'Erro ao marcar serviço');
-                        }
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 5),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            loading
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : Row(
-                                    children: const [
-                                      Icon(
-                                        CupertinoIcons.check_mark,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(width: 15),
-                                      Text(
-                                        'Agendar',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                          ],
+                      const SizedBox(height: 10), // Espaçamento entre os botões
+                      ButtonPatternDialog(
+                        width: size.width * 0.35,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        color: colorContainers242424,
+                        child: const Text(
+                          'Cadastrar com outro e-mail',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],

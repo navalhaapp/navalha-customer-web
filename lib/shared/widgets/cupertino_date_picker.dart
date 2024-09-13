@@ -31,18 +31,14 @@ class _CupertinoDataPickerState extends State<CupertinoDataPicker> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: colorBackground181818,
-                boxShadow: shadowButton,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 30, 30, 30),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
               ),
               height: 216,
               padding: const EdgeInsets.all(10),
-              margin: EdgeInsets.only(
-                left: 10,
-                right: 10,
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
               child: SafeArea(
                 top: false,
                 child: child,
@@ -89,7 +85,6 @@ class _CupertinoDataPickerState extends State<CupertinoDataPicker> {
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: widget.marginHorizontal,
-        vertical: MediaQuery.of(context).size.height * 0.01,
       ),
       decoration: BoxDecoration(
         color: widget.color,
@@ -108,7 +103,6 @@ class _CupertinoDataPickerState extends State<CupertinoDataPicker> {
               widget.label,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 22,
               ),
               textAlign: TextAlign.left,
             ),
@@ -120,7 +114,6 @@ class _CupertinoDataPickerState extends State<CupertinoDataPicker> {
                       textTheme: CupertinoTextThemeData(
                         dateTimePickerTextStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
                           wordSpacing: 10,
                         ),
                         primaryColor: Colors.white,
@@ -134,8 +127,11 @@ class _CupertinoDataPickerState extends State<CupertinoDataPicker> {
               child: Text(
                 '${widget.date.day} / ${widget.date.month} / ${widget.date.year}',
                 style: TextStyle(
-                  fontSize: 20,
-                  color: colorWhite255255255,
+                  color:
+                      '${widget.date.day} / ${widget.date.month} / ${widget.date.year}' ==
+                              '6 / 7 / 2000'
+                          ? const Color.fromARGB(255, 119, 119, 119)
+                          : colorWhite255255255,
                   fontStyle: FontStyle.normal,
                 ),
               ),

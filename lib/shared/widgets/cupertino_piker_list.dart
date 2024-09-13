@@ -36,9 +36,11 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: colorBackground181818,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 30, 30, 30),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
               ),
               height: 216,
               padding: const EdgeInsets.only(top: 6.0),
