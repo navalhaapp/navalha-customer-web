@@ -44,8 +44,6 @@ final Uri urlWhats =
     Uri(scheme: 'https', host: 'wa.me', path: '/5547991558228');
 
 String baseURLV1 = Enviroment.apiBaseUrl;
-String baseUrlProd = 'https://navalha-core.navalhatech.com.br/v1';
-String baseUrlDev = 'http://navalha-core-dev.us-east-1.elasticbeanstalk.com/v1';
 
 void pushFcm(BuildContext context, String? title, String? message) {
   Flushbar(

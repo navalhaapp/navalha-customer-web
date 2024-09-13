@@ -33,7 +33,8 @@ class ChangeLocationsState extends State<ChangeLocations> {
 
     String description = prediction.description!;
     List<Location> locations =
-        await GeocodingPlatform.instance.locationFromAddress(description);
+        await GeocodingPlatform.instance
+        !.locationFromAddress(description);
 
     if (locations.isNotEmpty) {
       Location location = locations.first;

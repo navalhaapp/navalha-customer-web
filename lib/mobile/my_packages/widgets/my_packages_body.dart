@@ -54,7 +54,7 @@ class _MyPackagesBodyState extends ConsumerState<MyPackagesBody> {
             children: [
               TopContainerTitle(
                 imgProfile: loginController.user?.customer?.imgProfile ??
-                    imgLogoNavalhaBlack,
+                    '',
                 imgBackGround: imgBackgroundBarberShop,
                 name: loginController.user?.customer?.name ?? 'Usuário',
               ),

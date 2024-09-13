@@ -51,7 +51,7 @@ class _BodyCalendarState extends ConsumerState<BodyCalendar> {
             children: [
               TopContainerTitle(
                 imgProfile: loginController.user?.customer?.imgProfile ??
-                    imgLogoNavalhaBlack,
+                    '',
                 imgBackGround: imgBackgroundBarberShop,
                 name: loginController.user?.customer?.name ?? 'Usuário',
               ),

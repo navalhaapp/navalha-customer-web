@@ -216,7 +216,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                                             .user
                                                             ?.customer
                                                             ?.imgProfile ??
-                                                        imgLogoNavalhaBlack,
+                                                        '',
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),

@@ -1,1 +1,0 @@
- /Users/viniciusrovigomedeiros/Documents/Dev/navalha-customer-web/.dart_tool/flutter_build/da1d124caa0d72f08f890eb8c9e29259/native_assets.yaml: 
