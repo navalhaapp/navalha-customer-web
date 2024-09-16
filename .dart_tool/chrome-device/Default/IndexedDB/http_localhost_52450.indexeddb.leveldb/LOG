@@ -1,0 +1,28 @@
+2024/09/16-14:45:08.003 b103 Reusing MANIFEST /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.w8pPKn/flutter_tools_chrome_device.HwAe13/Default/IndexedDB/http_localhost_52450.indexeddb.leveldb/MANIFEST-000001
+2024/09/16-14:45:08.004 b103 Recovering log #4
+2024/09/16-14:45:08.004 b103 Reusing old log /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.w8pPKn/flutter_tools_chrome_device.HwAe13/Default/IndexedDB/http_localhost_52450.indexeddb.leveldb/000004.log 
+2024/09/16-14:45:08.034 8703 Level-0 table #8: started
+2024/09/16-14:45:08.038 8703 Level-0 table #8: 9866 bytes OK
+2024/09/16-14:45:08.046 8703 Delete type=0 #4
+2024/09/16-14:45:08.046 8703 Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/09/16-14:45:12.482 b103 Level-0 table #10: started
+2024/09/16-14:45:12.486 b103 Level-0 table #10: 4018 bytes OK
+2024/09/16-14:45:12.493 b103 Delete type=0 #7
+2024/09/16-14:45:12.494 8207 Manual compaction at level-0 from '\x00\x06\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at '\x00\x06\x00\x00\x05' @ 246 : 1
+2024/09/16-14:45:12.494 8207 Compacting 1@0 + 1@1 files
+2024/09/16-14:45:12.496 8207 Generated table #11@0: 79 keys, 4090 bytes
+2024/09/16-14:45:12.497 8207 Compacted 1@0 + 1@1 files => 4090 bytes
+2024/09/16-14:45:12.502 8207 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/09/16-14:45:12.503 8207 Delete type=2 #10
+2024/09/16-14:45:12.503 8207 Manual compaction at level-0 from '\x00\x06\x00\x00\x05' @ 246 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/09/16-14:45:14.380 b103 Level-0 table #13: started
+2024/09/16-14:45:14.384 b103 Level-0 table #13: 928 bytes OK
+2024/09/16-14:45:14.392 b103 Delete type=2 #8
+2024/09/16-14:45:14.392 b103 Delete type=0 #9
+2024/09/16-14:45:14.393 8703 Manual compaction at level-0 from '\x00\x07\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x08\x00\x00\x00' @ 0 : 0; will stop at '\x00\x07\x00\x00\x05' @ 279 : 1
+2024/09/16-14:45:14.393 8703 Compacting 1@0 + 1@1 files
+2024/09/16-14:45:14.396 8703 Generated table #14@0: 80 keys, 4245 bytes
+2024/09/16-14:45:14.396 8703 Compacted 1@0 + 1@1 files => 4245 bytes
+2024/09/16-14:45:14.404 8703 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/09/16-14:45:14.404 8703 Delete type=2 #13
+2024/09/16-14:45:14.405 8703 Manual compaction at level-0 from '\x00\x07\x00\x00\x05' @ 279 : 1 .. '\x00\x08\x00\x00\x00' @ 0 : 0; will stop at (end)

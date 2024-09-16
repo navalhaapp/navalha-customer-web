@@ -40,7 +40,7 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ButtonSocialNetwork(
             onTap: () async {
-              UserCredential? userCredential = await signInWithGoogle();
+              var userCredential = await signInWithGoogle();
               userCredential == null
                   ? null
                   : await login(
@@ -110,7 +110,7 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
           email: response.customer!.email ?? '',
           birthDate: response.customer!.birthDate ?? '',
           userID: '',
-          password: response.customer!.password!,
+          password: response.customer!.password ?? '',
         ),
       );
       Navigator.of(context).pushNamed('/resume');
@@ -128,7 +128,7 @@ class _RowSocialNetworksWebState extends ConsumerState<RowSocialNetworksWeb> {
             email: email,
             birthDate: '',
             userID: id,
-            password: response.customer!.password!,
+            password: response.customer?.password ?? '',
           ),
         );
         Navigator.pushNamed(context, '/register-social');
