@@ -7,6 +7,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_analytics_web/firebase_analytics_web.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/mobile/change_password/change_password_page.dart';
@@ -77,6 +78,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
         CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
         var serviceCache = ref.watch(listServicesCacheProvider.state);
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
+
         final createSchedule =
             ref.watch(CreateScheduleStateController.provider.notifier);
         var barberShopProvider = ref.watch(barberShopSelectedProvider.state);
@@ -328,6 +330,7 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
   TextEditingController emailEditController = TextEditingController();
   DateTime date = DateTime(2018, 28, 10);
   final GlobalKey<FlutterPwValidatorState> validatorKey =
@@ -344,6 +347,7 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
     ReqCreateCustomerModel customer;
     return Consumer(
       builder: (context, ref, child) {
+        CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
         final authEmailController =
             ref.read(AuthEmailStateController.provider.notifier);
         final customerRegisterController =
@@ -352,7 +356,7 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
             ref.read(LoginStateController.provider.notifier);
         var fBTokenController = ref.watch(fBTokenProvider.state);
         final createSchedule =
-            ref.watch(CreateScheduleFitStateController.provider.notifier);
+            ref.watch(CreateScheduleStateController.provider.notifier);
         var serviceCache = ref.watch(listServicesCacheProvider.state);
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
         return Dialog(
@@ -411,28 +415,46 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
-                          child: CupertinoDataPicker(
+                          child: TextEditPatternWeb(
                             label: 'Data de nascimento',
-                            color: const Color.fromARGB(255, 30, 30, 30),
-                            marginHorizontal: 20,
-                            date: parseStringYYYYmmDDtoDateTime(birthdate),
-                            picker: CupertinoDatePicker(
-                              dateOrder: DatePickerDateOrder.dmy,
-                              initialDateTime:
-                                  parseStringYYYYmmDDtoDateTime(birthdate),
-                              mode: CupertinoDatePickerMode.date,
-                              use24hFormat: true,
-                              maximumYear: DateTime.now().year,
-                              onDateTimeChanged: (DateTime newDate) {
-                                setState(() {
-                                  birthdate =
-                                      parseDateTimeToStringYYYYmmDD(newDate);
-                                  date = newDate;
-                                });
-                              },
-                            ),
+                            obscure: false,
+                            maxLength: 10,
+                            controller: birthDateController,
+                            hint: 'DD/MM/AAAA',
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter
+                                  .digitsOnly, // Aceita apenas números
+                              LengthLimitingTextInputFormatter(
+                                  10), // Limita a 10 caracteres
+                              DateInputFormatter(),
+                            ],
                           ),
                         ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(bottom: 10),
+                        //   child: CupertinoDataPicker(
+                        //     label: 'Data de nascimento',
+                        //     color: const Color.fromARGB(255, 30, 30, 30),
+                        //     marginHorizontal: 20,
+                        //     date: parseStringYYYYmmDDtoDateTime(birthdate),
+                        //     picker: CupertinoDatePicker(
+                        //       dateOrder: DatePickerDateOrder.dmy,
+                        //       initialDateTime:
+                        //           parseStringYYYYmmDDtoDateTime(birthdate),
+                        //       mode: CupertinoDatePickerMode.date,
+                        //       use24hFormat: true,
+                        //       maximumYear: DateTime.now().year,
+                        //       onDateTimeChanged: (DateTime newDate) {
+                        //         setState(() {
+                        //           birthdate =
+                        //               parseDateTimeToStringYYYYmmDD(newDate);
+                        //           date = newDate;
+                        //         });
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: TextEditPatternWeb(
@@ -515,14 +537,10 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                               } else if (!EmailValidator.validate(
                                   emailEditController.text)) {
                                 showSnackBar(context, 'Digite um email válido');
-                              } else if (verificarDataFutura(
-                                  UtilText.formatDate(date))) {
+                              } else if (!verificarDataValida(
+                                  birthDateController.text)) {
                                 showSnackBar(context,
-                                    'Não é possível adicionar datas futuras!');
-                              } else if (DateTime(2020, 4, 10, 0, 0, 0, 0, 0) ==
-                                  date) {
-                                showSnackBar(context,
-                                    'Selecione uma data de nascimento!');
+                                    'Digite uma data de nascimento válida');
                               } else if (phoneController.text.length < 14) {
                                 showSnackBar(context, 'Telefone inválido');
                               } else if (passwordController.text.isEmpty) {
@@ -535,8 +553,7 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                                     'A senha deve conter alguma letra maiúscula!');
                               } else {
                                 setState(() => loading = true);
-
-//verifica email
+                                //verifica email
                                 final adressEmail = await authEmailController
                                     .authEmail(emailEditController.text.trim());
                                 if (adressEmail.result == 'already_exists') {
@@ -594,37 +611,36 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                                           password: customer.password!,
                                         ),
                                       );
+                                      //marcando serviço
+                                      ResponseCreateSchedule
+                                          responseCreateAppointment =
+                                          await createSchedule.createSchedule(
+                                        response.customer.customerId,
+                                        widget.barberShop.barbershopId!,
+                                        response.token,
+                                        listResumePayment
+                                            .state.transactionAmount!,
+                                        listResumePayment.state
+                                                .promotionalCodeDiscount ??
+                                            0,
+                                        listResumePayment
+                                                .state.promotionalCodePercent ??
+                                            0,
+                                        listResumePayment.state.services,
+                                      );
+                                      if (responseCreateAppointment.status ==
+                                          'success') {
+                                        Navigator.of(context)
+                                            .pushNamed('/approved');
+                                        serviceCache.state.clear();
+                                        listResumePayment.state.clear();
+                                      } else {
+                                        showSnackBar(
+                                            context, 'Erro ao marcar serviço');
+                                      }
                                       setState(() {
                                         _state = 2;
                                       });
-                                    }
-                                    //marcando serviço
-                                    ResponseCreateSchedule
-                                        responseCreateAppointment =
-                                        await createSchedule.createSchedule(
-                                      nameController.text,
-                                      widget.barberShop.barbershopId!,
-                                      listResumePayment
-                                          .state.transactionAmount!,
-                                      listResumePayment
-                                              .state.promotionalCodeDiscount ??
-                                          0,
-                                      listResumePayment
-                                              .state.promotionalCodePercent ??
-                                          0,
-                                      listResumePayment.state.services,
-                                    );
-                                    if (responseCreateAppointment.status ==
-                                        'success') {
-                                      setState(() => loading = false);
-                                      Navigator.of(context)
-                                          .pushNamed('/approved/fit-service');
-                                      serviceCache.state.clear();
-                                      listResumePayment.state.clear();
-                                    } else {
-                                      setState(() => loading = false);
-                                      showSnackBar(
-                                          context, 'Erro ao marcar serviço');
                                     }
                                   } else {
                                     setState(() => loading = false);
@@ -634,7 +650,6 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                                     );
                                   }
                                 }
-//verifica email
                               }
                             },
                             child: Padding(
@@ -774,4 +789,46 @@ class _AlreadyExistsEmailDialogState extends State<AlreadyExistsEmailDialog> {
       },
     );
   }
+}
+
+bool verificarDataValida(String data) {
+  // Verifica se a string está no formato correto
+  RegExp regex = RegExp(r'^(\d{2})\/(\d{2})\/(\d{4})$');
+  if (!regex.hasMatch(data)) {
+    return false;
+  }
+
+  // Divide a string em dia, mês e ano
+  List<String> partes = data.split('/');
+  int dia = int.parse(partes[0]);
+  int mes = int.parse(partes[1]);
+  int ano = int.parse(partes[2]);
+
+  // Verifica se o mês está entre 1 e 12
+  if (mes < 1 || mes > 12) {
+    return false;
+  }
+
+  // Verifica o número de dias em cada mês
+  List<int> diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  // Verifica se é um ano bissexto e ajusta fevereiro
+  if ((ano % 4 == 0 && ano % 100 != 0) || ano % 400 == 0) {
+    diasPorMes[1] = 29;
+  }
+
+  // Verifica se o dia é válido para o mês
+  if (dia < 1 || dia > diasPorMes[mes - 1]) {
+    return false;
+  }
+
+  // Verifica se a data é futura
+  DateTime dataAtual = DateTime.now();
+  DateTime dataFornecida = DateTime(ano, mes, dia);
+
+  if (dataFornecida.isAfter(dataAtual)) {
+    return false; // Data futura
+  }
+
+  return true;
 }

@@ -137,6 +137,43 @@ class UtilValidator {
   }
 }
 
+class DateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String text = newValue.text;
+
+    // Remove tudo que não seja número
+    text = text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    // Limita a 8 dígitos (DDMMYYYY)
+    if (text.length > 8) {
+      text = text.substring(0, 8);
+    }
+
+    // Adiciona as barras (/) nos lugares corretos
+    if (text.length >= 3 && text.length <= 4) {
+      text = text.substring(0, 2) + '/' + text.substring(2);
+    } else if (text.length > 4 && text.length <= 8) {
+      text = text.substring(0, 2) +
+          '/' +
+          text.substring(2, 4) +
+          '/' +
+          text.substring(4);
+    }
+
+    // Retorna o valor formatado com a nova posição do cursor
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+  }
+}
+
+String formatarDataNew(String data) {
+  return data.replaceAll('/', '-');
+}
+
 String? getServiceIdByName(String? name, List<Service>? services) {
   if (name == null || services == null) {
     return null;

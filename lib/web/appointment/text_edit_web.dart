@@ -16,6 +16,7 @@ class TextEditPatternWeb extends HookConsumerWidget {
   final EdgeInsets? margin;
   final Function? onChange;
   final double? width;
+  final List<TextInputFormatter>? inputFormatters;
 
   const TextEditPatternWeb({
     super.key,
@@ -31,6 +32,7 @@ class TextEditPatternWeb extends HookConsumerWidget {
     this.margin,
     this.onChange,
     this.width,
+    this.inputFormatters,
   });
 
   @override
@@ -79,9 +81,11 @@ class TextEditPatternWeb extends HookConsumerWidget {
                   keyboardType: keyboardType,
                   cursorColor: Colors.white,
                   onTap: () {},
-                  inputFormatters: UtilValidator.numberFormater(mask)
-                      ? [FilteringTextInputFormatter.digitsOnly, mask!]
-                      : null,
+                  inputFormatters: inputFormatters == null
+                      ? UtilValidator.numberFormater(mask)
+                          ? [FilteringTextInputFormatter.digitsOnly, mask!]
+                          : null
+                      : inputFormatters,
                   obscureText: obscure ?? false,
                   controller: controller,
                   style: const TextStyle(
