@@ -16,6 +16,7 @@ import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/appointment/widgets/service_item_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../mobile/home/model/response_get_barber_shop_by_id.dart';
 import '../../../shared/model/service_model.dart';
 

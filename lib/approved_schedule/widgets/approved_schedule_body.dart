@@ -1,6 +1,11 @@
 import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:navalha/core/colors.dart';
+import 'package:navalha/shared/shows_dialogs/dialog.dart';
 
 class ApprovedScheduleBody extends StatelessWidget {
   const ApprovedScheduleBody({
@@ -79,6 +84,7 @@ class SlideFadeTransition extends StatefulWidget {
   final Duration delayStart;
   final Duration animationDuration;
   final String page;
+  final Map<String, dynamic> args;
 
   const SlideFadeTransition({
     Key? key,
@@ -89,6 +95,7 @@ class SlideFadeTransition extends StatefulWidget {
     this.delayStart = const Duration(seconds: 0),
     this.animationDuration = const Duration(milliseconds: 800),
     required this.page,
+    required this.args,
   }) : super(key: key);
 
   @override
@@ -138,8 +145,9 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
       _animationController.forward();
       Timer(const Duration(milliseconds: 2000), () {
         if (mounted) {
-          // navigationFadePush(widget.page, context);
           Navigator.of(context).pushNamed(widget.page);
+          showCustomDialog(context,
+              SizedBox(width: 500, child: WhatsAppDialog(args: widget.args)));
         }
       });
     });
@@ -160,5 +168,86 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
         child: widget.child,
       ),
     );
+  }
+}
+
+class WhatsAppDialog extends StatelessWidget {
+  const WhatsAppDialog({
+    Key? key,
+    required this.args,
+  }) : super(key: key);
+
+  final Map<String, dynamic> args;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return
+        // padding: EdgeInsets.symmetric(
+        //     horizontal: size.width <= 500 ? 30 : size.width * 0.2),
+        AlertDialog(
+      alignment: Alignment.center,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(32.0),
+        ),
+      ),
+      scrollable: true,
+      backgroundColor: colorBackground181818,
+      title: SizedBox(
+        width: size.width * 0.6,
+        child: const Text(
+          textAlign: TextAlign.center,
+          'Agendamento confirmado!',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      content: const Text(
+        textAlign: TextAlign.center,
+        'Para garantir que tudo esteja perfeito, não se esqueça de enviar uma mensagem para a barbearia informando sobre seu agendamento. Se tiver dúvidas ou precisar de mais informações, eles estão prontos para ajudar!',
+        style: TextStyle(color: Colors.white),
+      ),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all<Color>(
+                    colorContainers353535,
+                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 24, 24, 24)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    'Enviar mensagem',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  _openWhatsApp(args);
+                }),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+void _openWhatsApp(Map<String, dynamic> args) async {
+  String url =
+      'https://wa.me/55${args['barbershop_phone']}/?text=Olá *${args['professional_name']}*, agendei um *${args['service_name']}* com você pelo *Navalha* para o dia *${args['service_date']}* às *${args['service_hour']}*.%0A%0A*Observações*: ${args['service_observation'] == '' ? 'Nenhuma observação.' : args['service_observation']}%0A%0AAté lá!';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    null;
   }
 }

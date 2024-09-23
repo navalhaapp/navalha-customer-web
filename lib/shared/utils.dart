@@ -10,6 +10,7 @@ import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile/home/model/response_get_barber_shop_by_id.dart';
 import 'package:navalha/shared/enviroment.dart';
 import 'package:navalha/shared/widgets/snack_bar_pattern.dart';
+import 'package:navalha/web/appointment/widgets/register_social_network_page_web.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -135,6 +136,13 @@ class UtilValidator {
 
     return false;
   }
+}
+
+String removeNonNumeric(String? input) {
+  if (input == null) {
+    return '';
+  }
+  return input.replaceAll(RegExp(r'[^0-9]'), '');
 }
 
 class DateInputFormatter extends TextInputFormatter {
@@ -497,4 +505,15 @@ List<ImageOnboarding> onboardingList(context) {
       height: MediaQuery.of(context).size.height * 0.55,
     ),
   ];
+}
+
+String formatDateStr(String? date) {
+  if (date == null) {
+    return '';
+  }
+  List<String> dateParts = date.split('-');
+
+  String formattedDate = '${dateParts[1]}/${dateParts[0]}/${dateParts[2]}';
+
+  return formattedDate;
 }

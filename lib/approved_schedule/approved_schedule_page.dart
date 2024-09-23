@@ -18,6 +18,8 @@ class ApprovedSchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -32,6 +34,7 @@ class ApprovedSchedulePage extends StatelessWidget {
             animationDuration: const Duration(milliseconds: 3000),
             offset: -3.0,
             direction: Direction.vertical,
+            args: args,
             child: SizedBox(
               height: 150,
               child: ApprovedScheduleBody(

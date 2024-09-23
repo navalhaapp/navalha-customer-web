@@ -223,7 +223,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                                           color: colorFontUnable116116116),
                                       const SizedBox(width: 3),
                                       Text(
-                                        '${observation.isNotEmpty ? 'Editar' : 'Adicionar'} uma observação',
+                                        '${observation.isNotEmpty ? 'Editar' : 'Adicionar uma'} observação',
                                         style: TextStyle(
                                           color: colorFontUnable116116116,
                                         ),
