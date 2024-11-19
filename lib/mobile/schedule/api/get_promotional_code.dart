@@ -6,15 +6,12 @@ class GetPromotionalCodeEndPoint {
   final Dio dio = Dio();
 
   Future getPromotionalCode(
-      String token, String promotionalCode, String barberShopId) async {
-    final headers = {
-      'Authorization': token,
-    };
+      String promotionalCode, String barberShopId) async {
+   
 
     try {
       var response = await dio.get(
         '$baseURLV1/barbershop/$barberShopId/get/promotional_code/$promotionalCode',
-        options: Options(headers: headers),
       );
       return response.data;
     } catch (e) {
@@ -29,9 +26,9 @@ class GetPromotionalCodeRepository {
   GetPromotionalCodeRepository({required this.getPromotionalCodeEndPoint});
 
   Future<ResponseGetPromotionalCode> getPromotionalCode(
-      String token, String promotionalCode, String barberShopId) async {
+      String promotionalCode, String barberShopId) async {
     final result = await getPromotionalCodeEndPoint.getPromotionalCode(
-        token, promotionalCode, barberShopId);
+        promotionalCode, barberShopId);
     if (result.runtimeType == DioError) {
       return ResponseGetPromotionalCode.fromJson(result.response.data);
     } else {
@@ -46,9 +43,9 @@ class GetPromotionalCodeUseCase {
   GetPromotionalCodeUseCase({required this.repository});
 
   Future<ResponseGetPromotionalCode> execute(
-      String token, String promotionalCode, String barberShopId) async {
+      String promotionalCode, String barberShopId) async {
     final response = await repository.getPromotionalCode(
-        token, promotionalCode, barberShopId);
+        promotionalCode, barberShopId);
     return response;
   }
 }

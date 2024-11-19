@@ -128,15 +128,11 @@ class _AddCouponHourBottonSheetState extends State<AddCouponHourBottonSheet> {
                             ),
                           ),
                           onPressed: () async {
-                            if (retrievedCustomer == null) {
-                              showSnackBar(context,
-                                  'Você precisa fazer o login para adicionar cupom de desconto!');
-                              Navigator.pushNamed(context, '/login');
-                            } else {
+                            
                               ResponseGetPromotionalCode response =
                                   await promotionalCodeController
                                       .getPromotionalCode(
-                                          retrievedCustomer.token,
+                                         
                                           codeController.text,
                                           widget.barberShop.barbershopId!);
                               if (response.status == 'success') {
@@ -155,7 +151,7 @@ class _AddCouponHourBottonSheetState extends State<AddCouponHourBottonSheet> {
                                 showSnackBar(context, 'Ops, algo aconteceu');
                                 Navigator.of(context).pop();
                               }
-                            }
+                            
                           },
                         ),
                       ],

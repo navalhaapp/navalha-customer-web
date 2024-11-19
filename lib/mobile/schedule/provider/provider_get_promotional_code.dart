@@ -36,9 +36,9 @@ class GetPromotionalCodeStateController
   );
 
   Future getPromotionalCode(
-      String token, String promotionalCode, String barberShopId) async {
+     String promotionalCode, String barberShopId) async {
     code = await _read(getPromotionalCodeUseCase)
-        .execute(token, promotionalCode, barberShopId);
+        .execute(promotionalCode, barberShopId);
 
     return code!;
   }

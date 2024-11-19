@@ -649,7 +649,34 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                                       if (responseCreateAppointment.status ==
                                           'success') {
                                         Navigator.of(context)
-                                            .pushNamed('/approved');
+                                            .pushNamed('/approved', arguments: {
+                                          'service_observation': serviceCache
+                                              .state.first.observation,
+                                          'barbershop_phone': removeNonNumeric(
+                                              serviceCache
+                                                  .state
+                                                  .first
+                                                  .professional
+                                                  ?.barbershop
+                                                  ?.phone),
+                                          'professional_name': serviceCache
+                                                  .state
+                                                  .first
+                                                  .professional
+                                                  ?.name ??
+                                              '',
+                                          'service_name': serviceCache
+                                                  .state.first.service?.name ??
+                                              '',
+                                          'service_date': formatDateStr(
+                                              listResumePayment
+                                                  .state.services.first.date),
+                                          'service_hour': listResumePayment
+                                              .state
+                                              .services
+                                              .first
+                                              .serviceInitialHour,
+                                        });
                                         serviceCache.state.clear();
                                         listResumePayment.state.clear();
                                       } else {
