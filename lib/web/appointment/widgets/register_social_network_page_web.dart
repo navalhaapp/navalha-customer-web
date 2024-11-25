@@ -42,7 +42,7 @@ class RegistrationSocialNetworksWeb extends StatefulHookConsumerWidget {
 class _RegistrationSocialNetworksWebState
     extends ConsumerState<RegistrationSocialNetworksWeb> {
   bool loading = false;
-  DateTime date = DateTime(2018, 28, 10);
+  DateTime? date;
   final List<String> _listgener = <String>[
     'Selecione o gênero',
     'Masculino',
@@ -299,7 +299,11 @@ class _RegistrationSocialNetworksWebState
                     prefs = await SharedPreferences.getInstance();
                     emailApple = prefs.getString('emailApple');
                     fullNameApple = prefs.getString('fullNameApple');
-                    if (verificarDataFutura(UtilText.formatDate(date))) {
+                    if (date == null) {
+                      showSnackBar(
+                          context, 'Preencha a sua data de nascimento!');
+                    } else if (verificarDataFutura(
+                        UtilText.formatDate(date!))) {
                       showSnackBar(
                           context, 'Não é possível adicionar datas futuras!');
                       setState(() {
@@ -362,7 +366,7 @@ class _RegistrationSocialNetworksWebState
                                   ? name
                                   : fullNameApple,
                               email,
-                              UtilText.formatDate(date),
+                              UtilText.formatDate(date!),
                               UtilText.registerGener[selectedItem] ==
                                       'undefined'
                                   ? null

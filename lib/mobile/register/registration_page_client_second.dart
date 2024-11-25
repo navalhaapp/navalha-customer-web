@@ -28,7 +28,7 @@ class _RegistrationPageClientSecondState
     'Feminino'
   ];
 
-  DateTime date = DateTime(2018, 28, 10);
+  DateTime? date;
   int selectedItem = 0;
 
   @override
@@ -108,7 +108,9 @@ class _RegistrationPageClientSecondState
                 ref.watch(customerRegisterProvider.notifier);
             return FloatingNextButton(
               onPressed: () {
-                if (verificarDataFutura(UtilText.formatDate(date))) {
+                if (date == null) {
+                  showSnackBar(context, 'Preencha a sua data de nascimento!');
+                } else if (verificarDataFutura(UtilText.formatDate(date!))) {
                   showSnackBar(
                       context, 'Não é possível adicionar datas futuras!');
                 } else {
@@ -116,7 +118,7 @@ class _RegistrationPageClientSecondState
                     'birth_date',
                     'gener'
                   ], [
-                    UtilText.formatDate(date),
+                    UtilText.formatDate(date!),
                     UtilText.registerGener[selectedItem] == 'undefined'
                         ? null
                         : UtilText.registerGener[selectedItem]

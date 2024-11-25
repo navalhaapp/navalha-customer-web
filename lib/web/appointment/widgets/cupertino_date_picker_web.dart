@@ -16,7 +16,7 @@ class CupertinoDataPickerWeb extends StatefulWidget {
   final Color color;
   final double marginHorizontal;
   final CupertinoDatePicker picker;
-  final DateTime date;
+  final DateTime? date;
 
   @override
   State<CupertinoDataPickerWeb> createState() => _CupertinoDataPickerState();
@@ -128,9 +128,13 @@ class _CupertinoDataPickerState extends State<CupertinoDataPickerWeb> {
               ),
               padding: EdgeInsets.zero,
               child: Text(
-                '${widget.date.day} / ${widget.date.month} / ${widget.date.year}',
+                widget.date == null
+                    ? 'Selecione uma data'
+                    : '${widget.date!.day} / ${widget.date!.month} / ${widget.date!.year}',
                 style: TextStyle(
-                  color: colorWhite255255255,
+                  color: widget.date == null
+                      ? colorFontUnable116116116
+                      : colorWhite255255255,
                   fontStyle: FontStyle.normal,
                 ),
               ),
