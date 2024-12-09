@@ -39,6 +39,15 @@ class ServicesPageWeb extends StatefulHookConsumerWidget {
 class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
   late ParamsBarberShopById getBarberShopModel;
   CustomerDB? retrievedCustomer;
+
+  final Uri _url = Uri.parse('https://navalha.app.br');
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -102,152 +111,171 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
           }).toList();
         }
 
-        List<Service> listServices = findServicesWithProfessionals(
-          data.barbershop!.professionals!,
-          showActivatedServices(data.barbershop!.services!),
-        );
-        return Consumer(
-          builder: (context, ref, child) {
-            WidgetsBinding.instance.addPostFrameCallback((_) async {
-              ref.watch(barberShopSelectedProvider.state).state =
-                  data.barbershop!;
-            });
-            return Scaffold(
-              backgroundColor: colorBackground181818,
-              drawer: DrawerPageWeb(barberShopId: widget.barberShopId!),
-              appBar: AppBar(
-                elevation: 0,
+        if (data.status != 'error') {
+          List<Service> listServices = findServicesWithProfessionals(
+            data.barbershop!.professionals!,
+            showActivatedServices(data.barbershop!.services!),
+          );
+          return Consumer(
+            builder: (context, ref, child) {
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                ref.watch(barberShopSelectedProvider.state).state =
+                    data.barbershop!;
+              });
+              return Scaffold(
                 backgroundColor: colorBackground181818,
-                title: Text(data.barbershop!.name ?? ''),
-                actions: [
-                  retrievedCustomer == null
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage(iconLogoApp),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        )
-                      : Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                retrievedCustomer!.image,
+                drawer: DrawerPageWeb(barberShopId: widget.barberShopId!),
+                appBar: AppBar(
+                  elevation: 0,
+                  backgroundColor: colorBackground181818,
+                  title: Text(data.barbershop!.name ?? ''),
+                  actions: [
+                    retrievedCustomer == null
+                        ? Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(iconLogoApp),
+                                fit: BoxFit.contain,
                               ),
-                              fit: BoxFit.contain,
                             ),
-                          ),
-                        ),
-                ],
-              ),
-              body: SingleChildScrollView(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Center(
-                      child: Container(
-                        margin: const EdgeInsets.all(18),
-                        width: 500,
-                        height: 500,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: colorContainers242424,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, top: 20, bottom: 10),
-                              child: Text(
-                                'Escolha um serviço',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  shadows: shadow,
-                                  color: Colors.white,
+                          )
+                        : Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  retrievedCustomer!.image,
                                 ),
+                                fit: BoxFit.contain,
                               ),
                             ),
-                            const Center(
-                              child: AlertContainer(
-                                backgroundColor: Colors.black54,
-                                message:
-                                    'Atenção: para agendar ou comprar um pacote, baixe o nosso aplicativo.',
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            SizedBox(
-                              height: 360,
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: listServices.length,
-                                itemBuilder: (context, iService) {
-                                  List<Professional> listProfessionals =
-                                      getProfessionalsByService(
-                                    listServices[iService],
-                                    data.barbershop!.professionals!,
-                                  );
-                                  return GestureDetector(
-                                    child: ServiceItemWeb(
-                                      havePrice: widget.havePrice,
-                                      packageSelected: widget.packageSelected,
-                                      description:
-                                          listServices[iService].description!,
-                                      duration: getDurationRange(
-                                          getAllServices(
-                                              data.barbershop!.professionals!),
-                                          listServices[iService].name!),
-                                      img: listServices[iService].imgProfile!,
-                                      name: listServices[iService].name!,
-                                      price: getPriceRange(
-                                          getAllServices(
-                                              data.barbershop!.professionals!),
-                                          listServices[iService].name!),
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                        '/select-professional',
-                                        arguments: {
-                                          'serviceName':
-                                              listServices[iService].name!,
-                                          'data': data,
-                                          'iService': iService,
-                                          'listProfessionals':
-                                              listProfessionals,
-                                          'packageSelected':
-                                              widget.packageSelected,
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const DownloadAppPromotion(),
+                          ),
                   ],
                 ),
+                body: SingleChildScrollView(
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.all(18),
+                          width: 500,
+                          height: 500,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: colorContainers242424,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, top: 20, bottom: 10),
+                                child: Text(
+                                  'Escolha um serviço',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    shadows: shadow,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const Center(
+                                child: AlertContainer(
+                                  backgroundColor: Colors.black54,
+                                  message:
+                                      'Atenção: para agendar ou comprar um pacote, baixe o nosso aplicativo.',
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                height: 360,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: listServices.length,
+                                  itemBuilder: (context, iService) {
+                                    List<Professional> listProfessionals =
+                                        getProfessionalsByService(
+                                      listServices[iService],
+                                      data.barbershop!.professionals!,
+                                    );
+                                    return GestureDetector(
+                                      child: ServiceItemWeb(
+                                        havePrice: widget.havePrice,
+                                        packageSelected: widget.packageSelected,
+                                        description:
+                                            listServices[iService].description!,
+                                        duration: getDurationRange(
+                                            getAllServices(data
+                                                .barbershop!.professionals!),
+                                            listServices[iService].name!),
+                                        img: listServices[iService].imgProfile!,
+                                        name: listServices[iService].name!,
+                                        price: getPriceRange(
+                                            getAllServices(data
+                                                .barbershop!.professionals!),
+                                            listServices[iService].name!),
+                                      ),
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                          '/select-professional',
+                                          arguments: {
+                                            'serviceName':
+                                                listServices[iService].name!,
+                                            'data': data,
+                                            'iService': iService,
+                                            'listProfessionals':
+                                                listProfessionals,
+                                            'packageSelected':
+                                                widget.packageSelected,
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const DownloadAppPromotion(),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        } else if (data.status == 'error') {
+          return Scaffold(
+            body: Center(
+              child: SizedBox(
+                width: 500,
+                child: WidgetEmpty(
+                  title: 'Barbearia não encontrada',
+                  subTitle: 'Parece que não conseguimos localizar a barbearia.',
+                  text: 'Escolher outra barbearia',
+                  onPressed: () => _launchUrl(),
+                ),
               ),
-            );
-          },
-        );
+            ),
+          );
+        } else {
+          return const SizedBox();
+        }
+        
       },
       error: (error, stackTrace) => Scaffold(
         body: Center(
