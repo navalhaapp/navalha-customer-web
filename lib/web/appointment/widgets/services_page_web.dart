@@ -128,21 +128,64 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: colorBackground181818,
-                  title: Text(data.barbershop!.name ?? ''),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(left: 10, right: 10),
+                        width: 25,
+                        height: 25,
+                        child: ClipOval(
+                          child: FadeInImage.assetNetwork(
+                            placeholder: imgLoading3,
+                            image: data.barbershop!.imgProfile ?? '',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      Text(data.barbershop!.name ?? ''),
+                    ],
+                  ),
                   actions: [
                     retrievedCustomer == null
-                        ? Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage(iconLogoApp),
-                                fit: BoxFit.contain,
+                        ? Row(
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/login');
+                                },
+                                style: ButtonStyle(
+                                  overlayColor:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                    (Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.pressed)) {
+                                        return colorContainers242424;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Entrar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
-                            ),
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage(iconLogoApp),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ],
                           )
                         : Container(
                             margin: const EdgeInsets.symmetric(
@@ -171,17 +214,18 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                         child: Container(
                           margin: const EdgeInsets.all(18),
                           width: 500,
-                          height: 500,
+                          height: 550,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             color: colorContainers242424,
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 10, top: 20, bottom: 10),
+                                    left: 10, top: 20, bottom: 0),
                                 child: Text(
                                   'Escolha um serviço',
                                   style: TextStyle(
@@ -193,7 +237,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                               ),
                               const Center(
                                 child: AlertContainer(
-                                  backgroundColor: Colors.black54,
+                                  backgroundColor: Colors.black26,
                                   message:
                                       'Atenção: para agendar ou comprar um pacote, baixe o nosso aplicativo.',
                                 ),
@@ -245,6 +289,13 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                                       },
                                     );
                                   },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 40,
+                                child: Image.asset(
+                                  logoBrancaCustomer,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                             ],

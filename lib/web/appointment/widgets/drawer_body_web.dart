@@ -38,57 +38,70 @@ class DrawerBodyWeb extends StatelessWidget {
       child: Consumer(
         builder: (context, ref, child) {
           CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _ImageProfile(
-                  imgProfile: retrievedCustomer?.image ?? imgProfileDefaultS3,
-                  nameUser: getFirstName(retrievedCustomer?.name ?? 'Usuário'),
-                  adressEmail: retrievedCustomer == null
-                      ? ''
-                      : retrievedCustomer.email.contains('appleid.com')
-                          ? ''
-                          : retrievedCustomer.email,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _ImageProfile(
+                    imgProfile: retrievedCustomer?.image ?? imgProfileDefaultS3,
+                    nameUser:
+                        getFirstName(retrievedCustomer?.name ?? 'Usuário'),
+                    adressEmail: retrievedCustomer == null
+                        ? ''
+                        : retrievedCustomer.email.contains('appleid.com')
+                            ? ''
+                            : retrievedCustomer.email,
+                  ),
+                  _ButtonItem(
+                    label: 'Reservar',
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/');
+                    },
+                    icon: CupertinoIcons.calendar_badge_plus,
+                  ),
+                  _ButtonItem(
+                    label: 'Meus agendamentos',
+                    onPressed: () async {
+                      Navigator.of(context).pushNamed('/calendar');
+                    },
+                    icon: CupertinoIcons.calendar,
+                  ),
+                  _ButtonItem(
+                    label: 'Página navalha',
+                    onPressed: () => _launchUrl(),
+                    icon: Icons.phone_iphone_rounded,
+                  ),
+                  _ButtonItem(
+                    label: retrievedCustomer == null
+                        ? 'Entrar na sua conta'
+                        : 'Sair',
+                    onPressed: () async {
+                      // final GoogleSignIn _googleSignIn = GoogleSignIn(
+                      //     // clientId:
+                      //     //     '503923325128-ms8brondqnsrld6bu5vcptsireonda6t.apps.googleusercontent.com',
+                      //     );
+                      // await _googleSignIn.disconnect();
+                      // await _googleSignIn.signOut();
+                      LocalStorageManagerLastPage.saveResumeLastPage(
+                          ResumeLastPage(false));
+                      LocalStorageManager.clearCustomer();
+                      Navigator.of(context).pushNamed('/login');
+                    },
+                    icon: Icons.exit_to_app_rounded,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 50,
+                child: Image.asset(
+                  logoBrancaCustomer,
+                  fit: BoxFit.contain,
                 ),
-                _ButtonItem(
-                  label: 'Reservar',
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/');
-                  },
-                  icon: CupertinoIcons.calendar_badge_plus,
-                ),
-                _ButtonItem(
-                  label: 'Meus agendamentos',
-                  onPressed: () async {
-                    Navigator.of(context).pushNamed('/calendar');
-                  },
-                  icon: CupertinoIcons.calendar,
-                ),
-                _ButtonItem(
-                  label: 'Página navalha',
-                  onPressed: () => _launchUrl(),
-                  icon: Icons.phone_iphone_rounded,
-                ),
-                _ButtonItem(
-                  label: 'Sair',
-                  onPressed: () async {
-                    // final GoogleSignIn _googleSignIn = GoogleSignIn(
-                    //     // clientId:
-                    //     //     '503923325128-ms8brondqnsrld6bu5vcptsireonda6t.apps.googleusercontent.com',
-                    //     );
-                    // await _googleSignIn.disconnect();
-                    // await _googleSignIn.signOut();
-                    LocalStorageManagerLastPage.saveResumeLastPage(
-                        ResumeLastPage(false));
-                    LocalStorageManager.clearCustomer();
-                    Navigator.of(context).pushNamed('/login');
-                  },
-                  icon: Icons.exit_to_app_rounded,
-                ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),
@@ -125,8 +138,9 @@ class _ButtonItem extends StatelessWidget {
           Icon(
             icon,
             color: Colors.white,
+            size: 20,
           ),
-          const SizedBox(width: 30),
+          const SizedBox(width: 10),
           Text(
             label,
             style: const TextStyle(

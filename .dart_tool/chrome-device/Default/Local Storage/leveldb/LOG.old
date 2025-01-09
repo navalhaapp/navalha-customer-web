@@ -1,6 +1,8 @@
-2024/12/05-21:30:51.456 2b07 Reusing MANIFEST /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.XtT2QA/flutter_tools_chrome_device.bu6JNq/Default/Local Storage/leveldb/MANIFEST-000001
-2024/12/05-21:30:51.458 2b07 Recovering log #10
-2024/12/05-21:30:51.458 2b07 Reusing old log /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.XtT2QA/flutter_tools_chrome_device.bu6JNq/Default/Local Storage/leveldb/000010.log 
-2024/12/05-21:30:51.458 2b07 Delete type=0 #7
-2024/12/05-21:30:51.458 2b07 Delete type=0 #4
-2024/12/05-21:30:51.459 2b07 Delete type=0 #3
+2025/01/07-20:17:00.153 2707 Reusing MANIFEST /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.PT0y5T/flutter_tools_chrome_device.WfIGkl/Default/Local Storage/leveldb/MANIFEST-000001
+2025/01/07-20:17:00.155 2707 Recovering log #16
+2025/01/07-20:17:00.155 2707 Reusing old log /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.PT0y5T/flutter_tools_chrome_device.WfIGkl/Default/Local Storage/leveldb/000016.log 
+2025/01/07-20:17:00.156 2707 Delete type=0 #13
+2025/01/07-20:17:00.156 2707 Delete type=0 #7
+2025/01/07-20:17:00.156 2707 Delete type=0 #4
+2025/01/07-20:17:00.156 2707 Delete type=0 #10
+2025/01/07-20:17:00.156 2707 Delete type=0 #3
