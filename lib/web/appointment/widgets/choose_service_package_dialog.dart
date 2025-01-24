@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:navalha/core/colors.dart';
-import '../../../mobile/home/model/response_get_barber_shop_by_id.dart';
+import '../../../mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 
 class ChooseServicePackage extends StatefulWidget {
   const ChooseServicePackage({

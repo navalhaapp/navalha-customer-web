@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:navalha/mobile/calendar/model/model_cancel_appointment.dart';
-import 'package:navalha/mobile/calendar/provider/provider_cancel_appointment.dart';
+import 'package:navalha/mobile-DEPRECIATED/calendar/model/model_cancel_appointment.dart';
+import 'package:navalha/mobile-DEPRECIATED/calendar/provider/provider_cancel_appointment.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/utils/utils.dart';
 import '../../../core/colors.dart';
-import '../../../shared/widgets/button_pattern_dialog.dart';
 
 class CancelAppointmentDialogWeb extends StatefulWidget {
   const CancelAppointmentDialogWeb({
@@ -33,8 +33,8 @@ class _CancelAppointmentDialogWebState
         final retrievedCustomer = LocalStorageManager.getCustomer();
         final cancelAppointment =
             ref.watch(CancelAppointmentStateController.provider.notifier);
-        return SizedBox(
-          width: 500,
+        return Padding(
+          padding: NavalhaUtils().calculateDialogPadding(context),
           child: AlertDialog(
             alignment: Alignment.center,
             shape: const RoundedRectangleBorder(
@@ -65,23 +65,69 @@ class _CancelAppointmentDialogWebState
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: ButtonPatternDialog(
-                      color: colorContainers242424,
-                      child: const Text(
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10, right: 5),
+                      height: 35,
+                      decoration: BoxDecoration(
+                        color: colorContainers242424,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(14),
+                        ),
+                      ),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          overlayColor: MaterialStateProperty.all<Color>(
+                            colorContainers353535,
+                          ),
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            colorContainers242424,
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                        ),
+                        child: const Text(
                         'Voltar',
                         style: TextStyle(fontSize: 15, color: Colors.white),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
                       },
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: ButtonPatternDialog(
-                      onPressed: () async {
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 5, right: 10),
+                      height: 35,
+                      decoration: BoxDecoration(
+                        color: colorContainers242424,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(14),
+                        ),
+                      ),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          overlayColor: MaterialStateProperty.all<Color>(
+                            colorContainers353535,
+                          ),
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            colorContainers242424,
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
                         setState(() {
                           loading = true;
                         });
@@ -106,8 +152,7 @@ class _CancelAppointmentDialogWebState
                           }
                           setState(() => loading = false);
                         }
-                      },
-                      color: colorContainers242424,
+                        },
                       child: !loading
                           ? Text(
                               'Confirmar',
@@ -124,6 +169,7 @@ class _CancelAppointmentDialogWebState
                                 strokeWidth: 2,
                               ),
                             ),
+                      ),
                     ),
                   ),
                 ],

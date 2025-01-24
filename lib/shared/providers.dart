@@ -1,14 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:navalha/mobile/home/model/response_get_barber_shop_by_id.dart';
+import 'package:navalha/mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 
 import 'package:navalha/shared/model/barber_shop_model.dart';
 
-import '../mobile/my_packages/widgets/cupertino_sliding.dart';
-import '../mobile/payment/model/response_create_pix_payment.dart';
-import '../mobile/schedule/model/model_reserved_time.dart';
-import '../mobile/schedule/model/model_service_cache.dart';
-import '../mobile/schedule/model/model_total_price.dart';
-import '../mobile/use_package/model/service_package_request.dart';
+import '../mobile-DEPRECIATED/my_packages/widgets/cupertino_sliding.dart';
+import '../mobile-DEPRECIATED/payment/model/response_create_pix_payment.dart';
+import '../mobile-DEPRECIATED/schedule/model/model_reserved_time.dart';
+import '../mobile-DEPRECIATED/schedule/model/model_service_cache.dart';
+import '../mobile-DEPRECIATED/schedule/model/model_total_price.dart';
+import '../mobile-DEPRECIATED/use_package/model/service_package_request.dart';
 import 'model/edit_profile_model.dart';
 import 'model/location_model.dart';
 import 'model/package_model.dart';

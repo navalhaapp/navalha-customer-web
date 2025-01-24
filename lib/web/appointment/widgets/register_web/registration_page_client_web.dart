@@ -8,8 +8,8 @@ import 'package:navalha/web/appointment/text_edit_web.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/register/provider/provider_auth_email.dart';
-import 'package:navalha/mobile/register/provider/register_customer_provider.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/provider/provider_auth_email.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/provider/register_customer_provider.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';

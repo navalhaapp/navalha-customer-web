@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:navalha/mobile/calendar/widget/status_item.dart';
+import 'package:navalha/mobile-DEPRECIATED/calendar/widget/status_item.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/web/appointment/widgets/cancel_appointment_dialog_web.dart';

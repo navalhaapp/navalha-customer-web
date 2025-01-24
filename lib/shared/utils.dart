@@ -7,14 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/home/model/response_get_barber_shop_by_id.dart';
+import 'package:navalha/mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 import 'package:navalha/shared/enviroment.dart';
 import 'package:navalha/shared/widgets/snack_bar_pattern.dart';
 import 'package:navalha/web/appointment/widgets/register_social_network_page_web.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../mobile/schedule/model/model_service_cache.dart';
+import '../mobile-DEPRECIATED/schedule/model/model_service_cache.dart';
 import 'model/professional_model.dart';
 import 'model/service_model.dart';
 

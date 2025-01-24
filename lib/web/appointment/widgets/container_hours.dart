@@ -20,6 +20,7 @@ class ContainerHoursWeb extends StatefulHookConsumerWidget {
 }
 
 class _ContainerHoursWebState extends ConsumerState<ContainerHoursWeb> {
+  Color _containerColor = const Color.fromARGB(255, 28, 28, 28);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,21 +33,31 @@ class _ContainerHoursWebState extends ConsumerState<ContainerHoursWeb> {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            decoration: BoxDecoration(
-              color: widget.selected
-                  ? const Color.fromARGB(255, 230, 198, 18)
-                  : const Color.fromARGB(255, 20, 20, 20),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(
-                widget.hour,
-                style: TextStyle(
-                  color: !widget.selected ? Colors.white : Colors.black,
-                  fontSize: 17,
-                  fontWeight: widget.selected ? FontWeight.bold : null,
+          MouseRegion(
+            onEnter: (_) {
+              setState(() =>
+                  _containerColor = const Color.fromARGB(255, 40, 40, 40));
+            },
+            onExit: (_) {
+              setState(() =>
+                  _containerColor = const Color.fromARGB(255, 28, 28, 28));
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 10),
+              decoration: BoxDecoration(
+                color: widget.selected
+                    ? const Color.fromARGB(255, 230, 198, 18)
+                    : _containerColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  widget.hour,
+                  style: TextStyle(
+                    color: !widget.selected ? Colors.white : Colors.black,
+                    fontSize: 17,
+                    fontWeight: widget.selected ? FontWeight.bold : null,
+                  ),
                 ),
               ),
             ),

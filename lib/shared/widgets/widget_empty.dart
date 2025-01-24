@@ -15,6 +15,7 @@ class WidgetEmpty extends StatelessWidget {
   final bool? havebutton;
   final bool? haveIcon;
   final Color? color;
+  final double? heightIcon;
 
   const WidgetEmpty({
     Key? key,
@@ -27,6 +28,7 @@ class WidgetEmpty extends StatelessWidget {
     this.titleSize,
     this.havebutton,
     this.haveIcon,
+    this.heightIcon,
     this.color,
   }) : super(key: key);
 
@@ -42,7 +44,7 @@ class WidgetEmpty extends StatelessWidget {
           haveIcon == null
               ? Image(
                   image: AssetImage(iconEmpyYellow),
-                  height: size.height * .15,
+                  height: heightIcon ?? size.height * .15,
                 )
               : const SizedBox(),
           SizedBox(height: spaceBetween ?? size.height * 0.0),
@@ -72,7 +74,7 @@ class WidgetEmpty extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25),
                     ),
                     elevation: 10,
-                    minWidth: size.width * 0.8,
+                    // minWidth: size.width * 0.08,
                     height: size.height * 0.05,
                     color: color ?? colorContainers242424,
                     onPressed: () => onPressed(),

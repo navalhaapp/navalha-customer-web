@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/register/provider/register_customer_provider.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/provider/register_customer_provider.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/cupertino_piker_list.dart';

@@ -6,25 +6,29 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/schedule/model/model_reserved_time.dart';
-import 'package:navalha/mobile/schedule/widgets/observation_botton_sheet.dart';
-import 'package:navalha/web/appointment/widgets/container_hours.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:navalha/mobile/schedule/model/model_get_open_hours_by_date.dart';
-import 'package:navalha/mobile/schedule/provider/provider_get_open_hours_by_date.dart';
+
+import 'package:navalha/mobile-DEPRECIATED/schedule/model/model_get_open_hours_by_date.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/model/model_reserved_time.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/provider/provider_get_open_hours_by_date.dart';
 import 'package:navalha/shared/model/open_hour_model.dart';
 import 'package:navalha/shared/shimmer/shimmer_faq.dart';
+import 'package:navalha/web/appointment/widgets/container_hours.dart';
+
 import '../../../shared/providers.dart';
 import '../../../shared/utils.dart';
 import '../../../shared/widgets/widget_empty.dart';
 
 class CalendarWeb extends StatefulHookConsumerWidget {
-  static const String page = '/calendar-page-web';
-  const CalendarWeb({super.key});
-
+  const CalendarWeb({
+    super.key,
+    required this.scrollToEnd,
+  });
+  
+  final Function() scrollToEnd;
   @override
   CalendarState createState() => CalendarState();
+  
 }
 
 class CalendarState extends ConsumerState<CalendarWeb> {
@@ -248,6 +252,7 @@ class CalendarState extends ConsumerState<CalendarWeb> {
                           _selectedDay = null;
                         });
                       }
+                      widget.scrollToEnd();
                     },
                     onFormatChanged: (format) {
                       if (_calendarFormat != format) {

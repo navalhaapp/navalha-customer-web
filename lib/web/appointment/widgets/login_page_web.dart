@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/web/appointment/widgets/body_login_page_web.dart';
+import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 
 class LoginPageWeb extends StatefulWidget {
   static const route = '/login-page-web';
@@ -31,6 +32,7 @@ class _LoginPageWebState extends State<LoginPageWeb> {
           ),
         ),
       ),
+      persistentFooterButtons: const [DownloadAppPromotion()],
     );
   }
 }

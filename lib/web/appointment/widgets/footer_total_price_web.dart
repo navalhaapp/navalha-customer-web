@@ -10,29 +10,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:navalha/mobile/change_password/change_password_page.dart';
-import 'package:navalha/mobile/edit_profile/edit_profile_page.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
-import 'package:navalha/mobile/payment/model/response_schedule.dart';
-import 'package:navalha/mobile/payment/provider/provider_create_schedule.dart';
-import 'package:navalha/mobile/register/api/create_customer_endpoint.dart';
-import 'package:navalha/mobile/register/model/req_create_customer.dart';
-import 'package:navalha/mobile/register/provider/provider_auth_email.dart';
-import 'package:navalha/mobile/register/provider/register_customer_provider.dart';
-import 'package:navalha/mobile/register/repository/registration_repository.dart';
-import 'package:navalha/mobile/register/usecase/create_customer_usecase.dart';
-import 'package:navalha/mobile/schedule/schedule_page.dart';
-import 'package:navalha/mobile/schedule/widgets/add_coupon_botton_sheet.dart';
+
+import 'package:navalha/mobile-DEPRECIATED/change_password/change_password_page.dart';
+import 'package:navalha/mobile-DEPRECIATED/login/controller/login_controller.dart';
+import 'package:navalha/mobile-DEPRECIATED/payment/model/response_schedule.dart';
+import 'package:navalha/mobile-DEPRECIATED/payment/provider/provider_create_schedule.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/api/create_customer_endpoint.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/model/req_create_customer.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/provider/provider_auth_email.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/provider/register_customer_provider.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/repository/registration_repository.dart';
+import 'package:navalha/mobile-DEPRECIATED/register/usecase/create_customer_usecase.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/schedule_page.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/widgets/add_coupon_botton_sheet.dart';
 import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/button_pattern_dialog.dart';
-import 'package:navalha/shared/widgets/cupertino_date_picker.dart';
-import 'package:navalha/shared/widgets/cupertino_piker_list.dart';
-import 'package:navalha/web/appointment/fit_service/provider/provider_create_schedule.dart';
 import 'package:navalha/web/appointment/text_edit_web.dart';
-import 'package:navalha/web/appointment/widgets/register_web/registration_page_client_second_web.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_password_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+
 import '../../../core/colors.dart';
 import '../../../shared/model/barber_shop_model.dart';
 import '../../../shared/providers.dart';
@@ -45,6 +42,7 @@ class FooterTotalPriceWeb extends StatefulWidget {
     required this.totalTime,
     required this.haveDiscount,
     required this.barberShop,
+    required this.onChangedCoupon,
   }) : super(key: key);
 
   final double totalPrice;
@@ -52,6 +50,7 @@ class FooterTotalPriceWeb extends StatefulWidget {
   final String totalTime;
   final bool haveDiscount;
   final BarberShop barberShop;
+  final Function() onChangedCoupon;
 
   @override
   State<FooterTotalPriceWeb> createState() => _FooterTotalPriceWebState();
@@ -108,8 +107,10 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                 onTap: () async {
                   showModalBottomSheet<void>(
                     backgroundColor: Colors.transparent,
-                    isScrollControlled: true,
-                    isDismissible: true,
+                    isScrollControlled: false,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     context: context,
                     builder: (BuildContext context) {
                       return GestureDetector(
@@ -122,6 +123,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                             setState(() {
                               couponName = value;
                             });
+                            widget.onChangedCoupon();
                           },
                         ),
                       );
@@ -138,7 +140,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                         Text(
                           couponName == null
                               ? 'Adicionar cupom de desconto'
-                              : 'Trocar cupom de desconto',
+                              : 'Trocar cupom de desconto: ',
                           style: const TextStyle(
                             color: Colors.white,
                           ),
@@ -146,7 +148,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                         Visibility(
                           visible: couponName != null,
                           child: Text(
-                            ': $couponName',
+                            couponName ?? '',
                             style: TextStyle(
                               color: colorFontUnable116116116,
                             ),
@@ -275,26 +277,40 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               if (response.status == 'success') {
                                 _trackFinalizeEvent(
                                     retrievedCustomer.customerId);
-
                                 Navigator.of(context)
                                     .pushNamed('/approved', arguments: {
-                                  'service_observation':
-                                      serviceCache.state.first.observation,
-                                  'barbershop_phone': removeNonNumeric(
-                                      serviceCache.state.first.professional
-                                          ?.barbershop?.phone),
-                                  'professional_name': serviceCache
-                                          .state.first.professional?.name ??
-                                      '',
-                                  'service_name':
-                                      serviceCache.state.first.service?.name ??
-                                          '',
-                                  'service_date': formatDateStr(
-                                      listResumePayment
-                                          .state.services.first.date),
-                                  'service_hour': listResumePayment
-                                      .state.services.first.serviceInitialHour,
+                                  'services': List.generate(
+                                      listResumePayment.state.services.length,
+                                      (index) {
+                                    final service =
+                                        listResumePayment.state.services[index];
+                                    final cachedService =
+                                        serviceCache.state.isNotEmpty
+                                            ? serviceCache.state[index]
+                                            : null;
+
+                                    return {
+                                      'service_observation':
+                                          cachedService?.observation ?? '',
+                                      'barbershop_phone': removeNonNumeric(
+                                          cachedService?.professional
+                                                  ?.barbershop?.phone ??
+                                              ''),
+                                      'professional_name':
+                                          cachedService?.professional?.name ??
+                                              '',
+                                      'service_name':
+                                          cachedService?.service?.name ?? '',
+                                      'service_date':
+                                          formatDateStr(service.date),
+                                      'service_hour':
+                                          service.serviceInitialHour,
+                                    };
+                                  }),
                                 });
+
+
+
                                 serviceCache.state.clear();
                                 listResumePayment.state.clear();
                               } else {
@@ -449,30 +465,6 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(bottom: 10),
-                        //   child: CupertinoDataPicker(
-                        //     label: 'Data de nascimento',
-                        //     color: const Color.fromARGB(255, 30, 30, 30),
-                        //     marginHorizontal: 20,
-                        //     date: parseStringYYYYmmDDtoDateTime(birthdate),
-                        //     picker: CupertinoDatePicker(
-                        //       dateOrder: DatePickerDateOrder.dmy,
-                        //       initialDateTime:
-                        //           parseStringYYYYmmDDtoDateTime(birthdate),
-                        //       mode: CupertinoDatePickerMode.date,
-                        //       use24hFormat: true,
-                        //       maximumYear: DateTime.now().year,
-                        //       onDateTimeChanged: (DateTime newDate) {
-                        //         setState(() {
-                        //           birthdate =
-                        //               parseDateTimeToStringYYYYmmDD(newDate);
-                        //           date = newDate;
-                        //         });
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: TextEditPatternWeb(
@@ -541,41 +533,40 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                             ),
                             onPressed: () async {
                               if (nameController.text.trim().isEmpty) {
-                                showSnackBar(context, 'Digite seu nome');
+                                showErrorDialog(context, 'Digite seu nome');
                               } else if (nameController.text.length < 4) {
-                                showSnackBar(context, 'Nome muito curto');
+                                showErrorDialog(context, 'Nome muito curto');
                               } else if (!nameRegExp
                                   .hasMatch(nameController.text)) {
-                                showSnackBar(context, 'Nome inválido');
+                                showErrorDialog(context, 'Nome inválido');
                               } else if (!nameController.text.contains(' ')) {
-                                showSnackBar(
+                                showErrorDialog(
                                   context,
                                   'Digite o nome completo',
                                 );
                               } else if (!EmailValidator.validate(
                                   emailEditController.text)) {
-                                showSnackBar(context, 'Digite um email válido');
+                                showErrorDialog(
+                                    context, 'Digite um email válido');
                               } else if (!verificarDataValida(
                                   birthDateController.text)) {
-                                showSnackBar(context,
+                                showErrorDialog(context,
                                     'Digite uma data de nascimento válida');
                               } else if (phoneController.text.length < 14) {
-                                showSnackBar(context, 'Telefone inválido');
+                                showErrorDialog(context, 'Telefone inválido');
                               } else if (passwordController.text.isEmpty) {
-                                showSnackBar(context, 'Digite uma senha');
+                                showErrorDialog(context, 'Digite uma senha');
                               } else if (!widget.passedTest) {
-                                showSnackBar(context, 'Senha não segura');
+                                showErrorDialog(context, 'Senha não segura');
                               } else if (!possuiLetraMaiuscula(
                                   passwordController.text.trim())) {
-                                showSnackBar(context,
+                                showErrorDialog(context,
                                     'A senha deve conter alguma letra maiúscula!');
                               } else {
                                 setState(() => loading = true);
-                                //verifica email
                                 final adressEmail = await authEmailController
                                     .authEmail(emailEditController.text.trim());
                                 if (adressEmail.result == 'already_exists') {
-                                  //apresentar dialog
                                   showCustomDialog(context,
                                       const AlreadyExistsEmailDialog());
                                   setState(() {
@@ -716,7 +707,7 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                                         : Row(
                                             children: const [
                                               Icon(
-                                                CupertinoIcons.check_mark,
+                                                Icons.check_circle_sharp,
                                                 color: Colors.white,
                                               ),
                                               SizedBox(width: 15),
@@ -876,4 +867,59 @@ bool verificarDataValida(String data) {
   }
 
   return true;
+}
+
+void showErrorDialog(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        alignment: Alignment.center,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(32.0),
+          ),
+        ),
+        scrollable: true,
+        backgroundColor: colorBackground181818,
+        title: const Text('Erro'),
+        content: Text(message),
+        actions: <Widget>[
+          Container(
+            margin: const EdgeInsets.only(left: 10, right: 5),
+            height: 35,
+            decoration: BoxDecoration(
+              color: colorContainers242424,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(14),
+              ),
+            ),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all<Color>(
+                  colorContainers353535,
+                ),
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  colorContainers242424,
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+              ),
+              child: const Text(
+                'Ok',
+                style: TextStyle(fontSize: 15, color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -28,13 +28,13 @@ class DrawerBodyWeb extends StatelessWidget {
       height: size.height,
       padding: EdgeInsets.only(top: size.height * 0.05),
       decoration: BoxDecoration(
-        color: colorBackground181818,
+        color: colorContainers242424,
         borderRadius: const BorderRadius.only(
-          bottomRight: Radius.circular(25),
-          topRight: Radius.circular(25),
+          bottomRight: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
       ),
-      width: 280,
+      width: 250,
       child: Consumer(
         builder: (context, ref, child) {
           CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
@@ -45,15 +45,19 @@ class DrawerBodyWeb extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _ImageProfile(
-                    imgProfile: retrievedCustomer?.image ?? imgProfileDefaultS3,
-                    nameUser:
-                        getFirstName(retrievedCustomer?.name ?? 'Usuário'),
-                    adressEmail: retrievedCustomer == null
-                        ? ''
-                        : retrievedCustomer.email.contains('appleid.com')
-                            ? ''
-                            : retrievedCustomer.email,
+                  Visibility(
+                    visible: retrievedCustomer != null,
+                    child: _ImageProfile(
+                      imgProfile:
+                          retrievedCustomer?.image ?? imgProfileDefaultS3,
+                      nameUser:
+                          getFirstName(retrievedCustomer?.name ?? ''),
+                      adressEmail: retrievedCustomer == null
+                          ? ''
+                          : retrievedCustomer.email.contains('appleid.com')
+                              ? ''
+                              : retrievedCustomer.email,
+                    ),
                   ),
                   _ButtonItem(
                     label: 'Reservar',
@@ -174,8 +178,8 @@ class _ImageProfile extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20),
           child: Container(
             padding: EdgeInsets.zero,
-            width: 120,
-            height: 120,
+            width: 80,
+            height: 80,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(1000),
               child: FadeInImage.assetNetwork(

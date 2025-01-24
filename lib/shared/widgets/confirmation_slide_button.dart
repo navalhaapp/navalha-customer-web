@@ -3,7 +3,7 @@
 
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:navalha/mobile/home/home_page.dart';
+import 'package:navalha/mobile-DEPRECIATED/home/home_page.dart';
 
 class ConfirmationSlideButton extends StatelessWidget {
   final String? text;

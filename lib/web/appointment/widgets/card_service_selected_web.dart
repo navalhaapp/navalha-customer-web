@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:navalha/mobile/schedule/model/model_delete_service_cache.dart';
-import 'package:navalha/mobile/schedule/model/model_reserved_time.dart';
-import 'package:navalha/mobile/schedule/provider/provider_delete_service_cache.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/model/model_delete_service_cache.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/model/model_reserved_time.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/provider/provider_delete_service_cache.dart';
 import 'package:navalha/shared/model/barber_shop_model.dart';
 import 'package:navalha/shared/utils.dart';
 import '../../../core/assets.dart';
@@ -77,6 +77,12 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(18)),
                 color: Color.fromARGB(255, 28, 28, 28),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 2,
+                      color: Color.fromARGB(255, 20, 20, 20),
+                      offset: Offset(3, 3))
+                ],
               ),
               child: Padding(
                 padding:
@@ -273,7 +279,6 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
                       totalPriceProvider.state.clear();
                       totalPriceProvider.state.discount = null;
                     }
-                    Navigator.of(context).pushNamed('/resume');
                   } else {
                     showSnackBar(context, 'Ops, algo aconteceu!');
                   }

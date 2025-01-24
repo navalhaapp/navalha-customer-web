@@ -12,7 +12,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
+import 'package:navalha/mobile-DEPRECIATED/login/controller/login_controller.dart';
 import 'package:navalha/shared/model/customer_model.dart';
 import 'package:navalha/web/appointment/text_edit_web.dart';
 import 'package:navalha/web/appointment/widgets/button_login_web.dart';
@@ -263,12 +263,9 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
               ),
             ),
           ),
-          Visibility(
-            visible: !widget.isloginDialog,
-            child: const DownloadAppPromotion(),
-          ),
         ],
       ),
+      
     );
   }
 

@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/home/model/provider_family_model.dart';
-import 'package:navalha/mobile/home/provider/provider_get_barber_shop_by_id.dart';
-import 'package:navalha/mobile/login/controller/login_controller.dart';
-import 'package:navalha/mobile/schedule/widgets/body_schedule.dart';
+import 'package:navalha/mobile-DEPRECIATED/home/model/provider_family_model.dart';
+import 'package:navalha/mobile-DEPRECIATED/home/provider/provider_get_barber_shop_by_id.dart';
+import 'package:navalha/mobile-DEPRECIATED/login/controller/login_controller.dart';
+import 'package:navalha/mobile-DEPRECIATED/schedule/widgets/body_schedule.dart';
 import 'package:navalha/shared/model/professional_model.dart';
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/shimmer/shimmer_calendar.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
-import 'package:navalha/web/appointment/widgets/service_item_web.dart';
+import 'package:navalha/web/home/widgets/service_item_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../mobile/home/model/response_get_barber_shop_by_id.dart';
+import '../../../mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 import '../../../shared/model/service_model.dart';
 
 class ServicesPageWeb extends StatefulHookConsumerWidget {
@@ -357,7 +357,6 @@ class DownloadAppPromotion extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.only(top: 88),
       height: 200,
       decoration: BoxDecoration(
         boxShadow: const [
@@ -452,7 +451,10 @@ class AlertContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      color: backgroundColor,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: backgroundColor,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

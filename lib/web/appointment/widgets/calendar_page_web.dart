@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/assets.dart';
@@ -36,21 +37,41 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                 ref.watch(barberShopSelectedProvider.state).state.name ?? ''),
             backgroundColor: colorBackground181818,
             actions: [
-              retrievedCustomer == null
-                  ? Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(iconLogoApp),
-                          fit: BoxFit.contain,
+              Row(
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/');
+                      },
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return colorContainers242424;
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                    )
-                  : Container(
+                      child: const Icon(
+                        Icons.home,
+                        color: Colors.white,
+                      )),
+                  retrievedCustomer == null
+                  ? Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: AssetImage(iconLogoApp),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        )
+                      : Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
                       width: 40,
@@ -65,47 +86,46 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                         ),
                       ),
                     ),
+                  
+                ],
+              )
+                 
             ],
           ),
           body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Center(
-                  child: Container(
-                    margin: const EdgeInsets.all(18),
-                    width: 500,
-                    height: 500,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: colorContainers242424,
-                    ),
-                    child: Consumer(
-                      builder: (context, ref, child) {
-                        if (retrievedCustomer == null) {
-                          return Center(
-                            child: WidgetEmpty(
-                              topSpace: 0,
-                              title: 'Vamos começar!',
-                              subTitle:
-                                  'Por favor, entre ou registre-se para continuar.',
-                              text: 'Entrar',
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/login');
-                              },
-                            ),
-                          );
-                        } else {
-                          return const BodyCalendarWeb();
-                        }
-                      },
-                    ),
-                  ),
+            child: Center(
+              child: Container(
+                margin: const EdgeInsets.all(18),
+                width: 500,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: colorContainers242424,
                 ),
-                const DownloadAppPromotion(),
-              ],
+                child: Consumer(
+                  builder: (context, ref, child) {
+                    if (retrievedCustomer == null) {
+                      return Center(
+                        child: WidgetEmpty(
+                          heightIcon: 100,
+                          topSpace: 0,
+                          title: 'Vamos começar!',
+                          subTitle:
+                              'Por favor, entre ou registre-se para continuar.',
+                          text: 'Entrar',
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/login');
+                          },
+                        ),
+                      );
+                    } else {
+                      return const BodyCalendarWeb();
+                    }
+                  },
+                ),
+              ),
             ),
           ),
+          persistentFooterButtons: [const DownloadAppPromotion()],
         );
       }),
     );

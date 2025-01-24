@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class HeaderBottonSheetPattern extends StatelessWidget {
   final Widget? widget;
   final Function? onClose;
+  final double? width;
   const HeaderBottonSheetPattern({
     Key? key,
     this.widget,
     this.onClose,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class HeaderBottonSheetPattern extends StatelessWidget {
         widget ??
             Container(
               margin: const EdgeInsets.only(bottom: 10),
-              width: size.width * 0.10,
+              width: width ?? size.width * 0.10,
               height: 5,
               decoration: BoxDecoration(
                 color: Colors.white,

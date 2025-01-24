@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/calendar/calendar_page.dart';
+import 'package:navalha/mobile-DEPRECIATED/calendar/calendar_page.dart';
 
 Future<void> confirmAppointmentDialog(BuildContext context) {
   final size = MediaQuery.of(context).size;

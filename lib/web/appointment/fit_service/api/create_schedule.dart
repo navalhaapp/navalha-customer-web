@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:navalha/mobile/payment/model/response_schedule.dart';
+import 'package:navalha/mobile-DEPRECIATED/payment/model/response_schedule.dart';
 import 'package:navalha/shared/utils.dart';
 
 class CreateScheduleEndPoint {

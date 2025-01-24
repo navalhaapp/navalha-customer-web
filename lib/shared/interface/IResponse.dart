@@ -1,4 +1,4 @@
-import '../../mobile/use_package/model/response_use_package.dart';
+import '../../mobile-DEPRECIATED/use_package/model/response_use_package.dart';
 
 class IResponse<S, R> {
   S? status;

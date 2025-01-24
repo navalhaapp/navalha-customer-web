@@ -3,13 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/forget_password/model/reset_password_model.dart';
-import 'package:navalha/mobile/forget_password/provider/provider_reset_password.dart';
-import 'package:navalha/mobile/forget_password/widgets/form_field_email.dart';
+import 'package:navalha/mobile-DEPRECIATED/forget_password/model/reset_password_model.dart';
+import 'package:navalha/mobile-DEPRECIATED/forget_password/provider/provider_reset_password.dart';
+import 'package:navalha/mobile-DEPRECIATED/forget_password/widgets/form_field_email.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/header_button_sheet_pattern.dart';
 import 'package:navalha/web/appointment/reset_page/reset_page.dart';
+import 'package:navalha/web/utils/utils.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ForgetPasswordPageWeb extends StatefulWidget {
@@ -56,33 +57,35 @@ class _ForgetPasswordPageWebState extends State<ForgetPasswordPageWeb> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    SizedBox(height: size.height * 0.02),
-                    const Icon(
-                      Icons.lock,
-                      size: 80,
-                      color: Colors.white,
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        'Informe seu email para que possamos enviar informações de como recuperar a sua senha',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
+                Expanded(
+                  child: Column(
+                    children: [
+                      SizedBox(height: size.height * 0.1),
+                      const Icon(
+                        Icons.lock,
+                        size: 80,
+                        color: Colors.white,
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          'Informe seu email para que possamos enviar informações de como recuperar a sua senha',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    FormFieldEmail(
-                      maxLength: 300,
-                      hint: 'Email do cadastro',
-                      controller: emailController,
-                    ),
-                  ],
+                      SizedBox(height: size.height * 0.02),
+                      FormFieldEmail(
+                        maxLength: 300,
+                        hint: 'Email do cadastro',
+                        controller: emailController,
+                      ),
+                    ],
+                  ),
                 ),
                 Consumer(
                   builder: (context, ref, child) {
@@ -225,20 +228,20 @@ class _ConfirmEmailBottonSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          color: colorBackground181818,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
+      child: Padding(
+        padding: NavalhaUtils().calculateDialogPadding(context),
+        child: Container(
+          decoration: BoxDecoration(
+            color: colorBackground181818,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(22),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const HeaderBottonSheetPattern(),
+              const HeaderBottonSheetPattern(width: 40),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
@@ -321,7 +324,7 @@ class _ConfirmEmailBottonSheet extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Text(
                   'Não encontrou? Confira a aba de Promoções ou Spam do seu e-mail',
                   textAlign: TextAlign.center,

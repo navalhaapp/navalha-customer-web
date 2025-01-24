@@ -1,4 +1,4 @@
-import '../../mobile/home/model/response_get_barber_shop_by_id.dart';
+import '../../mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 
 class PackageModel {
   String? barbershopPackageId;

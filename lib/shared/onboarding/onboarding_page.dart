@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/mobile/permission_loc/permission_page.dart';
+import 'package:navalha/mobile-DEPRECIATED/permission_loc/permission_page.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:page_view_indicators/page_view_indicators.dart';
