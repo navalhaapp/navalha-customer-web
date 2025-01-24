@@ -4,22 +4,21 @@ import 'package:navalha/approved_schedule/widgets/approved_schedule_body.dart';
 import 'package:navalha/core/colors.dart';
 
 class ApprovedSchedulePage extends StatelessWidget {
-  static const route = '/approved-payment-page';
 
   const ApprovedSchedulePage({
     Key? key,
     required this.page,
     this.title,
     this.subTitle,
+    required this.arguments,
   }) : super(key: key);
   final String page;
   final String? title;
   final String? subTitle;
+  final Map<String, dynamic> arguments;
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -34,7 +33,7 @@ class ApprovedSchedulePage extends StatelessWidget {
             animationDuration: const Duration(milliseconds: 3000),
             offset: -3.0,
             direction: Direction.vertical,
-            args: args,
+            args: arguments,
             child: SizedBox(
               height: 150,
               child: ApprovedScheduleBody(

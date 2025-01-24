@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:navalha/web/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:navalha/core/colors.dart';
@@ -182,36 +183,35 @@ class WhatsAppDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return
-        // padding: EdgeInsets.symmetric(
-        //     horizontal: size.width <= 500 ? 30 : size.width * 0.2),
-        AlertDialog(
-      alignment: Alignment.center,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(32.0),
+    return Padding(
+      padding: NavalhaUtils().calculateDialogPadding(context),
+      child: AlertDialog(
+        alignment: Alignment.center,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(32.0),
+          ),
         ),
-      ),
-      scrollable: true,
-      backgroundColor: colorBackground181818,
-      title: SizedBox(
-        width: size.width * 0.6,
-        child: const Text(
+        scrollable: true,
+        backgroundColor: colorBackground181818,
+        title: SizedBox(
+          width: size.width * 0.6,
+          child: const Text(
+            textAlign: TextAlign.center,
+            'Agendamento confirmado!',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        content: const Text(
           textAlign: TextAlign.center,
-          'Agendamento confirmado!',
+          'Para garantir que tudo esteja perfeito, não se esqueça de enviar uma mensagem para a barbearia informando sobre seu agendamento. Se tiver dúvidas ou precisar de mais informações, eles estão prontos para ajudar!',
           style: TextStyle(color: Colors.white),
         ),
-      ),
-      content: const Text(
-        textAlign: TextAlign.center,
-        'Para garantir que tudo esteja perfeito, não se esqueça de enviar uma mensagem para a barbearia informando sobre seu agendamento. Se tiver dúvidas ou precisar de mais informações, eles estão prontos para ajudar!',
-        style: TextStyle(color: Colors.white),
-      ),
-      actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
                 style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all<Color>(
                     colorContainers353535,
@@ -233,21 +233,34 @@ class WhatsAppDialog extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  _openWhatsApp(args);
-                }),
-          ],
-        ),
-      ],
+                  _openWhatsApp(args['services']);
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
-}
 
-void _openWhatsApp(Map<String, dynamic> args) async {
-  String url =
-      'https://wa.me/55${args['barbershop_phone']}/?text=Olá *${args['professional_name']}*, agendei um *${args['service_name']}* com você pelo *Navalha* para o dia *${args['service_date']}* às *${args['service_hour']}*.%0A%0A*Observações*: ${args['service_observation'] == '' ? 'Nenhuma observação.' : args['service_observation']}%0A%0AAté lá!';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    null;
+  void _openWhatsApp(List<dynamic> services) async {
+    String url =
+        'https://wa.me/55${services[0]['barbershop_phone']}/?text=Olá, agendei os seguintes serviços com você pelo *Navalha*:%0A';
+    // 'https://wa.me/5547996675564/?text=Olá, agendei os seguintes serviços com você pelo *Navalha*:%0A';
+
+    for (var service in services) {
+      url +=
+          '*${service['service_name']}* com *${service['professional_name']}* para o dia *${service['service_date']}* às *${service['service_hour']}*.%0A';
+      url +=
+          '*Observações*: ${service['service_observation'] == '' ? 'Nenhuma observação.' : service['service_observation']}%0A%0A';
+    }
+
+    url += 'Até lá!';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      null;
+    }
   }
 }
