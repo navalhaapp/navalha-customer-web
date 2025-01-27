@@ -315,6 +315,7 @@ class CalendarState extends ConsumerState<CalendarWeb> {
                                                   .state
                                                   .listOpenHours![index]
                                                   .discount;
+                                          widget.scrollToEnd();
                                         },
                                         dicount: reservedTime.state
                                             .listOpenHours![index].discount,

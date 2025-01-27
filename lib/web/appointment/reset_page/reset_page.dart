@@ -3,24 +3,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile-DEPRECIATED/change_password/change_password_page.dart';
 import 'package:navalha/mobile-DEPRECIATED/change_password/model/change_password_model.dart';
 import 'package:navalha/mobile-DEPRECIATED/change_password/provider/provider_change_password.dart';
-import 'package:navalha/mobile-DEPRECIATED/forget_password/forget_password_page.dart';
-import 'package:navalha/mobile-DEPRECIATED/login/controller/login_controller.dart';
-import 'package:navalha/mobile-DEPRECIATED/login/login_page.dart';
 import 'package:navalha/shared/utils.dart';
-import 'package:navalha/shared/widgets/page_transition.dart';
 import 'package:navalha/shared/widgets/text_edit.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_password_web.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   static const route = '/reset-password-page';
 
-  ResetPasswordPage({Key? key}) : super(key: key);
+  ResetPasswordPage({
+    Key? key,
+    required this.arguments,
+  }) : super(key: key);
   static bool btnConverIsPressed = false;
+  final Map<String, dynamic> arguments;
   bool passedTest = false;
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
@@ -43,10 +44,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    var args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-    final String customerId = args?['customer_id'] ?? '';
+    final String customerId = widget.arguments['customer_id'] ?? '';
     final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
@@ -199,7 +198,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       showSnackBar(context, 'Senha atualizada com sucesso!');
                       Future.delayed(const Duration(milliseconds: 1500))
                           .then((value) {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.of(context).pushNamed('/login');
                       });
                     }
                   }

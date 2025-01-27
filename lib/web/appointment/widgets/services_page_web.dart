@@ -16,6 +16,7 @@ import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/home/widgets/service_item_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/shared/downloadAppPromotionBanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 import '../../../shared/model/service_model.dart';
@@ -348,92 +349,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
   }
 }
 
-class DownloadAppPromotion extends StatelessWidget {
-  const DownloadAppPromotion({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: 200,
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(color: Colors.white10, spreadRadius: 2),
-        ],
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-        // color: colorYellow25020050,
-        image: DecorationImage(
-          image: AssetImage(imgBackgroundBarberLogin),
-          fit: BoxFit.cover,
-          // opacity: 0.3,
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: size.width > 500 ? 350 : 200,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(18),
-                      bottomRight: Radius.circular(18),
-                    ),
-                    color: Colors.black),
-                child: const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: 10, right: 10, top: 10, bottom: 10),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      'Para uma experiência completa, baixe nosso aplicativo.',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 212, 212, 212)),
-                    ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: size.width < 920,
-                child: SizedBox(
-                    height: size.width < 500 ? 38 : 60,
-                    child: Image.asset(imgStore2)),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: SizedBox(
-              child: Image.asset(
-                height: 190,
-                imgMockup1,
-              ),
-            ),
-          ),
-          Visibility(
-            visible: size.width > 720,
-            child: SizedBox(height: 200, child: Image.asset(imgMockup2)),
-          ),
-          Visibility(
-            visible: size.width > 920,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: SizedBox(height: 120, child: Image.asset(imgStore)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class AlertContainer extends StatelessWidget {
   final String message;

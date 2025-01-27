@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:navalha/mobile-DEPRECIATED/calendar/model/model_cancel_appointment.dart';
+import 'package:navalha/mobile-DEPRECIATED/calendar/provider/provider_cancel_appointment.dart';
 import 'package:navalha/mobile-DEPRECIATED/calendar/widget/status_item.dart';
 import 'package:navalha/core/colors.dart';
-import 'package:navalha/shared/shows_dialogs/dialog.dart';
-import 'package:navalha/web/appointment/widgets/cancel_appointment_dialog_web.dart';
+import 'package:navalha/shared/utils.dart';
 import 'package:navalha/web/appointment/widgets/evaluate_botton_sheet_web.dart';
+import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/shared/navalha_dialog.dart';
 
 class ContainerCalendarWeb extends StatelessWidget {
   final String nameBarberShop;
@@ -348,45 +352,86 @@ class _ContainerActive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 35,
-      margin: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
-        color: colorContainers353535,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextButton(
-              style: TextButton.styleFrom(
-                elevation: 0,
-                foregroundColor: const Color.fromARGB(255, 36, 36, 36),
-              ),
-              onPressed: () => {
-                showCustomDialog(
-                  context,
-                  CancelAppointmentDialogWeb(
-                    professionalId: professionalId,
-                    scheduleServiceId: scheduleServiceId,
-                  ),
+    return Consumer(builder: (context, ref, child) {
+      final retrievedCustomer = LocalStorageManager.getCustomer();
+      final cancelAppointment =
+          ref.watch(CancelAppointmentStateController.provider.notifier);
+      return Container(
+        height: 35,
+        margin: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+        ),
+        decoration: BoxDecoration(
+          borderRadius:
+              const BorderRadius.vertical(bottom: Radius.circular(18)),
+          color: colorContainers353535,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  elevation: 0,
+                  foregroundColor: const Color.fromARGB(255, 36, 36, 36),
                 ),
-              },
-              child: const Text(
-                textAlign: TextAlign.center,
-                'Cancelar agendamento',
-                style: TextStyle(
-                  color: Colors.white,
+                onPressed: () {
+                  showCupertinoDialog(
+                    context: context,
+                    builder: (context) => NavalhaDialog(
+                      title: 'Atenção!',
+                      content:
+                          'Você tem certeza de que deseja cancelar seu agendamento? Esta ação não poderá ser desfeita.',
+                      cancelText: 'Voltar',
+                      onCancel: () => Navigator.pop(context),
+                      confirmText: 'Cancelar Agendamento',
+                      onConfirm: () async {
+                        ResponseCancelAppointment response =
+                            await cancelAppointment.cancelAppointment(
+                          retrievedCustomer!.token,
+                          scheduleServiceId,
+                          retrievedCustomer.customerId,
+                        );
+                        if (context.mounted) {
+                          if (response.status == 'success') {
+                            showSnackBar(context, 'Agendamento cancelado!');
+                            Navigator.pop(context);
+                          } else {
+                            if (response.result == 'less_than_4_hours_left') {
+                              showSnackBar(context,
+                                  'Agendamento só pode ser cancelado com 4 horas de antecedência!');
+                              Navigator.pop(context);
+                            } else {
+                              Navigator.pop(context);
+                              showSnackBar(context, 'Ops, algo aconteceu');
+                            }
+                          }
+                        }
+                      },
+                    ),
+                  );
+                }
+                // showCustomDialog(
+                //   context,
+                //   CancelAppointmentDialogWeb(
+                //     professionalId: professionalId,
+                //     scheduleServiceId: scheduleServiceId,
+                //   ),
+                // ),
+                ,
+                child: const Text(
+                  textAlign: TextAlign.center,
+                  'Cancelar agendamento',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:navalha/web/home/widgets/professionals_list.dart';
 import 'package:navalha/web/home/widgets/resume_page_web.dart';
 import 'package:navalha/web/home/widgets/select_hours_page_web.dart';
 import 'package:navalha/web/home/widgets/services_list.dart';
+import 'package:navalha/web/shared/downloadAppPromotionBanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 
@@ -188,7 +190,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                           ),
                         ),
                       ),
-                      Text(data.barbershop!.name ?? ''),
+                      AutoSizeText(data.barbershop!.name ?? ''),
                     ],
                   ),
                   actions: [
@@ -275,6 +277,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                 ),
                 body: Center(
                   child: SingleChildScrollView(
+                    padding: EdgeInsets.zero,
                     controller: _scrollController,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,7 +299,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                         ),
                         Center(
                           child: Container(
-                            margin: const EdgeInsets.all(18),
+                            margin: const EdgeInsets.all(10),
                             width: getResponsiveWidth(context),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
@@ -340,6 +343,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                     ),
                   ),
                 ),
+                persistentFooterAlignment: AlignmentDirectional.bottomCenter,
                 persistentFooterButtons: const [DownloadAppPromotion()],
               );
             },
@@ -387,11 +391,11 @@ double getResponsiveWidth(BuildContext context) {
   double screenWidth = MediaQuery.of(context).size.width;
 
   if (screenWidth < 400) {
-    return 335;
+    return 400;
   } else if (screenWidth < 500) {
-    return 360;
+    return 500;
   } else if (screenWidth < 600) {
-    return 460;
+    return 550;
   } else {
     return 550;
   }

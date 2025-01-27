@@ -84,6 +84,7 @@ class _ProfessionalListPageWebState extends State<ProfessionalListPageWeb> {
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: listProfessionals.length,
                   itemBuilder: (context, i) {
                     return GestureDetector(

@@ -66,7 +66,8 @@ class _MyAppState extends ConsumerState<MyApp> {
             return animatedRoute(const RegistrationSocialNetworksWeb(),
                 routeName: '/register-social');
           case '/reset-password':
-            return animatedRoute(ResetPasswordPage(),
+            final args = settings.arguments as Map<String, dynamic>;
+            return animatedRoute(ResetPasswordPage(arguments: args),
                 routeName: '/reset-password');
           case '/approved':
             final args = settings.arguments as Map<String, dynamic>;

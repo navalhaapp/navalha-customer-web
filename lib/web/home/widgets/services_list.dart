@@ -46,6 +46,7 @@ class ServicesList extends StatelessWidget {
           child: ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: listServices.length,
             itemBuilder: (context, iService) {
               List<Professional> listProfessionals = getProfessionalsByService(

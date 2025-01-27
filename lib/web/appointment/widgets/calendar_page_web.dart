@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/assets.dart';
@@ -7,8 +6,8 @@ import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/calendar_body_web.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
-import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/shared/downloadAppPromotionBanner.dart';
 
 class CalendarPageWeb extends StatefulWidget {
   const CalendarPageWeb({Key? key}) : super(key: key);
@@ -44,9 +43,9 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                         Navigator.of(context).pushNamed('/');
                       },
                       style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed)) {
+                        overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                          (Set<WidgetState> states) {
+                            if (states.contains(WidgetState.pressed)) {
                               return colorContainers242424;
                             }
                             return null;
@@ -92,10 +91,10 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                  
             ],
           ),
-          body: SingleChildScrollView(
-            child: Center(
+          body: Center(
+            child: SingleChildScrollView(
               child: Container(
-                margin: const EdgeInsets.all(18),
+                margin: const EdgeInsets.all(10),
                 width: 500,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -125,7 +124,7 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
               ),
             ),
           ),
-          persistentFooterButtons: [const DownloadAppPromotion()],
+          persistentFooterButtons: const [DownloadAppPromotion()],
         );
       }),
     );

@@ -305,7 +305,8 @@ class _ConfirmEmailBottonSheet extends StatelessWidget {
                       onCompleted: (code) {
                         if (resultCode == codeController.text) {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, '/reset-password',
+                          Navigator.of(context)
+                              .pushNamed('/reset-password',
                               arguments: {
                                 'customer_id': customerId,
                               });

@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/shared/downloadAppPromotionBanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/mobile-DEPRECIATED/login/controller/login_controller.dart';
