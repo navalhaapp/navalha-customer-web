@@ -80,8 +80,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                       IconButton(
                         padding: const EdgeInsets.only(left: 30),
                         onPressed: () {
-                          widget.onPreviousStep.call();
-                          // widget.scrollToEnd();
+                          // widget.onPreviousStep.call();
                         },
                         icon: const Icon(
                           CupertinoIcons.clear,
@@ -108,6 +107,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                   ),
                 ),
                 SingleChildScrollView(
+                  // child: CalendarWeb(scrollToEnd: () {}),
                   child: CalendarWeb(scrollToEnd: () => widget.scrollToEnd()),
                 )
               ],

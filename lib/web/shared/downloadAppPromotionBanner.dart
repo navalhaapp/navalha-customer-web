@@ -34,9 +34,8 @@ class DownloadAppPromotion extends StatelessWidget {
               Container(
                 width: size.width > 500 ? 350 : 200,
                 decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(18),
-                      bottomRight: Radius.circular(18),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(18),
                     ),
                     color: Colors.black),
                 child: const Center(

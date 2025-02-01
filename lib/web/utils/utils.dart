@@ -8,7 +8,7 @@ class NavalhaUtils {
     // Calcula o padding necessário para centralizar o diálogo
     double horizontalPadding = (screenWidth > dialogWidth)
         ? (screenWidth - dialogWidth) / 2
-        : 20.0; // Define um padding mínimo para telas menores
+        : 0; // Define um padding mínimo para telas menores
 
     return EdgeInsets.symmetric(horizontal: horizontalPadding);
   }

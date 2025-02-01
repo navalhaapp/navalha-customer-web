@@ -1,14 +1,62 @@
-2025/01/26-23:14:57.181 a203 Reusing MANIFEST /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.hPVVXe/flutter_tools_chrome_device.OGHjOA/Default/IndexedDB/http_localhost_5000.indexeddb.leveldb/MANIFEST-000001
-2025/01/26-23:14:57.181 a203 Recovering log #134
-2025/01/26-23:14:57.181 a203 Reusing old log /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.hPVVXe/flutter_tools_chrome_device.OGHjOA/Default/IndexedDB/http_localhost_5000.indexeddb.leveldb/000134.log 
-2025/01/26-23:14:57.181 a203 Delete type=2 #132
-2025/01/26-23:14:57.210 f603 Level-0 table #139: started
-2025/01/26-23:14:57.213 f603 Level-0 table #139: 4561 bytes OK
-2025/01/26-23:14:57.221 f603 Delete type=0 #134
-2025/01/26-23:14:57.222 a607 Manual compaction at level-0 from '\x005\x00\x00\x00' @ 72057594037927935 : 1 .. '\x006\x00\x00\x00' @ 0 : 0; will stop at '\x005\x00\x00\x05' @ 2402 : 1
-2025/01/26-23:14:57.222 a607 Compacting 1@0 + 1@1 files
-2025/01/26-23:14:57.225 a607 Generated table #140@0: 60 keys, 3669 bytes
-2025/01/26-23:14:57.225 a607 Compacted 1@0 + 1@1 files => 3669 bytes
-2025/01/26-23:14:57.233 a607 compacted to: files[ 0 1 1 0 0 0 0 ]
-2025/01/26-23:14:57.233 a607 Delete type=2 #139
-2025/01/26-23:14:57.234 a607 Manual compaction at level-0 from '\x005\x00\x00\x05' @ 2402 : 1 .. '\x006\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/30-21:58:31.858 f203 Reusing MANIFEST /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.w3iRNs/flutter_tools_chrome_device.Yrsb8H/Default/IndexedDB/http_localhost_5000.indexeddb.leveldb/MANIFEST-000001
+2025/01/30-21:58:31.863 f203 Recovering log #361
+2025/01/30-21:58:31.865 f203 Reusing old log /private/var/folders/pn/t7qt1gb55ql_dc621754gchc0000gn/T/flutter_tools.w3iRNs/flutter_tools_chrome_device.Yrsb8H/Default/IndexedDB/http_localhost_5000.indexeddb.leveldb/000361.log 
+2025/01/30-21:58:31.869 f203 Delete type=2 #360
+2025/01/30-21:58:31.964 a303 Level-0 table #366: started
+2025/01/30-21:58:31.970 a303 Level-0 table #366: 2212 bytes OK
+2025/01/30-21:58:31.979 a303 Delete type=0 #361
+2025/01/30-21:58:31.981 a403 Manual compaction at level-0 from '\x00\x89\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x8a\x00\x00\x00' @ 0 : 0; will stop at '\x00\x89\x00\x00\x05' @ 6748 : 1
+2025/01/30-21:58:31.981 a403 Compacting 1@0 + 1@1 files
+2025/01/30-21:58:31.986 a403 Generated table #367@0: 55 keys, 4431 bytes
+2025/01/30-21:58:31.986 a403 Compacted 1@0 + 1@1 files => 4431 bytes
+2025/01/30-21:58:31.995 a403 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/01/30-21:58:31.995 a403 Delete type=2 #366
+2025/01/30-21:58:31.995 a403 Manual compaction at level-0 from '\x00\x89\x00\x00\x05' @ 6748 : 1 .. '\x00\x8a\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/30-21:59:50.375 a303 Compacting 1@1 + 1@2 files
+2025/01/30-21:59:50.380 a303 Generated table #368@1: 57 keys, 4665 bytes
+2025/01/30-21:59:50.380 a303 Compacted 1@1 + 1@2 files => 4665 bytes
+2025/01/30-21:59:50.389 a303 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/01/30-21:59:50.389 a303 Delete type=2 #363
+2025/01/30-21:59:50.389 a303 Delete type=2 #367
+2025/01/30-21:59:50.389 a303 Delete type=2 #350
+2025/01/30-22:00:35.094 f503 Level-0 table #370: started
+2025/01/30-22:00:35.103 f503 Level-0 table #370: 3972 bytes OK
+2025/01/30-22:00:35.116 f503 Delete type=0 #365
+2025/01/30-22:00:35.117 a403 Manual compaction at level-0 from '\x00\x8a\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x8b\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/30-22:01:50.377 a303 Compacting 1@1 + 1@2 files
+2025/01/30-22:01:50.382 a303 Generated table #371@1: 54 keys, 4575 bytes
+2025/01/30-22:01:50.382 a303 Compacted 1@1 + 1@2 files => 4575 bytes
+2025/01/30-22:01:50.391 a303 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/01/30-22:01:50.391 a303 Delete type=2 #370
+2025/01/30-22:01:50.391 a303 Delete type=2 #368
+2025/01/30-22:10:27.909 a303 Level-0 table #373: started
+2025/01/30-22:10:27.917 a303 Level-0 table #373: 2234 bytes OK
+2025/01/30-22:10:27.924 a303 Delete type=0 #369
+2025/01/30-22:10:27.924 a303 Manual compaction at level-0 from '\x00\x8b\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x8c\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/30-22:11:45.518 a303 Compacting 1@1 + 1@2 files
+2025/01/30-22:11:45.525 a303 Generated table #374@1: 57 keys, 4670 bytes
+2025/01/30-22:11:45.525 a303 Compacted 1@1 + 1@2 files => 4670 bytes
+2025/01/30-22:11:45.533 a303 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/01/30-22:11:45.534 a303 Delete type=2 #371
+2025/01/30-22:11:45.534 a303 Delete type=2 #373
+2025/01/30-22:20:10.731 f503 Level-0 table #376: started
+2025/01/30-22:20:10.748 f503 Level-0 table #376: 4078 bytes OK
+2025/01/30-22:20:10.756 f503 Delete type=0 #372
+2025/01/30-22:20:10.756 a303 Manual compaction at level-0 from '\x00\x8c\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x8d\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/30-22:21:29.953 a303 Compacting 1@1 + 1@2 files
+2025/01/30-22:21:29.962 a303 Generated table #377@1: 58 keys, 4685 bytes
+2025/01/30-22:21:29.962 a303 Compacted 1@1 + 1@2 files => 4685 bytes
+2025/01/30-22:21:29.970 a303 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/01/30-22:21:29.971 a303 Delete type=2 #376
+2025/01/30-22:21:29.971 a303 Delete type=2 #374
+2025/01/30-22:21:57.372 a403 Level-0 table #379: started
+2025/01/30-22:21:57.379 a403 Level-0 table #379: 6507 bytes OK
+2025/01/30-22:21:57.387 a403 Delete type=0 #375
+2025/01/30-22:21:57.387 a403 Manual compaction at level-0 from '\x00\x8d\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x8e\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/30-22:22:28.397 f503 Manual compaction at level-0 from '\x00\x8e\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x8f\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/01/30-22:23:07.785 a303 Compacting 1@1 + 1@2 files
+2025/01/30-22:23:07.790 a303 Generated table #380@1: 57 keys, 4670 bytes
+2025/01/30-22:23:07.790 a303 Compacted 1@1 + 1@2 files => 4670 bytes
+2025/01/30-22:23:07.799 a303 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/01/30-22:23:07.799 a303 Delete type=2 #377
+2025/01/30-22:23:07.799 a303 Delete type=2 #379

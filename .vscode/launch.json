@@ -1,27 +1,27 @@
-// {   
-//  "version": "0.2.0",
-//  "configurations": [{
-//         "name": "Flutter port 5000",
-//         "request": "launch",
-//         "type": "dart",
-//         "args": ["-d", "chrome", "--web-port", "5000", "--web-renderer", "html"]
-//     }
-// ]}
-{
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Flutter Web Release",
+{   
+ "version": "0.2.0",
+ "configurations": [{
+        "name": "Flutter port 5000",
         "request": "launch",
         "type": "dart",
-        "program": "lib/main.dart",
-        "args": [
-          "-d", "chrome",
-          "--web-port", "5000",
-          "--release",
-          "--web-renderer", "html"
-        ]
-      }
-    ]
-  }
+        "args": ["-d", "chrome", "--web-port", "5000", "--web-renderer", "html"]
+    }
+]}
+// {
+//     "version": "0.2.0",
+//     "configurations": [
+//       {
+//         "name": "Flutter Web Release",
+//         "request": "launch",
+//         "type": "dart",
+//         "program": "lib/main.dart",
+//         "args": [
+//           "-d", "chrome",
+//           "--web-port", "5000",
+//           "--release",
+//           "--web-renderer", "html"
+//         ]
+//       }
+//     ]
+//   }
   

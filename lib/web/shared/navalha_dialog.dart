@@ -19,7 +19,7 @@ class NavalhaDialog extends StatefulWidget {
     required this.confirmText,
     this.onConfirm,
     this.onCancel,
-    this.textConfirmColor = Colors.redAccent,
+    this.textConfirmColor = const Color.fromARGB(184, 255, 82, 82),
     this.textCancelColor = Colors.grey,
   }) : super(key: key);
 
@@ -37,7 +37,7 @@ class _NavalhaDialogState extends State<NavalhaDialog> {
     }
     setState(() => _loading = false);
     if (mounted) {
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
     }
   }
 

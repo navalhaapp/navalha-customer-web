@@ -395,7 +395,7 @@ class _ContainerActive extends StatelessWidget {
                         if (context.mounted) {
                           if (response.status == 'success') {
                             showSnackBar(context, 'Agendamento cancelado!');
-                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/calendar');
                           } else {
                             if (response.result == 'less_than_4_hours_left') {
                               showSnackBar(context,

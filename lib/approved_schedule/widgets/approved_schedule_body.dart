@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:navalha/web/utils/utils.dart';
+import 'package:navalha/web/shared/navalha_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:navalha/core/colors.dart';
-import 'package:navalha/shared/shows_dialogs/dialog.dart';
 
 class ApprovedScheduleBody extends StatelessWidget {
   const ApprovedScheduleBody({
@@ -147,8 +145,22 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
       Timer(const Duration(milliseconds: 2000), () {
         if (mounted) {
           Navigator.of(context).pushNamed(widget.page);
-          showCustomDialog(context,
-              SizedBox(width: 500, child: WhatsAppDialog(args: widget.args)));
+          showCupertinoDialog(
+            context: context,
+            builder: (context) => NavalhaDialog(
+              title: 'Agendamento confirmado!',
+              content:
+                  'Para garantir que tudo esteja perfeito, não se esqueça de enviar uma mensagem para a barbearia informando sobre seu agendamento. Se tiver dúvidas ou precisar de mais informações, eles estão prontos para ajudar!',
+              cancelText: 'Voltar',
+              onCancel: () => Navigator.pop(context),
+              confirmText: 'Enviar',
+              textConfirmColor: Colors.white,
+              onConfirm: () async {
+                Navigator.pop(context);
+                _openWhatsApp(widget.args['services']);
+              },
+            ),
+          );
         }
       });
     });
@@ -172,81 +184,10 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
   }
 }
 
-class WhatsAppDialog extends StatelessWidget {
-  const WhatsAppDialog({
-    Key? key,
-    required this.args,
-  }) : super(key: key);
-
-  final Map<String, dynamic> args;
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: NavalhaUtils().calculateDialogPadding(context),
-      child: AlertDialog(
-        alignment: Alignment.center,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(32.0),
-          ),
-        ),
-        scrollable: true,
-        backgroundColor: colorBackground181818,
-        title: SizedBox(
-          width: size.width * 0.6,
-          child: const Text(
-            textAlign: TextAlign.center,
-            'Agendamento confirmado!',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        content: const Text(
-          textAlign: TextAlign.center,
-          'Para garantir que tudo esteja perfeito, não se esqueça de enviar uma mensagem para a barbearia informando sobre seu agendamento. Se tiver dúvidas ou precisar de mais informações, eles estão prontos para ajudar!',
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all<Color>(
-                    colorContainers353535,
-                  ),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 24, 24, 24)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Text(
-                    'Enviar mensagem',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                  _openWhatsApp(args['services']);
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
   void _openWhatsApp(List<dynamic> services) async {
     String url =
-        'https://wa.me/55${services[0]['barbershop_phone']}/?text=Olá, agendei os seguintes serviços com você pelo *Navalha*:%0A';
-    // 'https://wa.me/5547996675564/?text=Olá, agendei os seguintes serviços com você pelo *Navalha*:%0A';
+      'https://wa.me/55${services[0]['barbershop_phone']}/?text=Olá, agendei os seguintes serviços com você pelo *Navalha*:%0A';
 
     for (var service in services) {
       url +=
@@ -260,7 +201,6 @@ class WhatsAppDialog extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      null;
-    }
+    null;
   }
 }

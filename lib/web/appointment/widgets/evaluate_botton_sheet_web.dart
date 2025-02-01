@@ -9,6 +9,7 @@ import 'package:navalha/mobile-DEPRECIATED/calendar/provider/provider_create_rev
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/header_button_sheet_pattern.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
+import 'package:navalha/web/utils/utils.dart';
 import '../../../core/assets.dart';
 import '../../../core/colors.dart';
 import '../../../shared/shows_dialogs/evaluate__barber/widgets/comment_barber_bottom_sheet.dart';
@@ -45,153 +46,187 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      minimum: EdgeInsets.only(top: size.height * 0.04),
-      child: Scaffold(
-        bottomSheet: GestureDetector(
-          onTap: () {},
-          child: Consumer(
+    return Consumer(
             builder: (context, ref, child) {
               final retrievedCustomer = LocalStorageManager.getCustomer();
               final createReview =
                   ref.watch(CreateReviewStateController.provider.notifier);
-              return Container(
-                decoration: BoxDecoration(
-                  color: colorBackground181818,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
+        return Padding(
+          padding: NavalhaUtils().calculateDialogPadding(context),
+          child: Container(
+            decoration: BoxDecoration(
+              color: colorBackground181818,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const HeaderBottonSheetPattern(),
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: shadow,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: EdgeInsets.zero,
+                  width: 50,
+                  height: 50,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(1000),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: imgLoading3,
+                      image: widget.imgProfessional,
+                      fit: BoxFit.cover,
+                      fadeInDuration: const Duration(milliseconds: 500),
+                      fadeInCurve: Curves.easeIn,
+                    ),
                   ),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const HeaderBottonSheetPattern(),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: shadow,
-                        shape: BoxShape.circle,
-                      ),
-                      padding: EdgeInsets.zero,
-                      width: MediaQuery.of(context).size.height * 0.15,
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(1000),
-                        child: FadeInImage.assetNetwork(
-                          placeholder: imgLoading3,
-                          image: widget.imgProfessional,
-                          fit: BoxFit.cover,
-                          fadeInDuration: const Duration(milliseconds: 500),
-                          fadeInCurve: Curves.easeIn,
-                        ),
+                const SizedBox(height: 20),
+                const Text(
+                  textAlign: TextAlign.center,
+                  'Avalie o atendimento',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  textAlign: TextAlign.center,
+                  'Dia ${widget.day}, ${widget.serviceName} em ${widget.barberShopName}',
+                  style:
+                      TextStyle(color: colorFontUnable116116116, fontSize: 15),
+                ),
+                const SizedBox(height: 20),
+                RatingBar.builder(
+                  initialRating: 5,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemSize: 30,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 5),
+                  unratedColor: const Color.fromARGB(80, 255, 255, 255),
+                  itemBuilder: (context, _) => const Icon(
+                    CupertinoIcons.star_fill,
+                    color: Colors.white,
+                  ),
+                  onRatingUpdate: (rating) {
+                    ratingSelected = rating;
+                  },
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all<Color>(
+                      colorContainers353535,
+                    ),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.transparent),
+                    elevation: MaterialStateProperty.all(0),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.width * 0.04),
-                    const Text(
-                      textAlign: TextAlign.center,
-                      'Avalie o atendimento',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width * 0.04),
-                    Text(
-                      textAlign: TextAlign.center,
-                      'Dia ${widget.day}, ${widget.serviceName} em ${widget.barberShopName}',
-                      style: TextStyle(
-                          color: colorFontUnable116116116, fontSize: 15),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                    RatingBar.builder(
-                      initialRating: 5,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemSize: 50,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      unratedColor: const Color.fromARGB(80, 255, 255, 255),
-                      itemBuilder: (context, _) => const Icon(
-                        CupertinoIcons.star_fill,
-                        color: Colors.white,
-                      ),
-                      onRatingUpdate: (rating) {
-                        ratingSelected = rating;
-                      },
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all<Color>(
-                          colorContainers353535,
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          CupertinoIcons.pencil_ellipsis_rectangle,
+                          color: Colors.white,
                         ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.transparent),
-                        elevation: MaterialStateProperty.all(0),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Fazer um elogio',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
+                      ],
+                    ),
+                  ),
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      backgroundColor: Colors.black,
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CupertinoIcons.pencil_ellipsis_rectangle,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Fazer um elogio',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet<void>(
-                          backgroundColor: Colors.black,
-                          isScrollControlled: true,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CommentBarberBottomSheet(
-                              description: (desc) {
-                                setState(() {
-                                  description = desc;
-                                });
-                              },
-                            );
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CommentBarberBottomSheet(
+                          description: (desc) {
+                            setState(() {
+                              description = desc;
+                            });
                           },
                         );
                       },
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.width * 0.06),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ButtonPattern(
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            overlayColor: MaterialStateProperty.all<Color>(
+                              colorContainers353535,
+                            ),
+                            elevation: MaterialStateProperty.all(0),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              colorContainers242424,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                          ),
                           child: Text(
                             'Cancelar',
                             style: TextStyle(
                               fontSize: 15,
-                              color: colorRed1765959,
+                              color: colorWhite255255255,
                             ),
                           ),
                           onPressed: () {
                             Navigator.pop(context);
                           },
                         ),
-                        ButtonPattern(
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            overlayColor: MaterialStateProperty.all<Color>(
+                              colorContainers353535,
+                            ),
+                            elevation: MaterialStateProperty.all(0),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              colorContainers242424,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                          ),
                           child: const Text(
                             'Enviar',
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
+                                fontWeight: FontWeight.bold
                             ),
                           ),
                           onPressed: () async {
@@ -213,15 +248,15 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                             }
                           },
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
                 ),
               );
-            },
-          ),
-        ),
-      ),
+      },
     );
   }
 }

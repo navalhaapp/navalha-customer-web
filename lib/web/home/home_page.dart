@@ -174,14 +174,14 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Colors.transparent,
-                  title: Row(
+                  title: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 10, right: 10),
-                        width: 25,
-                        height: 25,
+                        margin: const EdgeInsets.only(left: 0, right: 10),
+                        width: 30,
+                        height: 30,
                         child: ClipOval(
                           child: FadeInImage.assetNetwork(
                             placeholder: imgLoading3,
@@ -190,7 +190,8 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                           ),
                         ),
                       ),
-                      AutoSizeText(data.barbershop!.name ?? ''),
+                      Text(data.barbershop!.name ?? '',
+                          textAlign: TextAlign.center),
                     ],
                   ),
                   actions: [
