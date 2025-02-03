@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:navalha/shared/utils.dart';
 
 class TextEditPatternWeb extends HookConsumerWidget {
@@ -17,9 +18,10 @@ class TextEditPatternWeb extends HookConsumerWidget {
   final Function? onChange;
   final double? width;
   final List<TextInputFormatter>? inputFormatters;
+  final EdgeInsetsGeometry? padding;
 
   const TextEditPatternWeb({
-    super.key,
+    super.key, 
     required this.label,
     this.obscure,
     required this.controller,
@@ -33,6 +35,7 @@ class TextEditPatternWeb extends HookConsumerWidget {
     this.onChange,
     this.width,
     this.inputFormatters,
+    this.padding,
   });
 
   @override
@@ -49,7 +52,7 @@ class TextEditPatternWeb extends HookConsumerWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding: padding ?? const EdgeInsets.only(top: 20, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -66,8 +69,8 @@ class TextEditPatternWeb extends HookConsumerWidget {
               highlightColor: Colors.transparent,
               splashFactory: NoSplash.splashFactory,
               child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.06,
-                width: MediaQuery.of(context).size.width * 0.8,
+                // height: MediaQuery.of(context).size.height * 0.06,
+                // width: MediaQuery.of(context).size.width * 0.8,
                 child: TextFormField(
                   onChanged: (value) => {
                     if (onChange != null) {onChange!()}

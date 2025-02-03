@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navalha/web/utils/utils.dart';
 
 import '../../core/colors.dart';
 
@@ -29,7 +30,9 @@ class CupertinoPickerList extends StatefulWidget {
 
 class _CupertinoPickerListState extends State<CupertinoPickerList> {
   void _showDialog(Widget child) {
+    
     showCupertinoModalPopup<void>(
+      
       context: context,
       builder: (BuildContext context) => SafeArea(
         child: Column(
@@ -44,30 +47,27 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
               ),
               height: 216,
               padding: const EdgeInsets.only(top: 6.0),
-              margin: EdgeInsets.only(
-                left: 10,
-                right: 10,
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
+              margin: NavalhaUtils().calculateDialogPadding(context),
               child: SafeArea(
                 top: false,
                 child: child,
               ),
             ),
+            const SizedBox(height: 5),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              margin: NavalhaUtils().calculateDialogPadding(context),
               height: MediaQuery.of(context).size.height * 0.05,
               color: Colors.transparent,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all<Color>(
-                    colorContainers353535,
+                  overlayColor: WidgetStateProperty.all<Color>(
+                    colorBrown626262,
                   ),
-                  shadowColor: MaterialStateProperty.all<Color>(Colors.black),
-                  elevation: MaterialStateProperty.all<double>(10),
+                  shadowColor: WidgetStateProperty.all<Color>(Colors.black),
+                  elevation: WidgetStateProperty.all<double>(10),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(colorBackground181818),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      WidgetStateProperty.all<Color>(colorContainers242424),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -87,7 +87,8 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
-            )
+            ),
+            const SizedBox(height: 5),
           ],
         ),
       ),
@@ -123,13 +124,11 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                         widget.label,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 22,
                         ),
                         textAlign: TextAlign.left,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width * 0.05),
+                        padding: const EdgeInsets.only(right: 20),
                         child: Text(
                           widget.optional!,
                           style: const TextStyle(
@@ -145,7 +144,6 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
                     widget.label,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -157,8 +155,7 @@ class _CupertinoPickerListState extends State<CupertinoPickerList> {
               child: Text(
                 widget.textEdit,
                 style: TextStyle(
-                  fontSize: 20,
-                  color: colorWhite255255255,
+                  color: colorFontUnable116116116,
                   fontStyle: FontStyle.normal,
                 ),
               ),

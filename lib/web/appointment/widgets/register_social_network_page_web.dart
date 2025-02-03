@@ -8,9 +8,11 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/extension.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/mobile-DEPRECIATED/login/controller/login_controller.dart';
 import 'package:navalha/mobile-DEPRECIATED/login/model/auth_model.dart';
@@ -27,6 +29,8 @@ import 'package:navalha/shared/widgets/button_pattern_botton_sheet.dart';
 import 'package:navalha/shared/widgets/cupertino_date_picker.dart';
 import 'package:navalha/shared/widgets/cupertino_piker_list.dart';
 import 'package:navalha/shared/widgets/text_edit.dart';
+import 'package:navalha/web/appointment/text_edit_web.dart';
+import 'package:navalha/web/appointment/widgets/footer_total_price_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,7 +46,8 @@ class RegistrationSocialNetworksWeb extends StatefulHookConsumerWidget {
 class _RegistrationSocialNetworksWebState
     extends ConsumerState<RegistrationSocialNetworksWeb> {
   bool loading = false;
-  DateTime? date;
+  // DateTime? date;
+
   final List<String> _listgener = <String>[
     'Selecione o gênero',
     'Masculino',
@@ -55,6 +60,7 @@ class _RegistrationSocialNetworksWebState
   final TextEditingController phoneEditController = TextEditingController();
   final TextEditingController postalCodeEditController =
       TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
   String? emailApple;
   String? fullNameApple;
   final dio = Dio(BaseOptions(
@@ -81,9 +87,8 @@ class _RegistrationSocialNetworksWebState
           child: Column(
             children: [
               Container(
-                margin: const EdgeInsets.all(18),
+                margin: const EdgeInsets.all(10),
                 width: 500,
-                height: 500,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: colorContainers242424,
@@ -93,8 +98,8 @@ class _RegistrationSocialNetworksWebState
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, top: 20, bottom: 20),
+                        padding:
+                            const EdgeInsets.only(left: 0, top: 20, bottom: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -111,7 +116,7 @@ class _RegistrationSocialNetworksWebState
                             Text(
                               'Complete seu cadastro',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 shadows: shadow,
                                 color: Colors.white,
                               ),
@@ -127,21 +132,25 @@ class _RegistrationSocialNetworksWebState
                           ],
                         ),
                       ),
-                      CupertinoDataPicker(
+                      TextEditPatternWeb(
+                        padding: const EdgeInsets.only(
+                            top: 10, left: 20, right: 10, bottom: 10),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 0),
                         label: 'Data de nascimento',
+                        obscure: false,
+                        maxLength: 10,
+                        controller: birthDateController,
                         color: const Color.fromARGB(255, 28, 28, 28),
-                        marginHorizontal: 30,
-                        date: date,
-                        picker: CupertinoDatePicker(
-                          dateOrder: DatePickerDateOrder.dmy,
-                          initialDateTime: date,
-                          mode: CupertinoDatePickerMode.date,
-                          use24hFormat: true,
-                          maximumYear: DateTime.now().year,
-                          onDateTimeChanged: (DateTime newDate) {
-                            setState(() => date = newDate);
-                          },
-                        ),
+                        hint: 'DD/MM/AAAA',
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter
+                              .digitsOnly, // Aceita apenas números
+                          LengthLimitingTextInputFormatter(
+                              10), // Limita a 10 caracteres
+                          DateInputFormatter(),
+                        ],
                       ),
                       CupertinoPickerList(
                         picker: CupertinoPicker(
@@ -160,8 +169,7 @@ class _RegistrationSocialNetworksWebState
                               child: Text(
                                 _listgener[index],
                                 style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.050,
+                                  fontSize: 20,
                                   color: colorWhite255255255,
                                   fontStyle: FontStyle.normal,
                                 ),
@@ -174,16 +182,18 @@ class _RegistrationSocialNetworksWebState
                         optional: 'opcional',
                         textEdit: _listgener[selectedItem],
                         color: const Color.fromARGB(255, 28, 28, 28),
-                        marginHorizontal: 30,
+                        marginHorizontal: 10,
                       ),
                       TextEditPattern(
-                        padding: const EdgeInsets.only(left: 20),
-                        sizeHint: 20,
-                        sizeLabel: 22,
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 10, bottom: 10),
+                        sizeHint: 15,
+                        sizeLabel: 15,
+                        height: 40,
                         color: const Color.fromARGB(255, 28, 28, 28),
                         margin: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 10,
+                          horizontal: 10,
+                          vertical: 0,
                         ),
                         width: MediaQuery.of(context).size.width,
                         maxLength: 30,
@@ -195,13 +205,15 @@ class _RegistrationSocialNetworksWebState
                         keyboardType: TextInputType.number,
                       ),
                       TextEditPattern(
-                        padding: const EdgeInsets.only(left: 20),
-                        sizeHint: 20,
-                        sizeLabel: 22,
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 10, bottom: 10),
+                        sizeHint: 15,
+                        sizeLabel: 15,
+                        height: 30,
                         color: const Color.fromARGB(255, 28, 28, 28),
                         margin: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 10,
+                          horizontal: 10,
+                          vertical: 7,
                         ),
                         width: MediaQuery.of(context).size.width,
                         maxLength: 30,
@@ -214,7 +226,7 @@ class _RegistrationSocialNetworksWebState
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 50,
+                          horizontal: 20,
                         ),
                         child: Text(
                           'O CEP será utilizado para encontrar barbearias próximas a você. Além disso, dentro do aplicativo, você terá a opção de alterar sua localização.',
@@ -225,12 +237,12 @@ class _RegistrationSocialNetworksWebState
                       ),
                       const SizedBox(height: 10),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const SizedBox(width: 40),
+                          const SizedBox(width: 10),
                           Checkbox(
                             checkColor: Colors.black,
-                            fillColor: MaterialStateProperty.all(Colors.white),
+                            fillColor: WidgetStateProperty.all(Colors.white),
                             activeColor: colorContainers353535,
                             value: _isChecked,
                             onChanged: (bool? value) {
@@ -239,15 +251,15 @@ class _RegistrationSocialNetworksWebState
                               });
                             },
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 0),
                           RichText(
                             text: TextSpan(
-                              text: 'Ao aceitar, você concorda em cumprir os\n',
+                              text: ' Ao aceitar, você concorda com os ',
                               style: const TextStyle(
                                   fontSize: 11, color: Colors.white),
                               children: [
                                 TextSpan(
-                                  text: 'Termos e Condições',
+                                  text: 'Termos e Condições\n',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
@@ -257,20 +269,20 @@ class _RegistrationSocialNetworksWebState
                                 ),
                                 const TextSpan(
                                   text:
-                                      ' do nosso aplicativo.\nLeia-os atentamente antes de prosseguir.',
+                                      ' do nosso aplicativo. Leia-os atentamente antes de\n prosseguir.',
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 100)
                         ],
                       ),
+                      const SizedBox(height: 20)
                     ],
                   ),
                 ),
               ),
               ButtonPattern(
-                margin: const EdgeInsets.symmetric(horizontal: 18),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 width: 500,
                 elevation: false,
                 child: !loading
@@ -299,13 +311,9 @@ class _RegistrationSocialNetworksWebState
                     prefs = await SharedPreferences.getInstance();
                     emailApple = prefs.getString('emailApple');
                     fullNameApple = prefs.getString('fullNameApple');
-                    if (date == null) {
-                      showSnackBar(
-                          context, 'Preencha a sua data de nascimento!');
-                    } else if (verificarDataFutura(
-                        UtilText.formatDate(date!))) {
-                      showSnackBar(
-                          context, 'Não é possível adicionar datas futuras!');
+                    if (!verificarDataValida(birthDateController.text)) {
+                      showErrorDialog(
+                          context, 'Digite uma data de nascimento válida');
                       setState(() {
                         loading = false;
                       });
@@ -351,7 +359,21 @@ class _RegistrationSocialNetworksWebState
                             setState(() {
                               _state = 3;
                             });
+                            DateTime newDate = DateTime(2018, 28, 10); 
 
+                            DateTime dateTimeBirthDate = newDate;
+                            if (birthDateController.text.isNotEmpty) {
+                              try {
+                                DateFormat format = DateFormat("dd/MM/yyyy");
+                                dateTimeBirthDate =
+                                    format.parse(birthDateController.text);
+                                print(dateTimeBirthDate);
+                              } catch (e) {
+                                print("Erro ao converter data: $e");
+                              }
+                            } else {
+                              print("O campo de data está vazio.");
+                            }
                             customerRegisterController.verifyValidProp([
                               'name',
                               'email',
@@ -366,7 +388,7 @@ class _RegistrationSocialNetworksWebState
                                   ? name
                                   : fullNameApple,
                               email,
-                              UtilText.formatDate(date!),
+                              dateTimeBirthDate.toString(),
                               UtilText.registerGener[selectedItem] ==
                                       'undefined'
                                   ? null
@@ -387,6 +409,7 @@ class _RegistrationSocialNetworksWebState
                                 customerEndPoint: CustomerEndPoint(dio),
                               ),
                             ).execute(customer);
+                            print(response.customer);
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             await prefs.setString('email', email);
@@ -401,6 +424,7 @@ class _RegistrationSocialNetworksWebState
                                 fBTokenController.state,
                               );
                               if (response.status == 'success') {
+                                print(response);
                                 LocalStorageManager.saveCustomer(
                                   CustomerDB(
                                     name: response.customer!.name ?? '',
