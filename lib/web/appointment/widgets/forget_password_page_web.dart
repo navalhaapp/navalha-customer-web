@@ -117,8 +117,8 @@ class _ForgetPasswordPageWebState extends State<ForgetPasswordPageWeb> {
                               builder: (BuildContext context) {
                                 return _ConfirmEmailBottonSheet(
                                   customerId: adressEmail.result!.customerId!,
-                                  resultCode:
-                                      adressEmail.result!.verificationCode!,
+                                  resultCode: simpleDecrypt(
+                                      adressEmail.result!.verificationCode!),
                                   email: emailController.text.trim(),
                                   codeController: codeController,
                                 );
@@ -306,10 +306,9 @@ class _ConfirmEmailBottonSheet extends StatelessWidget {
                         if (resultCode == codeController.text) {
                           Navigator.pop(context);
                           Navigator.of(context)
-                              .pushNamed('/reset-password',
-                              arguments: {
-                                'customer_id': customerId,
-                              });
+                              .pushNamed('/reset-password', arguments: {
+                            'customer_id': customerId,
+                          });
                           showSnackBar(context, 'Email confirmado!');
                           codeController.dispose();
                         } else {

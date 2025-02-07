@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -22,6 +23,11 @@ class Errors {
   static String badCredentials = 'bad_credentials';
   static String notFound = 'not_found';
   static String timeout = 'timeout';
+}
+
+String simpleDecrypt(String encryptedText) {
+  return String.fromCharCodes(
+      utf8.decode(base64.decode(encryptedText)).runes.toList().reversed);
 }
 
 double getSizeException(
