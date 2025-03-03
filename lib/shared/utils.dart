@@ -25,6 +25,11 @@ class Errors {
   static String timeout = 'timeout';
 }
 
+String simpleDecrypt(String encryptedText) {
+  return String.fromCharCodes(
+      utf8.decode(base64.decode(encryptedText)).runes.toList().reversed);
+}
+
 double getSizeException(
     {double? exceptValue,
     double? exceptSize,
