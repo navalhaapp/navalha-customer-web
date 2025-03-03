@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:brasil_fields/brasil_fields.dart';
@@ -45,6 +46,11 @@ final Uri urlWhats =
     Uri(scheme: 'https', host: 'wa.me', path: '/5547991558228');
 
 String baseURLV1 = Enviroment.apiBaseUrl;
+
+String simpleDecrypt(String encryptedText) {
+  return String.fromCharCodes(
+      utf8.decode(base64.decode(encryptedText)).runes.toList().reversed);
+}
 
 void pushFcm(BuildContext context, String? title, String? message) {
   Flushbar(

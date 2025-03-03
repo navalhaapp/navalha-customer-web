@@ -39,8 +39,9 @@ class AuthEmailStateController extends StateNotifier<AuthEmailState> {
     (ref) => AuthEmailStateController(ref.read, null),
   );
 
-  Future<AuthEmailModel> authEmail(String andressEmail) async {
-    Email = await _read(authEmailCustomerUseCase).execute(andressEmail);
+  Future<AuthEmailModel> authEmail(String andressEmail, bool sendCode) async {
+    Email =
+        await _read(authEmailCustomerUseCase).execute(andressEmail, sendCode);
 
     return Email!;
   }

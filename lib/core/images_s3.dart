@@ -1,15 +1,15 @@
 const String baseUrlS3bucket =
-    'https://barbershop-bucket-prod-v2.s3.amazonaws.com/img-service/';
+    'https://barbershop-bucket-prod-v3.s3.amazonaws.com/img-service/';
 
 const String baseUrlS3bucketProduct =
-    'https://barbershop-bucket-prod-v2.s3.amazonaws.com/img-products/';
+    'https://barbershop-bucket-prod-v3.s3.amazonaws.com/img-products/';
 
 const String baseUrlS3bucketGallery =
-    'https://barbershop-bucket-prod-v2.s3.amazonaws.com/img-gallery/';
+    'https://barbershop-bucket-prod-v3.s3.amazonaws.com/img-gallery/';
 
 //images profileDefault
 String imgProfileDefaultS3 =
-    'https://customer-bucket-prod-v2.s3.amazonaws.com/img-profile/img-customer-m-padrao.png';
+    'https://customer-bucket-prod-v3.s3.amazonaws.com/img-profile/img-customer-m-padrao.png';
 
 String imgDefaultProfessionalF = 'img-professional-f-padrao.png';
 String imgDefaultProfessionalM = 'img-professional-m-padrao.png';

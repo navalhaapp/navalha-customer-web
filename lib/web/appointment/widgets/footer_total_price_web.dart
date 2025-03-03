@@ -565,7 +565,8 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                               } else {
                                 setState(() => loading = true);
                                 final adressEmail = await authEmailController
-                                    .authEmail(emailEditController.text.trim());
+                                    .authEmail(
+                                        emailEditController.text.trim(), false);
                                 if (adressEmail.result == 'already_exists') {
                                   showCustomDialog(context,
                                       const AlreadyExistsEmailDialog());

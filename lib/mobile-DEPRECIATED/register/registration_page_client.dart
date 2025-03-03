@@ -118,7 +118,8 @@ class _RegistrationPageClientState
                     _state = 1;
                   });
                   final adressEmail = await authEmailController
-                      .authEmail(emailEditController.text.trim());
+                      .authEmail(
+                      emailEditController.text.trim(), true);
                   if (adressEmail.result == 'already_exists') {
                     showSnackBar(context, 'Email já cadastrado');
                     setState(() {

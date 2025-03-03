@@ -80,7 +80,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                       IconButton(
                         padding: const EdgeInsets.only(left: 30),
                         onPressed: () {
-                          // widget.onPreviousStep.call();
+                          widget.onPreviousStep.call();
                         },
                         icon: const Icon(
                           CupertinoIcons.clear,

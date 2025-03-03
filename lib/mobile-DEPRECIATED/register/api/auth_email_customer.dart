@@ -5,9 +5,12 @@ class AuthEmailCustomerEndPoint {
   final Dio _dio;
   AuthEmailCustomerEndPoint(this._dio);
 
-  Future authEmailCustomer(String email) async {
+  Future authEmailCustomer(String email, bool sendCode) async {
+    var url = sendCode
+        ? '/customer/auth_email/$email/'
+        : '/web/customer/auth_email/$email/';
     try {
-      return await _dio.get('/customer/auth_email/$email/');
+      return await _dio.get(url);
     } catch (e) {
       return e;
     }
@@ -19,8 +22,9 @@ class AuthEmailCustomerRepository {
 
   AuthEmailCustomerRepository({required this.authEmailCustomerEndPoint});
 
-  Future<AuthEmailModel> authEmailCustomer(String email) async {
-    final result = await authEmailCustomerEndPoint.authEmailCustomer(email);
+  Future<AuthEmailModel> authEmailCustomer(String email, bool sendCode) async {
+    final result =
+        await authEmailCustomerEndPoint.authEmailCustomer(email, sendCode);
     if (result.runtimeType == DioError) {
       return AuthEmailModel.fromJson(result.response.data);
     } else {
@@ -34,8 +38,8 @@ class AuthEmailCustomerUseCase {
 
   AuthEmailCustomerUseCase({required this.repository});
 
-  Future<AuthEmailModel> execute(String email) async {
-    final response = await repository.authEmailCustomer(email);
+  Future<AuthEmailModel> execute(String email, bool sendCode) async {
+    final response = await repository.authEmailCustomer(email, sendCode);
 
     return response;
   }

@@ -49,7 +49,11 @@ class CalendarState extends ConsumerState<CalendarWeb> {
   void initState() {
     super.initState();
     initializeDateFormatting();
+    ref.refresh(fetchOpenHoursProvider(_focusedDay));
+    _selectedDay = _focusedDay;
   }
+
+  Key calendarKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +73,7 @@ class CalendarState extends ConsumerState<CalendarWeb> {
           ),
         ),
         TableCalendar(
+          key: calendarKey,
           pageAnimationEnabled: true,
           firstDay: DateTime(DateTime.now().year - 5, DateTime.now().month,
               DateTime.now().day),
@@ -119,11 +124,14 @@ class CalendarState extends ConsumerState<CalendarWeb> {
           onDaySelected: (selectedDay, focusedDay) {
             reservedTime.state.initialHour = '';
             selectedIndex = 10000;
+
             setState(() {
               daySelectedController.state = selectedDay;
               _selectedDay = selectedDay;
               _focusedDay = focusedDay;
             });
+
+            ref.refresh(fetchOpenHoursProvider(selectedDay));
           },
           onFormatChanged: (format) {
             if (_calendarFormat != format) {

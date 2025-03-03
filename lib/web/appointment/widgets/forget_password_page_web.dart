@@ -303,7 +303,7 @@ class _ConfirmEmailBottonSheet extends StatelessWidget {
                       controller: codeController,
                       keyboardType: TextInputType.number,
                       onCompleted: (code) {
-                        if (resultCode == codeController.text) {
+                        if (simpleDecrypt(resultCode) == codeController.text) {
                           Navigator.pop(context);
                           Navigator.of(context)
                               .pushNamed('/reset-password',

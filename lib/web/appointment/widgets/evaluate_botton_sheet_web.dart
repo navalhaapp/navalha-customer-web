@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/mobile-DEPRECIATED/calendar/model/model_create_review.dart';
@@ -40,17 +41,24 @@ class EvaluateBottonSheetWeb extends StatefulWidget {
 
 class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
   String? description;
-  double ratingSelected = 5;
+  double rating = 5;
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    _controller.text = '5';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     return Consumer(
-            builder: (context, ref, child) {
-              final retrievedCustomer = LocalStorageManager.getCustomer();
-              final createReview =
-                  ref.watch(CreateReviewStateController.provider.notifier);
+      builder: (context, ref, child) {
+        final retrievedCustomer = LocalStorageManager.getCustomer();
+        final createReview =
+            ref.watch(CreateReviewStateController.provider.notifier);
         return Padding(
           padding: NavalhaUtils().calculateDialogPadding(context),
           child: Container(
@@ -98,22 +106,40 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                       TextStyle(color: colorFontUnable116116116, fontSize: 15),
                 ),
                 const SizedBox(height: 20),
-                RatingBar.builder(
-                  initialRating: 5,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: 30,
-                  itemPadding: const EdgeInsets.symmetric(horizontal: 5),
-                  unratedColor: const Color.fromARGB(80, 255, 255, 255),
-                  itemBuilder: (context, _) => const Icon(
-                    CupertinoIcons.star_fill,
-                    color: Colors.white,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(5, (index) {
+                    return Icon(
+                      index < rating ? Icons.star : Icons.star_border,
+                      color: Colors.white,
+                    );
+                  }),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: TextField(
+                    controller: _controller,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        rating = double.tryParse(value) ?? 0.0;
+                        if (rating > 5) rating = 5.0;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Nota (0-5)',
+                      labelStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      ),
+                    ),
                   ),
-                  onRatingUpdate: (rating) {
-                    ratingSelected = rating;
-                  },
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -191,50 +217,19 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                               ),
                             ),
                           ),
-                          child: Text(
-                            'Cancelar',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: colorWhite255255255,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all<Color>(
-                              colorContainers353535,
-                            ),
-                            elevation: MaterialStateProperty.all(0),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              colorContainers242424,
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                            ),
-                          ),
                           child: const Text(
                             'Enviar',
                             style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                                fontWeight: FontWeight.bold
-                            ),
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                           onPressed: () async {
                             ResponseCreateReview response =
                                 await createReview.createReview(
                               retrievedCustomer!.token,
                               description,
-                              ratingSelected,
+                              double.parse(_controller.text),
                               widget.serviceId,
                               widget.customerId,
                             );
@@ -254,8 +249,8 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                 ),
               ],
             ),
-                ),
-              );
+          ),
+        );
       },
     );
   }
