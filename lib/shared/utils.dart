@@ -52,10 +52,6 @@ final Uri urlWhats =
 
 String baseURLV1 = Enviroment.apiBaseUrl;
 
-String simpleDecrypt(String encryptedText) {
-  return String.fromCharCodes(
-      utf8.decode(base64.decode(encryptedText)).runes.toList().reversed);
-}
 
 void pushFcm(BuildContext context, String? title, String? message) {
   Flushbar(
