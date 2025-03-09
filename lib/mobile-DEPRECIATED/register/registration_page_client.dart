@@ -113,6 +113,13 @@ class _RegistrationPageClientState
                   );
                 } else if (!EmailValidator.validate(emailEditController.text)) {
                   showSnackBar(context, 'Digite um email válido');
+                } else if (emailEditController.text
+                    .toLowerCase()
+                    .contains('icloud')) {
+                  showSnackBar(
+                    context,
+                    'Não é possível usar e-mails do iCloud para confirmação no momento. Por favor, utilize outro provedor como Gmail ou Outlook.',
+                  );
                 } else {
                   setState(() {
                     _state = 1;
