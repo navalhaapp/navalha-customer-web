@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navalha/core/cors_helper.dart';
 import 'package:navalha/mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 import '../../../../../../../core/assets.dart';
 import '../../../../../../../core/colors.dart';
@@ -68,7 +69,8 @@ class _ServiceItemWebState extends State<ServiceItemWeb> {
                     child: ClipOval(
                       child: FadeInImage.assetNetwork(
                         placeholder: imgLoading3,
-                        image: widget.img,
+                        // image: widget.img,
+                        image: CORSHelper.getProxiedImageUrl(widget.img),
                         fit: BoxFit.fill,
                       ),
                     ),

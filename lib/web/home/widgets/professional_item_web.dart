@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:navalha/core/cors_helper.dart';
 import 'package:navalha/shared/model/barber_shop_model.dart';
 import 'package:navalha/shared/model/professional_model.dart';
 import 'package:navalha/shared/model/service_model.dart';
@@ -92,7 +93,7 @@ class _ProfessionalItemWebState extends State<ProfessionalItemWeb> {
                     child: ClipOval(
                       child: FadeInImage.assetNetwork(
                         placeholder: imgLoading3,
-                        image: widget.img,
+                        image: CORSHelper.getProxiedImageUrl(widget.img),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -172,8 +173,9 @@ class _ProfessionalItemWebState extends State<ProfessionalItemWeb> {
                                     child: ClipOval(
                                       child: FadeInImage.assetNetwork(
                                         placeholder: imgLoading3,
-                                        image: widget
-                                            .listImgServices![i].imgProfile!,
+                                        image: CORSHelper.getProxiedImageUrl(
+                                            widget.listImgServices![i]
+                                                .imgProfile!),
                                         fit: BoxFit.fill,
                                       ),
                                     ),

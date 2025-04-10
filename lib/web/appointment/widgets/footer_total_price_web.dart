@@ -277,6 +277,11 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               if (response.status == 'success') {
                                 _trackFinalizeEvent(
                                     retrievedCustomer.customerId);
+                                totalPriceProvider
+                                    .state.totalPriceWithoutDicount = null;
+                                totalPriceProvider.state.discount = null;
+                                totalPriceProvider
+                                    .state.totalPriceWithoutDicount = null;
                                 Navigator.of(context)
                                     .pushNamed('/approved', arguments: {
                                   'services': List.generate(
@@ -308,8 +313,6 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                                     };
                                   }),
                                 });
-
-
 
                                 serviceCache.state.clear();
                                 listResumePayment.state.clear();
@@ -564,8 +567,8 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                                     'A senha deve conter alguma letra maiúscula!');
                               } else {
                                 setState(() => loading = true);
-                                final adressEmail = await authEmailController
-                                    .authEmail(
+                                final adressEmail =
+                                    await authEmailController.authEmail(
                                         emailEditController.text.trim(), false);
                                 if (adressEmail.result == 'already_exists') {
                                   showCustomDialog(context,

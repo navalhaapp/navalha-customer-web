@@ -13,7 +13,7 @@ class AuthEndPoint {
     const int timeoutMilliseconds = 10000;
     try {
       var response = await _dio.post(
-        '/customer/auth/${login.trim()}/${password.trim()}',
+        '/customer/auth/${login.toLowerCase().trim()}/${password.trim()}',
         data: data,
         options: Options(
           receiveTimeout: timeoutMilliseconds,

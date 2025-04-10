@@ -19,7 +19,6 @@
           "-d", "chrome",
           "--web-port", "5000",
           "--release",
-          "--web-renderer", "html"
         ]
       }
     ]

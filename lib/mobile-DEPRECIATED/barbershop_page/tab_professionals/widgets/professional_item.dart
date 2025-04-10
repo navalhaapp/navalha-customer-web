@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:navalha/core/cors_helper.dart';
 
 import 'package:navalha/shared/model/service_model.dart';
 
@@ -55,7 +56,7 @@ class ProfessionalItem extends StatelessWidget {
               child: ClipOval(
                 child: FadeInImage.assetNetwork(
                   placeholder: imgLoading3,
-                  image: img,
+                  image: CORSHelper.getProxiedImageUrl(img),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -147,7 +148,8 @@ class ProfessionalItem extends StatelessWidget {
                             child: ClipOval(
                               child: FadeInImage.assetNetwork(
                                 placeholder: imgLoading3,
-                                image: imgService!,
+                                image:
+                                    CORSHelper.getProxiedImageUrl(imgService!),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -165,7 +167,8 @@ class ProfessionalItem extends StatelessWidget {
                                   child: ClipOval(
                                     child: FadeInImage.assetNetwork(
                                       placeholder: imgLoading3,
-                                      image: listImgServices![i].imgProfile!,
+                                      image: CORSHelper.getProxiedImageUrl(
+                                          listImgServices![i].imgProfile!),
                                       fit: BoxFit.fill,
                                     ),
                                   ),

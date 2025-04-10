@@ -156,8 +156,8 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
               confirmText: 'Enviar',
               textConfirmColor: Colors.white,
               onConfirm: () async {
-                Navigator.pop(context);
                 _openWhatsApp(widget.args['services']);
+                Navigator.pop(context);
               },
             ),
           );

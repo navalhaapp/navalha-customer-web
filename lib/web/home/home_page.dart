@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
+import 'package:navalha/core/cors_helper.dart';
 import 'package:navalha/core/images_s3.dart';
 import 'package:navalha/mobile-DEPRECIATED/home/model/provider_family_model.dart';
 import 'package:navalha/mobile-DEPRECIATED/home/provider/provider_get_barber_shop_by_id.dart';
@@ -185,7 +186,8 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                         child: ClipOval(
                           child: FadeInImage.assetNetwork(
                             placeholder: imgLoading3,
-                            image: data.barbershop!.imgProfile ?? '',
+                            image: CORSHelper.getProxiedImageUrl(
+                                data.barbershop!.imgProfile ?? ''),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -227,7 +229,9 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: NetworkImage(imgProfileDefaultS3),
+                                    image: NetworkImage(
+                                        CORSHelper.getProxiedImageUrl(
+                                            imgProfileDefaultS3)),
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -266,7 +270,8 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      retrievedCustomer!.image,
+                                      CORSHelper.getProxiedImageUrl(
+                                          retrievedCustomer!.image),
                                     ),
                                     fit: BoxFit.contain,
                                   ),
@@ -286,14 +291,18 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                         Visibility(
                           visible:
                               data.barbershop?.packageList?.isNotEmpty ?? true,
-                          child: SizedBox(
-                            width: 500,
-                            child: Center(
-                              child: AlertContainer(
-                                textColor: Colors.black,
-                                backgroundColor: colorYellow25020050,
-                                message:
-                                    'Atenção: Para agendar ou adquirir um pacote, faça o download do nosso aplicativo e aproveite todas as funcionalidades!',
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            child: SizedBox(
+                              width: getResponsiveWidth(context),
+                              child: Center(
+                                child: AlertContainer(
+                                  textColor: Colors.white,
+                                  backgroundColor: colorContainers353535,
+                                  message:
+                                      'Atenção: Aqui na barbearia você também encontra pacotes com vários serviços por um preço especial. Baixe o app e aproveite esse benfício.',
+                                ),
                               ),
                             ),
                           ),

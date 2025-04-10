@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
+import 'package:navalha/core/cors_helper.dart';
 import 'package:navalha/mobile-DEPRECIATED/edit_profile/edit_profile_page.dart';
 import 'package:navalha/mobile-DEPRECIATED/faq/faq_page.dart';
 import 'package:navalha/mobile-DEPRECIATED/home/home_page.dart';
@@ -48,7 +49,7 @@ class DrawerWebBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _ImageProfile(
-                  imgProfile: imgProfileBarber2,
+                  imgProfile: CORSHelper.getProxiedImageUrl(imgProfileBarber2),
                   nameUser: 'Usuário',
                   adressEmail: 'teste@gmail.com',
                 ),

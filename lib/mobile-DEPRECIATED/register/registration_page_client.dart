@@ -111,7 +111,8 @@ class _RegistrationPageClientState
                     context,
                     'Digite o nome completo',
                   );
-                } else if (!EmailValidator.validate(emailEditController.text)) {
+                } else if (!EmailValidator.validate(
+                    emailEditController.text.toLowerCase().trim())) {
                   showSnackBar(context, 'Digite um email válido');
                 } else if (emailEditController.text
                     .toLowerCase()
@@ -126,7 +127,7 @@ class _RegistrationPageClientState
                   });
                   final adressEmail = await authEmailController
                       .authEmail(
-                      emailEditController.text.trim(), true);
+                      emailEditController.text.toLowerCase().trim(), true);
                   if (adressEmail.result == 'already_exists') {
                     showSnackBar(context, 'Email já cadastrado');
                     setState(() {
@@ -141,8 +142,8 @@ class _RegistrationPageClientState
                       context,
                       _ConfirmEmail(
                         resultCode: adressEmail.result!,
-                        name: nameEditController.text.trim(),
-                        email: emailEditController.text.trim(),
+                        name: nameEditController.text,
+                        email: emailEditController.text.toLowerCase().trim(),
                         codeController: codeController,
                       ),
                     );

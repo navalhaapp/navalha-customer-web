@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:navalha/core/cors_helper.dart';
 import 'package:navalha/mobile-DEPRECIATED/schedule/model/model_delete_service_cache.dart';
 import 'package:navalha/mobile-DEPRECIATED/schedule/model/model_reserved_time.dart';
 import 'package:navalha/mobile-DEPRECIATED/schedule/provider/provider_delete_service_cache.dart';
@@ -190,7 +191,8 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
                                     height: size.width * 0.05,
                                     child: FadeInImage.assetNetwork(
                                       placeholder: imgLoading3,
-                                      image: widget.professionalImg,
+                                      image: CORSHelper.getProxiedImageUrl(
+                                          widget.professionalImg),
                                       fit: BoxFit.cover,
                                       fadeInDuration:
                                           const Duration(milliseconds: 500),
