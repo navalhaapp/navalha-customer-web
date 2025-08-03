@@ -56,7 +56,7 @@ class ProfessionalItem extends StatelessWidget {
               child: ClipOval(
                 child: FadeInImage.assetNetwork(
                   placeholder: imgLoading3,
-                  image: CORSHelper.getProxiedImageUrl(img),
+                  image: img,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -149,7 +149,7 @@ class ProfessionalItem extends StatelessWidget {
                               child: FadeInImage.assetNetwork(
                                 placeholder: imgLoading3,
                                 image:
-                                    CORSHelper.getProxiedImageUrl(imgService!),
+                                    imgService!,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -167,8 +167,7 @@ class ProfessionalItem extends StatelessWidget {
                                   child: ClipOval(
                                     child: FadeInImage.assetNetwork(
                                       placeholder: imgLoading3,
-                                      image: CORSHelper.getProxiedImageUrl(
-                                          listImgServices![i].imgProfile!),
+                                      image: listImgServices![i].imgProfile!,
                                       fit: BoxFit.fill,
                                     ),
                                   ),

@@ -93,7 +93,8 @@ class _ProfessionalItemWebState extends State<ProfessionalItemWeb> {
                     child: ClipOval(
                       child: FadeInImage.assetNetwork(
                         placeholder: imgLoading3,
-                        image: CORSHelper.getProxiedImageUrl(widget.img),
+                        image: widget.img,
+                        // image: CORSHelper.getProxiedImageUrl(widget.img),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -173,9 +174,12 @@ class _ProfessionalItemWebState extends State<ProfessionalItemWeb> {
                                     child: ClipOval(
                                       child: FadeInImage.assetNetwork(
                                         placeholder: imgLoading3,
-                                        image: CORSHelper.getProxiedImageUrl(
+                                        image: 
                                             widget.listImgServices![i]
-                                                .imgProfile!),
+                                                .imgProfile!,
+                                        // image: CORSHelper.getProxiedImageUrl(
+                                        //     widget.listImgServices![i]
+                                        //         .imgProfile!),
                                         fit: BoxFit.fill,
                                       ),
                                     ),

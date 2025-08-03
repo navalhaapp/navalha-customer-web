@@ -106,40 +106,13 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                       TextStyle(color: colorFontUnable116116116, fontSize: 15),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) {
-                    return Icon(
-                      index < rating ? Icons.star : Icons.star_border,
-                      color: Colors.white,
-                    );
-                  }),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: TextField(
-                    controller: _controller,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        rating = double.tryParse(value) ?? 0.0;
-                        if (rating > 5) rating = 5.0;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Nota (0-5)',
-                      labelStyle: TextStyle(color: Colors.white),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      ),
-                    ),
-                  ),
+                StarRating(
+                  rating: rating,
+                  onRatingChanged: (newRating) {
+                    setState(() {
+                      rating = newRating;
+                    });
+                  },
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -252,6 +225,77 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
           ),
         );
       },
+    );
+  }
+}
+
+
+class StarRating extends StatefulWidget {
+  final double rating;
+  final void Function(double) onRatingChanged;
+  final double iconSize;
+  final Color activeColor;
+  final Color inactiveColor;
+
+  const StarRating({
+    Key? key,
+    required this.rating,
+    required this.onRatingChanged,
+    this.iconSize = 40,
+    this.activeColor = Colors.white,
+    this.inactiveColor = Colors.grey,
+  }) : super(key: key);
+
+  @override
+  State<StarRating> createState() => _StarRatingState();
+}
+
+class _StarRatingState extends State<StarRating> {
+  late double _currentRating;
+
+  @override
+  void initState() {
+    _currentRating = widget.rating;
+    super.initState();
+  }
+
+  void _updateRating(double newRating) {
+    setState(() {
+      _currentRating = newRating;
+    });
+    widget.onRatingChanged(_currentRating);
+  }
+
+  void _handleTap(double tappedPosition) {
+    final newRating = (tappedPosition / widget.iconSize).clamp(0, 5);
+    _updateRating(newRating.ceilToDouble());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onHorizontalDragUpdate: (details) {
+        final box = context.findRenderObject() as RenderBox;
+        final localPosition = box.globalToLocal(details.globalPosition);
+        _handleTap(localPosition.dx);
+      },
+      onTapDown: (details) {
+        final box = context.findRenderObject() as RenderBox;
+        final localPosition = box.globalToLocal(details.globalPosition);
+        _handleTap(localPosition.dx);
+      },
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(5, (index) {
+          return Icon(
+            index < _currentRating ? Icons.star : Icons.star_border,
+            size: widget.iconSize,
+            color: index < _currentRating
+                ? widget.activeColor
+                : widget.inactiveColor,
+          );
+        }),
+      ),
     );
   }
 }

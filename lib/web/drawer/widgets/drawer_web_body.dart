@@ -49,7 +49,7 @@ class DrawerWebBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _ImageProfile(
-                  imgProfile: CORSHelper.getProxiedImageUrl(imgProfileBarber2),
+                  imgProfile: imgProfileBarber2,
                   nameUser: 'Usuário',
                   adressEmail: 'teste@gmail.com',
                 ),

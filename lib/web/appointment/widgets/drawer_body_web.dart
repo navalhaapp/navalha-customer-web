@@ -60,7 +60,7 @@ class DrawerBodyWeb extends StatelessWidget {
                     ),
                   ),
                   _ButtonItem(
-                    label: 'Reservar',
+                    label: 'Agendar',
                     onPressed: () {
                       Navigator.of(context).pushNamed('/');
                     },

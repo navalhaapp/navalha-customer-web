@@ -191,8 +191,7 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
                                     height: size.width * 0.05,
                                     child: FadeInImage.assetNetwork(
                                       placeholder: imgLoading3,
-                                      image: CORSHelper.getProxiedImageUrl(
-                                          widget.professionalImg),
+                                      image: widget.professionalImg,
                                       fit: BoxFit.cover,
                                       fadeInDuration:
                                           const Duration(milliseconds: 500),

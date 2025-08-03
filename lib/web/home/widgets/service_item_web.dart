@@ -67,10 +67,10 @@ class _ServiceItemWebState extends State<ServiceItemWeb> {
                     width: 60,
                     height: 60,
                     child: ClipOval(
-                      child: FadeInImage.assetNetwork(
-                        placeholder: imgLoading3,
-                        // image: widget.img,
-                        image: CORSHelper.getProxiedImageUrl(widget.img),
+                      child: Image.network(
+                        // placeholder: imgLoading3,
+                        widget.img,
+                        // image: CORSHelper.getProxiedImageUrl(widget.img),
                         fit: BoxFit.fill,
                       ),
                     ),

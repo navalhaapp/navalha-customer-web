@@ -186,8 +186,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                         child: ClipOval(
                           child: FadeInImage.assetNetwork(
                             placeholder: imgLoading3,
-                            image: CORSHelper.getProxiedImageUrl(
-                                data.barbershop!.imgProfile ?? ''),
+                            image: data.barbershop!.imgProfile ?? '',
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -230,8 +229,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                        CORSHelper.getProxiedImageUrl(
-                                            imgProfileDefaultS3)),
+                                            imgProfileDefaultS3),
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -270,8 +268,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      CORSHelper.getProxiedImageUrl(
-                                          retrievedCustomer!.image),
+                                      retrievedCustomer!.image,
                                     ),
                                     fit: BoxFit.contain,
                                   ),
@@ -301,7 +298,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                   textColor: Colors.white,
                                   backgroundColor: colorContainers353535,
                                   message:
-                                      'Atenção: Aqui na barbearia você também encontra pacotes com vários serviços por um preço especial. Baixe o app e aproveite esse benfício.',
+                                      'Atenção: Aqui na barbearia você também encontra pacotes com vários serviços por um preço especial. Baixe o app e aproveite esse benefício.',
                                 ),
                               ),
                             ),
