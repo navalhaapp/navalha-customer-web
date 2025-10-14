@@ -361,8 +361,9 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
               child: SizedBox(
                 width: 500,
                 child: WidgetEmpty(
-                  title: 'Barbearia não encontrada',
-                  subTitle: 'Parece que não conseguimos localizar a barbearia.',
+                  title: 'Barbearia Inativa',
+                  subTitle:
+                      'Parece que a barbearia não está disponível no momento.',
                   text: 'Escolher outra barbearia',
                   onPressed: () => _launchUrl(),
                 ),

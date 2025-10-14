@@ -109070,7 +109070,7 @@ $1(a){var s=null,r=this.a
 r.as=A.jQ()
 r.as=A.jQ()
 if(a.a!=="error")return A.ed(new A.aKh(r,a))
-else{r=A.jo(s,s,A.cp(A.b5(A.B7(s,s,s,new A.aKi(r),"Parece que n\xe3o conseguimos localizar a barbearia.","Escolher outra barbearia","Barbearia n\xe3o encontrada",s,s),s,500),s,s),s,!1,s,B.bG,s)
+else{r=A.jo(s,s,A.cp(A.b5(A.B7(s,s,s,new A.aKi(r),"Parece que a barbearia n\xe3o est\xe1 dispon\xedvel no momento.","Escolher outra barbearia","Barbearia Inativa",s,s),s,500),s,s),s,!1,s,B.bG,s)
 return r}},
 $S:739}
 A.aKh.prototype={
