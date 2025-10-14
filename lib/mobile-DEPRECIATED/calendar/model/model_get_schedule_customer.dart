@@ -103,18 +103,21 @@ class ScheduleItemModel {
 class BarbershopScheduleModel {
   String? barbershopName;
   String? imgProfile;
+  bool? barbershopExists;
 
   BarbershopScheduleModel({this.barbershopName, this.imgProfile});
 
   BarbershopScheduleModel.fromJson(Map<String, dynamic> json) {
     barbershopName = json['barbershop_name'];
     imgProfile = json['img_profile'];
+    barbershopExists = json['barbershop_exists'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['barbershop_name'] = barbershopName;
     data['img_profile'] = imgProfile;
+    data['barbershop_exists'] = barbershopExists;
     return data;
   }
 }

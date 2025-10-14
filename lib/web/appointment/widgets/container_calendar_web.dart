@@ -28,6 +28,7 @@ class ContainerCalendarWeb extends StatelessWidget {
   final String? professionalId;
   final int i;
   final String birthDate;
+  final bool barbershopExists;
 
   const ContainerCalendarWeb({
     Key? key,
@@ -48,6 +49,8 @@ class ContainerCalendarWeb extends StatelessWidget {
     required this.professionalId,
     required this.i,
     required this.birthDate,
+    required this.barbershopExists,
+
   }) : super(key: key);
 
   @override
@@ -222,7 +225,7 @@ class ContainerCalendarWeb extends StatelessWidget {
           child: Row(
             children: [
               Visibility(
-                visible: finalized && !reviewed,
+                visible: finalized && !reviewed && barbershopExists,
                 child: Expanded(
                   flex: 1,
                   child: _ContainerEvaluate(

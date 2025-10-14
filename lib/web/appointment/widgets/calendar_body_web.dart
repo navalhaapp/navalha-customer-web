@@ -178,6 +178,9 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
                         nameProfessional:
                             listScheduleItem[i].professional!.name!,
                         finalized: listScheduleItem[i].finalized!,
+                        barbershopExists:
+                            listScheduleItem[i].barbershop?.barbershopExists ??
+                                false,
                         i: i,
                       ),
                     SizedBox(
