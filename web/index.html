@@ -1,27 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="Navalha agendamento..">
-
-  <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="navalha">
@@ -29,24 +12,79 @@
   <link rel="apple-touch-icon" href="web/favi-black.png">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-
-  
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="web/favi-black.png" />
-
   <title>navalha</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
-    // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = "{{flutter_service_worker_version}}";
   </script>
-  <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+
+  <style>
+    #app-update-overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.85);
+      color:#fff; display:none; align-items:center; justify-content:center;
+      z-index:999999; text-align:center; padding:24px; font-family:system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    #app-update-overlay .card{
+      background:#1c1c1c; border:1px solid rgba(255,255,255,.08);
+      border-radius:12px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.4); max-width:360px;
+    }
+    #app-update-overlay button{
+      background:#fff; color:#000; border:0; border-radius:10px;
+      padding:10px 16px; cursor:pointer; margin-top:12px;
+    }
+  </style>
 </head>
 <body>
+
+  <div id="app-update-overlay">
+    <div class="card">
+      <h3 style="margin:0 0 8px">Atualização disponível</h3>
+      <p>Há uma nova versão do Navalha. Clique para atualizar.</p>
+      <button id="app-update-btn">Atualizar agora</button>
+    </div>
+  </div>
+
+  <script>
+    window.flutterConfiguration = { renderer: "html" };
+
+    function showUpdateOverlay(onClick){
+      const el = document.getElementById('app-update-overlay');
+      el.style.display = 'flex';
+      document.getElementById('app-update-btn').onclick = onClick;
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg) {
+            const listen = (worker) => {
+              if (!worker) return;
+              worker.addEventListener('statechange', () => {
+                if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                  showUpdateOverlay(() => {
+                    (reg.waiting || worker).postMessage({ type: 'SKIP_WAITING' });
+                  });
+                }
+              });
+            };
+
+            if (reg.waiting) {
+              showUpdateOverlay(() => reg.waiting.postMessage({ type: 'SKIP_WAITING' }));
+            }
+            listen(reg.installing);
+            reg.addEventListener('updatefound', () => listen(reg.installing));
+            navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
+            setInterval(() => reg.update().catch(()=>{}), 30000);
+          }
+        } catch (_) {}
+      });
+    }
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
-
 </html>
