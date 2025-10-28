@@ -303,7 +303,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                           ),
                         ),
                       ),
-                      const DownloadAppPromotion(),
+                      // const DownloadAppPromotion(),
                     ],
                   ),
                 ),

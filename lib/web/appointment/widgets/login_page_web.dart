@@ -33,7 +33,7 @@ class _LoginPageWebState extends State<LoginPageWeb> {
           ),
         ),
       ),
-      persistentFooterButtons: const [DownloadAppPromotion()],
+      // persistentFooterButtons: const [DownloadAppPromotion()],
     );
   }
 }

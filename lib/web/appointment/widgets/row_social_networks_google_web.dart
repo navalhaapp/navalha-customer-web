@@ -238,7 +238,7 @@ class ShimmerLoginGoogle extends StatelessWidget {
               ),
             ),
           ),
-          const DownloadAppPromotion(),
+          // const DownloadAppPromotion(),
         ],
       ),
     );

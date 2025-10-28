@@ -75,14 +75,17 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
                 right: 20,
                 top: 10,
               ),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                color: Color.fromARGB(255, 28, 28, 28),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(18)),
+                color: const Color.fromARGB(255, 28, 28, 28),
+                border:
+                    Border.all(color: Colors.white.withOpacity(0.06), width: 1),
                 boxShadow: [
                   BoxShadow(
-                      blurRadius: 2,
-                      color: Color.fromARGB(255, 20, 20, 20),
-                      offset: Offset(3, 3))
+                    color: Colors.black.withOpacity(0.20),
+                    blurRadius: 10,
+                    offset: const Offset(0, 6),
+                  ),
                 ],
               ),
               child: Padding(

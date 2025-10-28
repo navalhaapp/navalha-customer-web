@@ -107,63 +107,72 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                       ],
                     ),
                   ),
+
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all<Color>(
-                          colorContainers353535,
-                        ),
-                        elevation: MaterialStateProperty.all(0),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 28, 28, 28)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1C1C1C),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                            color: Colors.white.withOpacity(0.06), width: 1),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.20),
+                            blurRadius: 10,
+                            offset: const Offset(0, 6),
                           ),
-                        ),
+                        ],
                       ),
-                      onPressed: () {
-                        widget.onPreviousStep.call();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(12),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          splashColor: colorContainers353535,
+                          onTap: () {
+                            widget.onPreviousStep.call();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Icon(
-                                      CupertinoIcons.add_circled_solid,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(width: 15),
-                                    Text(
-                                      serviceCache.state.isEmpty
-                                          ? 'Adicionar um serviço'
-                                          : 'Adicionar outro serviço',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                    Row(
+                                      children: [
+                                        const SizedBox(width: 10),
+                                        const Icon(
+                                          CupertinoIcons.add_circled_solid,
+                                          color: Colors.white,
+                                        ),
+                                        const SizedBox(width: 15),
+                                        Text(
+                                          serviceCache.state.isEmpty
+                                              ? 'Adicionar um serviço'
+                                              : 'Adicionar outro serviço',
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
+                                const Icon(
+                                  CupertinoIcons.chevron_forward,
+                                  color: Colors.white,
+                                ),
                               ],
                             ),
-                            const Icon(
-                              CupertinoIcons.chevron_forward,
-                              color: Colors.white,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ),
+
                   serviceCache.state.isNotEmpty
                       ? ListView.builder(
                           padding: EdgeInsets.zero,

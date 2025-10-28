@@ -124,7 +124,7 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
               ),
             ),
           ),
-          persistentFooterButtons: const [DownloadAppPromotion()],
+          // persistentFooterButtons: const [DownloadAppPromotion()],
         );
       }),
     );

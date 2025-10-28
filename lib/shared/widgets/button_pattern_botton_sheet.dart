@@ -31,6 +31,14 @@ class ButtonPattern extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(14),
         ),
+        border: Border.all(color: Colors.white.withOpacity(0.06), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.20),
+            blurRadius: 10,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
       child: ElevatedButton(
         style: ButtonStyle(

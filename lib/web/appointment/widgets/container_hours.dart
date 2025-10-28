@@ -49,6 +49,15 @@ class _ContainerHoursWebState extends ConsumerState<ContainerHoursWeb> {
                     ? const Color.fromARGB(255, 230, 198, 18)
                     : _containerColor,
                 borderRadius: BorderRadius.circular(10),
+                border:
+                    Border.all(color: Colors.white.withOpacity(0.06), width: 1),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.20),
+                    blurRadius: 10,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
               ),
               child: Center(
                 child: Text(

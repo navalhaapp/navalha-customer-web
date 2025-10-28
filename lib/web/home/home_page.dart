@@ -311,6 +311,16 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: colorContainers242424,
+                              border: Border.all(
+                                  color: Colors.white.withOpacity(0.06),
+                                  width: 1),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.20),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -351,7 +361,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                   ),
                 ),
                 persistentFooterAlignment: AlignmentDirectional.bottomCenter,
-                persistentFooterButtons: const [DownloadAppPromotion()],
+                // persistentFooterButtons: const [DownloadAppPromotion()],
               );
             },
           );

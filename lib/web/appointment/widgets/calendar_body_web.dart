@@ -98,58 +98,72 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
                         top: 10,
                         bottom: 10,
                       ),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          overlayColor: MaterialStateProperty.all<Color>(
-                            colorContainers353535,
-                          ),
-                          elevation: MaterialStateProperty.all(0),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color.fromARGB(255, 28, 28, 28)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                              color: Colors.white.withOpacity(0.06), width: 1),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.20),
+                              blurRadius: 10,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            overlayColor: MaterialStateProperty.all<Color>(
+                              colorContainers353535,
+                            ),
+                            elevation: MaterialStateProperty.all(0),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromARGB(255, 28, 28, 28)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
                           ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                            '/',
-                            arguments: {'barbershop_id': params},
-                          );
-                        },
-                        child: const Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        CupertinoIcons.add_circled_solid,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(width: 15),
-                                      Text(
-                                        'Marcar um serviço',
-                                        style: TextStyle(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              '/',
+                              arguments: {'barbershop_id': params},
+                            );
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.add_circled_solid,
                                           color: Colors.white,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Icon(
-                                CupertinoIcons.chevron_forward,
-                                color: Colors.white,
-                              ),
-                            ],
+                                        SizedBox(width: 15),
+                                        Text(
+                                          'Marcar um serviço',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Icon(
+                                  CupertinoIcons.chevron_forward,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

@@ -221,10 +221,19 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                         borderRadius: const BorderRadius.all(
                           Radius.circular(18),
                         ),
+                        border: Border.all(
+                            color: Colors.white.withOpacity(0.06), width: 1),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.20),
+                            blurRadius: 10,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
                       ),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(0),
+                          // elevation: MaterialStateProperty.all(0),
                           backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromARGB(255, 28, 28, 28),
                           ),
@@ -282,37 +291,43 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                                 totalPriceProvider.state.discount = null;
                                 totalPriceProvider
                                     .state.totalPriceWithoutDicount = null;
-                                Navigator.of(context)
-                                    .pushNamed('/approved', arguments: {
-                                  'services': List.generate(
+                                Navigator.of(context).pushNamed(
+                                  '/approved',
+                                  arguments: {
+                                    'services': List.generate(
                                       listResumePayment.state.services.length,
                                       (index) {
-                                    final service =
-                                        listResumePayment.state.services[index];
-                                    final cachedService =
-                                        serviceCache.state.isNotEmpty
-                                            ? serviceCache.state[index]
-                                            : null;
+                                        final service = listResumePayment
+                                            .state.services[index];
+                                        final cachedService =
+                                            (serviceCache.state.length > index)
+                                                ? serviceCache.state[index]
+                                                : null;
 
-                                    return {
-                                      'service_observation':
-                                          cachedService?.observation ?? '',
-                                      'barbershop_phone': removeNonNumeric(
-                                          cachedService?.professional
-                                                  ?.barbershop?.phone ??
-                                              ''),
-                                      'professional_name':
-                                          cachedService?.professional?.name ??
+                                        return {
+                                          'service_observation':
+                                              cachedService?.observation ?? '',
+                                          'barbershop_phone': removeNonNumeric(
+                                            cachedService?.professional
+                                                    ?.barbershop?.phone ??
+                                                '',
+                                          ),
+                                          'professional_name': cachedService
+                                                  ?.professional?.name ??
                                               '',
-                                      'service_name':
-                                          cachedService?.service?.name ?? '',
-                                      'service_date':
-                                          formatDateStr(service.date),
-                                      'service_hour':
-                                          service.serviceInitialHour,
-                                    };
-                                  }),
-                                });
+                                          'service_name':
+                                              cachedService?.service?.name ??
+                                                  '',
+                                          'service_date':
+                                              formatDateStr(service.date),
+                                          'service_hour':
+                                              service.serviceInitialHour,
+                                        };
+                                      },
+                                    ),
+                                  },
+                                );
+
 
                                 serviceCache.state.clear();
                                 listResumePayment.state.clear();
@@ -643,35 +658,54 @@ class _FittingServiceDialogState extends State<FittingServiceDialog> {
                                       );
                                       if (responseCreateAppointment.status ==
                                           'success') {
-                                        Navigator.of(context)
-                                            .pushNamed('/approved', arguments: {
-                                          'service_observation': serviceCache
-                                              .state.first.observation,
-                                          'barbershop_phone': removeNonNumeric(
-                                              serviceCache
-                                                  .state
-                                                  .first
-                                                  .professional
-                                                  ?.barbershop
-                                                  ?.phone),
-                                          'professional_name': serviceCache
-                                                  .state
-                                                  .first
-                                                  .professional
-                                                  ?.name ??
-                                              '',
-                                          'service_name': serviceCache
-                                                  .state.first.service?.name ??
-                                              '',
-                                          'service_date': formatDateStr(
+                                        Navigator.of(context).pushNamed(
+                                          '/approved',
+                                          arguments: {
+                                            'services': List.generate(
                                               listResumePayment
-                                                  .state.services.first.date),
-                                          'service_hour': listResumePayment
-                                              .state
-                                              .services
-                                              .first
-                                              .serviceInitialHour,
-                                        });
+                                                  .state.services.length,
+                                              (index) {
+                                                final service =
+                                                    listResumePayment
+                                                        .state.services[index];
+                                                final cachedService =
+                                                    (serviceCache.state.length >
+                                                            index)
+                                                        ? serviceCache
+                                                            .state[index]
+                                                        : null;
+
+                                                return {
+                                                  'service_observation':
+                                                      cachedService
+                                                              ?.observation ??
+                                                          '',
+                                                  'barbershop_phone':
+                                                      removeNonNumeric(
+                                                    cachedService
+                                                            ?.professional
+                                                            ?.barbershop
+                                                            ?.phone ??
+                                                        '',
+                                                  ),
+                                                  'professional_name':
+                                                      cachedService
+                                                              ?.professional
+                                                              ?.name ??
+                                                          '',
+                                                  'service_name': cachedService
+                                                          ?.service?.name ??
+                                                      '',
+                                                  'service_date': formatDateStr(
+                                                      service.date),
+                                                  'service_hour': service
+                                                      .serviceInitialHour,
+                                                };
+                                              },
+                                            ),
+                                          },
+                                        );
+
                                         serviceCache.state.clear();
                                         listResumePayment.state.clear();
                                       } else {
