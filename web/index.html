@@ -3,12 +3,16 @@
 <head>
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="description" content="Navalha agendamento..">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="navalha">
   <meta name="theme-color" content="#000000">
+  <meta name="flutter-web-renderer" content="html">
+  <!-- Viewport correto para mobile + teclados -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
   <link rel="apple-touch-icon" href="web/favi-black.png">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -19,25 +23,94 @@
   <script>
     var serviceWorkerVersion = "{{flutter_service_worker_version}}";
   </script>
-  <script src="flutter.js" defer></script>
 
   <style>
+    /* Fundo e altura base */
+    html, body { height: 100%; margin: 0; background: #181818; }
+    /* Mantém o container do Flutter ocupando a área útil */
+    flt-glass-pane, #flutter_container { height: 100% !important; }
+    /* Evita rolagem do body; rolagem fica por conta do app */
+    body { overflow: hidden; }
+
+    /* Overlay de atualização */
     #app-update-overlay{
       position:fixed; inset:0; background:rgba(0,0,0,.85);
       color:#fff; display:none; align-items:center; justify-content:center;
-      z-index:999999; text-align:center; padding:24px; font-family:system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      z-index:999999; text-align:center; padding:24px;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
     }
     #app-update-overlay .card{
       background:#1c1c1c; border:1px solid rgba(255,255,255,.08);
-      border-radius:12px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.4); max-width:360px;
+      border-radius:12px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.4);
+      max-width:360px;
     }
     #app-update-overlay button{
       background:#fff; color:#000; border:0; border-radius:10px;
       padding:10px 16px; cursor:pointer; margin-top:12px;
     }
   </style>
+
+  <!-- Fix robusto: força altura real em body, container e flt-glass-pane -->
+  <script>
+    (function () {
+      function getVH() {
+        return Math.round((window.visualViewport ? window.visualViewport.height : window.innerHeight));
+      }
+
+      function applyVH(px) {
+        // 1) aplica como CSS var (útil se você usar em algum CSS)
+        document.documentElement.style.setProperty('--vhpx', px + 'px');
+        // 2) aplica diretamente nos elementos relevantes (Flutter usa inline styles)
+        var targets = [
+          document.body,
+          document.getElementById('flutter_container'),
+          document.querySelector('flt-glass-pane')
+        ];
+        targets.forEach(function(el){
+          if (!el) return;
+          el.style.height = px + 'px';
+          el.style.maxHeight = px + 'px';
+        });
+      }
+
+      function updateVH() {
+        applyVH(getVH());
+      }
+
+      // Atualiza em eventos comuns de mudança de viewport
+      window.addEventListener('resize', updateVH);
+      window.addEventListener('orientationchange', updateVH);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', updateVH, { passive: true });
+        window.visualViewport.addEventListener('scroll', updateVH, { passive: true });
+      }
+
+      // Observa até o Flutter montar o flt-glass-pane e aplica altura
+      function watchFlutterRoot() {
+        var el = document.querySelector('flt-glass-pane');
+        if (el) { updateVH(); return; }
+        var mo = new MutationObserver(function() {
+          var glass = document.querySelector('flt-glass-pane');
+          if (glass) { updateVH(); mo.disconnect(); }
+        });
+        mo.observe(document.documentElement, { childList: true, subtree: true });
+      }
+
+      // Chama no load e após o primeiro frame do Flutter
+      updateVH();
+      window.addEventListener('flutter-first-frame', function() {
+        updateVH();
+        watchFlutterRoot();
+      });
+      // fallback imediato
+      watchFlutterRoot();
+    })();
+  </script>
 </head>
 <body>
+
+  <!-- Wrapper opcional; Flutter vai anexar dentro dele -->
+  <div id="flutter_container"></div>
 
   <div id="app-update-overlay">
     <div class="card">
@@ -48,8 +121,6 @@
   </div>
 
   <script>
-    window.flutterConfiguration = { renderer: "html" };
-
     function showUpdateOverlay(onClick){
       const el = document.getElementById('app-update-overlay');
       el.style.display = 'flex';
