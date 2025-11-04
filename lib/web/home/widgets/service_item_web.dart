@@ -71,28 +71,15 @@ class _ServiceItemWebState extends State<ServiceItemWeb> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                    margin: const EdgeInsets.only(left: 15, right: 10, top: 10),
                     width: 60,
                     height: 60,
                     child: ClipOval(
                       child: Image.network(
+                        // placeholder: imgLoading3,
                         widget.img,
+                        // image: CORSHelper.getProxiedImageUrl(widget.img),
                         fit: BoxFit.fill,
-                        // enquanto carrega (opcional)
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Image.asset(
-                            'asset/images/image-loading3.png',
-                            fit: BoxFit.fill,
-                          );
-                        },
-                        // se falhar (ex.: CORS), usa o asset
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            'asset/images/image-loading3.png',
-                            fit: BoxFit.fill,
-                          );
-                        },
                       ),
                     ),
                   ),
@@ -151,22 +138,19 @@ class _ServiceItemWebState extends State<ServiceItemWeb> {
                   )
                 ],
               ),
-              SizedBox(
-                width: 500,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: size.height * 0.01,
-                    left: size.width * .03,
-                    bottom: size.height * 0.03,
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 15,
+                  left: 15,
+                  bottom: 15,
+                ),
+                child: AutoSizeText(
+                  style: TextStyle(
+                    color: colorFontUnable116116116,
+                    fontSize: 16,
                   ),
-                  child: AutoSizeText(
-                    style: TextStyle(
-                      color: colorFontUnable116116116,
-                      fontSize: size.height * .020,
-                    ),
-                    maxLines: 6,
-                    widget.description,
-                  ),
+                  maxLines: 6,
+                  widget.description,
                 ),
               ),
             ],
