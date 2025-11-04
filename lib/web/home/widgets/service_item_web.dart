@@ -76,10 +76,23 @@ class _ServiceItemWebState extends State<ServiceItemWeb> {
                     height: 60,
                     child: ClipOval(
                       child: Image.network(
-                        // placeholder: imgLoading3,
                         widget.img,
-                        // image: CORSHelper.getProxiedImageUrl(widget.img),
                         fit: BoxFit.fill,
+                        // enquanto carrega (opcional)
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Image.asset(
+                            'asset/images/image-loading3.png',
+                            fit: BoxFit.fill,
+                          );
+                        },
+                        // se falhar (ex.: CORS), usa o asset
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'asset/images/image-loading3.png',
+                            fit: BoxFit.fill,
+                          );
+                        },
                       ),
                     ),
                   ),
