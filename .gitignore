@@ -1,10 +1,25 @@
-node_modules
-node_modules
+# Flutter/Dart
 .dart_tool/
-dart_tool/
 build/
+
+# IDE
 .vscode/
 .idea/
+
+# Android/iOS
 **/android/.gradle/
 **/ios/Pods/
+
+# Logs
 *.log
+
+# Flutter generated
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Firebase (cache/local)
+.firebase/
+firebase-debug.log
+
+# Node
+node_modules/
