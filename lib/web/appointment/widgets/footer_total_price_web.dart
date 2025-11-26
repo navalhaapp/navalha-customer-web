@@ -329,13 +329,13 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               }
                             });
                           } else {
-                            // >>> Alterado: abre como Bottom Sheet
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (_) => FittingServiceBottomSheet(
-                                barberShop: widget.barberShop,
+                            // Agora abre como TELA INTEIRA, não mais bottom sheet
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => FittingServiceBottomSheet(
+                                  barberShop: widget.barberShop,
+                                ),
+                                fullscreenDialog: true,
                               ),
                             );
                           }
@@ -353,7 +353,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
   }
 }
 
-/// Bottom Sheet (Web-friendly) que substitui o antigo FittingServiceDialog
+/// Tela inteira (Web/Android-friendly) que substitui o antigo BottomSheet
 class FittingServiceBottomSheet extends StatefulWidget {
   FittingServiceBottomSheet({
     Key? key,
@@ -413,494 +413,407 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
         var serviceCache = ref.watch(listServicesCacheProvider.state);
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
 
-        return SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final maxW =
-                  constraints.maxWidth >= 900 ? 600.0 : constraints.maxWidth;
-              return Padding(
-                padding: EdgeInsets.only(bottom: viewInsets),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                  ),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: FractionallySizedBox(
-                      heightFactor: 0.92, // quase tela cheia no web p/ boa UX
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: colorBackground181818,
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(24)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.35),
-                              blurRadius: 20,
-                              offset: const Offset(0, -6),
+        return Scaffold(
+          backgroundColor: colorBackground181818,
+          appBar: AppBar(
+            backgroundColor: colorBackground181818,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            centerTitle: true,
+            title: const Text(
+              'Falta pouco...',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final maxW = constraints.maxWidth >= 900
+                    ? 600.0
+                    : constraints.maxWidth;
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: maxW),
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.fromLTRB(
+                        20,
+                        20,
+                        20,
+                        viewInsets + 20,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Falta pouco...',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 10),
+                            child: TextEditPatternWeb(
+                              label: 'Nome completo',
+                              obscure: false,
+                              maxLength: 100,
+                              controller: nameController,
+                              hint: 'Digite o seu nome completo',
+                              keyboardType: TextInputType.name,
                             ),
-                          ],
-                        ),
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(maxWidth: maxW),
-                            child: Column(
-                              children: [
-                                // Handle para UX de sheet
-                                const SizedBox(height: 10),
-                                Container(
-                                  width: 48,
-                                  height: 5,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.18),
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Text(
-                                  'Falta pouco...',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                const SizedBox(height: 6),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 20, bottom: 10),
-                                          child: TextEditPatternWeb(
-                                            label: 'Nome completo',
-                                            obscure: false,
-                                            maxLength: 100,
-                                            controller: nameController,
-                                            hint: 'Digite o seu nome completo',
-                                            keyboardType: TextInputType.name,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 10),
-                                          child: TextEditPatternWeb(
-                                            label: 'E-mail',
-                                            obscure: false,
-                                            maxLength: 100,
-                                            controller: emailEditController,
-                                            hint: 'Digite seu e-mail',
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 10),
-                                          child: TextEditPatternWeb(
-                                            label: 'Data de nascimento',
-                                            obscure: false,
-                                            maxLength: 10,
-                                            controller: birthDateController,
-                                            hint: 'DD/MM/AAAA',
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly,
-                                              LengthLimitingTextInputFormatter(
-                                                  10),
-                                              DateInputFormatter(),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 10),
-                                          child: TextEditPatternWeb(
-                                            mask: TelefoneInputFormatter(),
-                                            maxLength: 30,
-                                            controller: phoneController,
-                                            label: 'Telefone / WhatsApp',
-                                            hint: 'Digite o telefone',
-                                            obscure: false,
-                                            keyboardType: TextInputType.number,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 5),
-                                          child: TextEditPatternWeb(
-                                            label: 'Senha',
-                                            obscure: false,
-                                            maxLength: 50,
-                                            controller: passwordController,
-                                            hint: 'Digite uma senha',
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                          ),
-                                        ),
-                                        // Padding(
-                                        //   padding: EdgeInsets.symmetric(
-                                        //     horizontal: 20,
-                                        //     vertical: 10,
-                                        //   ),
-                                        //   child: SizedBox(
-                                        //     width: MediaQuery.of(context)
-                                        //         .size
-                                        //         .width,
-                                        //     child: FlutterPwValidator(
-                                        //       key: validatorKey,
-                                        //       controller: passwordController,
-                                        //       strings:
-                                        //           FlutterPwValidatorNavalha(),
-                                        //       minLength: 8,
-                                        //       uppercaseCharCount: 1,
-                                        //       numericCharCount: 1,
-                                        //       failureColor:
-                                        //           const Color.fromARGB(
-                                        //               255, 227, 90, 80),
-                                        //       width: 300,
-                                        //       height: 80,
-                                        //       onSuccess: () {
-                                        //         widget.passedTest = true;
-                                        //       },
-                                        //       onFail: () {},
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20, vertical: 20),
-                                          child: ElevatedButton(
-                                            style: ButtonStyle(
-                                              overlayColor:
-                                                  MaterialStateProperty.all<
-                                                      Color>(
-                                                colorContainers353535,
-                                              ),
-                                              elevation:
-                                                  MaterialStateProperty.all(0),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                          Color>(
-                                                      const Color.fromARGB(
-                                                          255, 28, 28, 28)),
-                                              shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                              ),
-                                            ),
-                                            onPressed: () async {
-                                              if (nameController.text
-                                                  .trim()
-                                                  .isEmpty) {
-                                                showErrorDialog(
-                                                    context, 'Digite seu nome');
-                                              } else if (nameController
-                                                      .text.length <
-                                                  4) {
-                                                showErrorDialog(context,
-                                                    'Nome muito curto');
-                                              } else if (!nameRegExp.hasMatch(
-                                                  nameController.text)) {
-                                                showErrorDialog(
-                                                    context, 'Nome inválido');
-                                              } else if (!nameController.text
-                                                  .contains(' ')) {
-                                                showErrorDialog(
-                                                  context,
-                                                  'Digite o nome completo',
-                                                );
-                                              } else if (!EmailValidator
-                                                  .validate(emailEditController
-                                                      .text)) {
-                                                showErrorDialog(context,
-                                                    'Digite um email válido');
-                                              } else if (!verificarDataValida(
-                                                  birthDateController.text)) {
-                                                showErrorDialog(context,
-                                                    'Digite uma data de nascimento válida');
-                                              } else if (phoneController
-                                                      .text.length <
-                                                  14) {
-                                                showErrorDialog(context,
-                                                    'Telefone inválido');
-                                              } else if (passwordController
-                                                  .text.isEmpty) {
-                                                showErrorDialog(context,
-                                                    'Digite uma senha');
-                                              } else if (!possuiLetraMaiuscula(
-                                                  passwordController.text
-                                                      .trim())) {
-                                                showErrorDialog(context,
-                                                    'A senha deve conter alguma letra maiúscula!');
-                                              } else {
-                                                setState(() => loading = true);
-                                                final adressEmail =
-                                                    await authEmailController
-                                                        .authEmail(
-                                                            emailEditController
-                                                                .text
-                                                                .trim(),
-                                                            false);
-                                                if (adressEmail.result ==
-                                                    'already_exists') {
-                                                  showCustomDialog(context,
-                                                      const AlreadyExistsEmailDialog());
-                                                  setState(() {
-                                                    loading = false;
-                                                    emailEditController.text =
-                                                        '';
-                                                  });
-                                                } else if (adressEmail.result !=
-                                                    'already_exists') {
-                                                  customer =
-                                                      ReqCreateCustomerModel(
-                                                    birthDate:
-                                                        UtilText.formatDate(
-                                                            date),
-                                                    email: emailEditController
-                                                        .text
-                                                        .trim(),
-                                                    externalAccount: false,
-                                                    gener: null,
-                                                    name: nameController.text
-                                                        .trim(),
-                                                    password: passwordController
-                                                        .text
-                                                        .trim(),
-                                                    phone: phoneController.text
-                                                        .trim(),
-                                                    postalCode: '89041080',
-                                                  );
-                                                  final createCustomerResponse =
-                                                      await CreateCustomerUseCase(
-                                                    repository:
-                                                        CustomerRepository(
-                                                      customerEndPoint:
-                                                          CustomerEndPoint(dio),
-                                                    ),
-                                                  ).execute(customer);
-                                                  if (createCustomerResponse
-                                                          .status ==
-                                                      'success') {
-                                                    var response =
-                                                        await loginController
-                                                            .login(
-                                                      customer.email!,
-                                                      customer.password!,
-                                                      fBTokenController.state,
-                                                    );
-                                                    if (response.runtimeType ==
-                                                        DioError) {
-                                                      setState(() {
-                                                        _state = 0;
-                                                      });
-
-                                                      loginController.user =
-                                                          null;
-                                                      Navigator.of(context)
-                                                          .pushNamed('/login');
-                                                    } else if (response
-                                                            .status ==
-                                                        'success') {
-                                                      LocalStorageManager
-                                                          .saveCustomer(
-                                                        CustomerDB(
-                                                          name: response
-                                                              .customer.name,
-                                                          image: response
-                                                              .customer
-                                                              .imgProfile,
-                                                          customerId: response
-                                                              .customer
-                                                              .customerId,
-                                                          token: response.token,
-                                                          email: response
-                                                              .customer.email,
-                                                          birthDate: response
-                                                              .customer
-                                                              .birthDate,
-                                                          userID: '',
-                                                          password: customer
-                                                              .password!,
-                                                        ),
-                                                      );
-                                                      //marcando serviço
-                                                      ResponseCreateSchedule
-                                                          responseCreateAppointment =
-                                                          await createSchedule
-                                                              .createSchedule(
-                                                        response.customer
-                                                            .customerId,
-                                                        widget.barberShop
-                                                            .barbershopId!,
-                                                        response.token,
-                                                        listResumePayment.state
-                                                            .transactionAmount!,
-                                                        listResumePayment.state
-                                                                .promotionalCodeDiscount ??
-                                                            0,
-                                                        listResumePayment.state
-                                                                .promotionalCodePercent ??
-                                                            0,
-                                                        listResumePayment
-                                                            .state.services,
-                                                      );
-                                                      if (responseCreateAppointment
-                                                              .status ==
-                                                          'success') {
-                                                        // Fecha o sheet antes de navegar
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                        Navigator.of(context)
-                                                            .pushNamed(
-                                                          '/approved',
-                                                          arguments: {
-                                                            'services':
-                                                                List.generate(
-                                                              listResumePayment
-                                                                  .state
-                                                                  .services
-                                                                  .length,
-                                                              (index) {
-                                                                final service =
-                                                                    listResumePayment
-                                                                            .state
-                                                                            .services[
-                                                                        index];
-                                                                final cachedService = (serviceCache
-                                                                            .state
-                                                                            .length >
-                                                                        index)
-                                                                    ? serviceCache
-                                                                            .state[
-                                                                        index]
-                                                                    : null;
-
-                                                                return {
-                                                                  'service_observation':
-                                                                      cachedService
-                                                                              ?.observation ??
-                                                                          '',
-                                                                  'barbershop_phone':
-                                                                      removeNonNumeric(
-                                                                    cachedService
-                                                                            ?.professional
-                                                                            ?.barbershop
-                                                                            ?.phone ??
-                                                                        '',
-                                                                  ),
-                                                                  'professional_name':
-                                                                      cachedService
-                                                                              ?.professional
-                                                                              ?.name ??
-                                                                          '',
-                                                                  'service_name':
-                                                                      cachedService
-                                                                              ?.service
-                                                                              ?.name ??
-                                                                          '',
-                                                                  'service_date':
-                                                                      formatDateStr(
-                                                                          service
-                                                                              .date),
-                                                                  'service_hour':
-                                                                      service
-                                                                          .serviceInitialHour,
-                                                                };
-                                                              },
-                                                            ),
-                                                          },
-                                                        );
-
-                                                        serviceCache.state
-                                                            .clear();
-                                                        listResumePayment.state
-                                                            .clear();
-                                                      } else {
-                                                        showSnackBar(context,
-                                                            'Erro ao marcar serviço');
-                                                      }
-                                                      setState(() {
-                                                        _state = 2;
-                                                      });
-                                                    }
-                                                  } else {
-                                                    setState(
-                                                        () => loading = false);
-                                                    showSnackBar(
-                                                      context,
-                                                      'Desculpe, ocorreu um problema. Por favor, entre em contato com o suporte pelo site para que possamos resolver o seu problema de cadastro.',
-                                                    );
-                                                  }
-                                                }
-                                              }
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 5),
-                                              child: Center(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    loading
-                                                        ? const SizedBox(
-                                                            width: 20,
-                                                            height: 20,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.white,
-                                                              strokeWidth: 2,
-                                                            ),
-                                                          )
-                                                        : Row(
-                                                            children: const [
-                                                              Icon(
-                                                                Icons
-                                                                    .check_circle_sharp,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                              SizedBox(
-                                                                  width: 15),
-                                                              Text(
-                                                                'Agendar',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: TextEditPatternWeb(
+                              label: 'E-mail',
+                              obscure: false,
+                              maxLength: 100,
+                              controller: emailEditController,
+                              hint: 'Digite seu e-mail',
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: TextEditPatternWeb(
+                              label: 'Data de nascimento',
+                              obscure: false,
+                              maxLength: 10,
+                              controller: birthDateController,
+                              hint: 'DD/MM/AAAA',
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(10),
+                                DateInputFormatter(),
                               ],
                             ),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: TextEditPatternWeb(
+                              mask: TelefoneInputFormatter(),
+                              maxLength: 30,
+                              controller: phoneController,
+                              label: 'Telefone / WhatsApp',
+                              hint: 'Digite o telefone',
+                              obscure: false,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 5),
+                            child: TextEditPatternWeb(
+                              label: 'Senha',
+                              obscure: false,
+                              maxLength: 50,
+                              controller: passwordController,
+                              hint: 'Digite uma senha',
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ),
+                          // Se quiser reativar o validador de senha, está aqui:
+                          // Padding(
+                          //   padding: EdgeInsets.symmetric(
+                          //     horizontal: 20,
+                          //     vertical: 10,
+                          //   ),
+                          //   child: SizedBox(
+                          //     width: MediaQuery.of(context).size.width,
+                          //     child: FlutterPwValidator(
+                          //       key: validatorKey,
+                          //       controller: passwordController,
+                          //       strings: FlutterPwValidatorNavalha(),
+                          //       minLength: 8,
+                          //       uppercaseCharCount: 1,
+                          //       numericCharCount: 1,
+                          //       failureColor: const Color.fromARGB(
+                          //           255, 227, 90, 80),
+                          //       width: 300,
+                          //       height: 80,
+                          //       onSuccess: () {
+                          //         widget.passedTest = true;
+                          //       },
+                          //       onFail: () {},
+                          //     ),
+                          //   ),
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.all<Color>(
+                                  colorContainers353535,
+                                ),
+                                elevation: MaterialStateProperty.all(0),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  const Color.fromARGB(255, 28, 28, 28),
+                                ),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (nameController.text.trim().isEmpty) {
+                                  showErrorDialog(
+                                      context, 'Digite seu nome');
+                                } else if (nameController.text.length < 4) {
+                                  showErrorDialog(
+                                      context, 'Nome muito curto');
+                                } else if (!nameRegExp
+                                    .hasMatch(nameController.text)) {
+                                  showErrorDialog(
+                                      context, 'Nome inválido');
+                                } else if (!nameController.text
+                                    .contains(' ')) {
+                                  showErrorDialog(
+                                    context,
+                                    'Digite o nome completo',
+                                  );
+                                } else if (!EmailValidator.validate(
+                                    emailEditController.text)) {
+                                  showErrorDialog(
+                                      context, 'Digite um email válido');
+                                } else if (!verificarDataValida(
+                                    birthDateController.text)) {
+                                  showErrorDialog(context,
+                                      'Digite uma data de nascimento válida');
+                                } else if (phoneController.text.length < 14) {
+                                  showErrorDialog(
+                                      context, 'Telefone inválido');
+                                } else if (passwordController.text.isEmpty) {
+                                  showErrorDialog(
+                                      context, 'Digite uma senha');
+                                } else if (!possuiLetraMaiuscula(
+                                    passwordController.text.trim())) {
+                                  showErrorDialog(
+                                      context,
+                                      'A senha deve conter alguma letra maiúscula!');
+                                } else {
+                                  setState(() => loading = true);
+                                  final adressEmail =
+                                      await authEmailController.authEmail(
+                                          emailEditController.text.trim(),
+                                          false);
+                                  if (adressEmail.result ==
+                                      'already_exists') {
+                                    showCustomDialog(context,
+                                        const AlreadyExistsEmailDialog());
+                                    setState(() {
+                                      loading = false;
+                                      emailEditController.text = '';
+                                    });
+                                  } else if (adressEmail.result !=
+                                      'already_exists') {
+                                    customer = ReqCreateCustomerModel(
+                                      birthDate:
+                                          UtilText.formatDate(date),
+                                      email: emailEditController.text.trim(),
+                                      externalAccount: false,
+                                      gener: null,
+                                      name: nameController.text.trim(),
+                                      password:
+                                          passwordController.text.trim(),
+                                      phone: phoneController.text.trim(),
+                                      postalCode: '89041080',
+                                    );
+                                    final createCustomerResponse =
+                                        await CreateCustomerUseCase(
+                                      repository: CustomerRepository(
+                                        customerEndPoint:
+                                            CustomerEndPoint(dio),
+                                      ),
+                                    ).execute(customer);
+                                    if (createCustomerResponse.status ==
+                                        'success') {
+                                      var response =
+                                          await loginController.login(
+                                        customer.email!,
+                                        customer.password!,
+                                        fBTokenController.state,
+                                      );
+                                      if (response.runtimeType ==
+                                          DioError) {
+                                        setState(() {
+                                          _state = 0;
+                                        });
+
+                                        loginController.user = null;
+                                        Navigator.of(context)
+                                            .pushNamed('/login');
+                                      } else if (response.status ==
+                                          'success') {
+                                        LocalStorageManager.saveCustomer(
+                                          CustomerDB(
+                                            name:
+                                                response.customer.name,
+                                            image: response
+                                                .customer.imgProfile,
+                                            customerId: response
+                                                .customer.customerId,
+                                            token: response.token,
+                                            email: response.customer.email,
+                                            birthDate: response
+                                                .customer.birthDate,
+                                            userID: '',
+                                            password:
+                                                customer.password!,
+                                          ),
+                                        );
+                                        // marcando serviço
+                                        ResponseCreateSchedule
+                                            responseCreateAppointment =
+                                            await createSchedule
+                                                .createSchedule(
+                                          response.customer.customerId,
+                                          widget.barberShop.barbershopId!,
+                                          response.token,
+                                          listResumePayment.state
+                                              .transactionAmount!,
+                                          listResumePayment.state
+                                                  .promotionalCodeDiscount ??
+                                              0,
+                                          listResumePayment.state
+                                                  .promotionalCodePercent ??
+                                              0,
+                                          listResumePayment
+                                              .state.services,
+                                        );
+                                        if (responseCreateAppointment
+                                                .status ==
+                                            'success') {
+                                          // Agora é tela inteira, não precisa dar pop antes
+                                          Navigator.of(context).pushNamed(
+                                            '/approved',
+                                            arguments: {
+                                              'services': List.generate(
+                                                listResumePayment
+                                                    .state.services.length,
+                                                (index) {
+                                                  final service =
+                                                      listResumePayment
+                                                              .state
+                                                              .services[
+                                                          index];
+                                                  final cachedService = (serviceCache
+                                                              .state
+                                                              .length >
+                                                          index)
+                                                      ? serviceCache.state[
+                                                          index]
+                                                      : null;
+
+                                                  return {
+                                                    'service_observation':
+                                                        cachedService
+                                                                ?.observation ??
+                                                            '',
+                                                    'barbershop_phone':
+                                                        removeNonNumeric(
+                                                      cachedService
+                                                              ?.professional
+                                                              ?.barbershop
+                                                              ?.phone ??
+                                                          '',
+                                                    ),
+                                                    'professional_name':
+                                                        cachedService
+                                                                ?.professional
+                                                                ?.name ??
+                                                            '',
+                                                    'service_name':
+                                                        cachedService
+                                                                ?.service
+                                                                ?.name ??
+                                                            '',
+                                                    'service_date':
+                                                        formatDateStr(
+                                                            service.date),
+                                                    'service_hour': service
+                                                        .serviceInitialHour,
+                                                  };
+                                                },
+                                              ),
+                                            },
+                                          );
+
+                                          serviceCache.state.clear();
+                                          listResumePayment.state.clear();
+                                        } else {
+                                          showSnackBar(context,
+                                              'Erro ao marcar serviço');
+                                        }
+                                        setState(() {
+                                          _state = 2;
+                                        });
+                                      }
+                                    } else {
+                                      setState(() => loading = false);
+                                      showSnackBar(
+                                        context,
+                                        'Desculpe, ocorreu um problema. Por favor, entre em contato com o suporte pelo site para que possamos resolver o seu problema de cadastro.',
+                                      );
+                                    }
+                                  }
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 5),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      loading
+                                          ? const SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child:
+                                                  CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2,
+                                              ),
+                                            )
+                                          : Row(
+                                              children: const [
+                                                Icon(
+                                                  Icons
+                                                      .check_circle_sharp,
+                                                  color: Colors.white,
+                                                ),
+                                                SizedBox(width: 15),
+                                                Text(
+                                                  'Agendar',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         );
       },
