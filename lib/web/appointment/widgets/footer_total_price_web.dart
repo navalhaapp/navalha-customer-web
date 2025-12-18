@@ -415,6 +415,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
 
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: colorBackground181818,
           appBar: AppBar(
             backgroundColor: colorBackground181818,
@@ -433,9 +434,8 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
           body: SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final maxW = constraints.maxWidth >= 900
-                    ? 600.0
-                    : constraints.maxWidth;
+                final maxW =
+                    constraints.maxWidth >= 900 ? 600.0 : constraints.maxWidth;
                 return Center(
                   child: ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: maxW),
@@ -562,8 +562,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                 horizontal: 20, vertical: 20),
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                overlayColor:
-                                    MaterialStateProperty.all<Color>(
+                                overlayColor: MaterialStateProperty.all<Color>(
                                   colorContainers353535,
                                 ),
                                 elevation: MaterialStateProperty.all(0),
@@ -580,17 +579,13 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                               ),
                               onPressed: () async {
                                 if (nameController.text.trim().isEmpty) {
-                                  showErrorDialog(
-                                      context, 'Digite seu nome');
+                                  showErrorDialog(context, 'Digite seu nome');
                                 } else if (nameController.text.length < 4) {
-                                  showErrorDialog(
-                                      context, 'Nome muito curto');
+                                  showErrorDialog(context, 'Nome muito curto');
                                 } else if (!nameRegExp
                                     .hasMatch(nameController.text)) {
-                                  showErrorDialog(
-                                      context, 'Nome inválido');
-                                } else if (!nameController.text
-                                    .contains(' ')) {
+                                  showErrorDialog(context, 'Nome inválido');
+                                } else if (!nameController.text.contains(' ')) {
                                   showErrorDialog(
                                     context,
                                     'Digite o nome completo',
@@ -604,15 +599,12 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                   showErrorDialog(context,
                                       'Digite uma data de nascimento válida');
                                 } else if (phoneController.text.length < 14) {
-                                  showErrorDialog(
-                                      context, 'Telefone inválido');
+                                  showErrorDialog(context, 'Telefone inválido');
                                 } else if (passwordController.text.isEmpty) {
-                                  showErrorDialog(
-                                      context, 'Digite uma senha');
+                                  showErrorDialog(context, 'Digite uma senha');
                                 } else if (!possuiLetraMaiuscula(
                                     passwordController.text.trim())) {
-                                  showErrorDialog(
-                                      context,
+                                  showErrorDialog(context,
                                       'A senha deve conter alguma letra maiúscula!');
                                 } else {
                                   setState(() => loading = true);
@@ -620,8 +612,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                       await authEmailController.authEmail(
                                           emailEditController.text.trim(),
                                           false);
-                                  if (adressEmail.result ==
-                                      'already_exists') {
+                                  if (adressEmail.result == 'already_exists') {
                                     showCustomDialog(context,
                                         const AlreadyExistsEmailDialog());
                                     setState(() {
@@ -631,22 +622,19 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                   } else if (adressEmail.result !=
                                       'already_exists') {
                                     customer = ReqCreateCustomerModel(
-                                      birthDate:
-                                          UtilText.formatDate(date),
+                                      birthDate: UtilText.formatDate(date),
                                       email: emailEditController.text.trim(),
                                       externalAccount: false,
                                       gener: null,
                                       name: nameController.text.trim(),
-                                      password:
-                                          passwordController.text.trim(),
+                                      password: passwordController.text.trim(),
                                       phone: phoneController.text.trim(),
                                       postalCode: '89041080',
                                     );
                                     final createCustomerResponse =
                                         await CreateCustomerUseCase(
                                       repository: CustomerRepository(
-                                        customerEndPoint:
-                                            CustomerEndPoint(dio),
+                                        customerEndPoint: CustomerEndPoint(dio),
                                       ),
                                     ).execute(customer);
                                     if (createCustomerResponse.status ==
@@ -657,8 +645,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                         customer.password!,
                                         fBTokenController.state,
                                       );
-                                      if (response.runtimeType ==
-                                          DioError) {
+                                      if (response.runtimeType == DioError) {
                                         setState(() {
                                           _state = 0;
                                         });
@@ -666,46 +653,39 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                         loginController.user = null;
                                         Navigator.of(context)
                                             .pushNamed('/login');
-                                      } else if (response.status ==
-                                          'success') {
+                                      } else if (response.status == 'success') {
                                         LocalStorageManager.saveCustomer(
                                           CustomerDB(
-                                            name:
-                                                response.customer.name,
-                                            image: response
-                                                .customer.imgProfile,
-                                            customerId: response
-                                                .customer.customerId,
+                                            name: response.customer.name,
+                                            image: response.customer.imgProfile,
+                                            customerId:
+                                                response.customer.customerId,
                                             token: response.token,
                                             email: response.customer.email,
-                                            birthDate: response
-                                                .customer.birthDate,
+                                            birthDate:
+                                                response.customer.birthDate,
                                             userID: '',
-                                            password:
-                                                customer.password!,
+                                            password: customer.password!,
                                           ),
                                         );
                                         // marcando serviço
                                         ResponseCreateSchedule
                                             responseCreateAppointment =
-                                            await createSchedule
-                                                .createSchedule(
+                                            await createSchedule.createSchedule(
                                           response.customer.customerId,
                                           widget.barberShop.barbershopId!,
                                           response.token,
-                                          listResumePayment.state
-                                              .transactionAmount!,
+                                          listResumePayment
+                                              .state.transactionAmount!,
                                           listResumePayment.state
                                                   .promotionalCodeDiscount ??
                                               0,
                                           listResumePayment.state
                                                   .promotionalCodePercent ??
                                               0,
-                                          listResumePayment
-                                              .state.services,
+                                          listResumePayment.state.services,
                                         );
-                                        if (responseCreateAppointment
-                                                .status ==
+                                        if (responseCreateAppointment.status ==
                                             'success') {
                                           // Agora é tela inteira, não precisa dar pop antes
                                           Navigator.of(context).pushNamed(
@@ -716,17 +696,15 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                                     .state.services.length,
                                                 (index) {
                                                   final service =
-                                                      listResumePayment
-                                                              .state
-                                                              .services[
-                                                          index];
-                                                  final cachedService = (serviceCache
-                                                              .state
-                                                              .length >
-                                                          index)
-                                                      ? serviceCache.state[
-                                                          index]
-                                                      : null;
+                                                      listResumePayment.state
+                                                          .services[index];
+                                                  final cachedService =
+                                                      (serviceCache.state
+                                                                  .length >
+                                                              index)
+                                                          ? serviceCache
+                                                              .state[index]
+                                                          : null;
 
                                                   return {
                                                     'service_observation':
@@ -747,8 +725,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                                                 ?.name ??
                                                             '',
                                                     'service_name':
-                                                        cachedService
-                                                                ?.service
+                                                        cachedService?.service
                                                                 ?.name ??
                                                             '',
                                                     'service_date':
@@ -787,15 +764,13 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                     vertical: 10, horizontal: 5),
                                 child: Center(
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       loading
                                           ? const SizedBox(
                                               width: 20,
                                               height: 20,
-                                              child:
-                                                  CircularProgressIndicator(
+                                              child: CircularProgressIndicator(
                                                 color: Colors.white,
                                                 strokeWidth: 2,
                                               ),
@@ -803,8 +778,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                           : Row(
                                               children: const [
                                                 Icon(
-                                                  Icons
-                                                      .check_circle_sharp,
+                                                  Icons.check_circle_sharp,
                                                   color: Colors.white,
                                                 ),
                                                 SizedBox(width: 15),
