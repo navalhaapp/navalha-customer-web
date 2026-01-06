@@ -13,6 +13,7 @@ import 'package:navalha/mobile-DEPRECIATED/login/controller/login_controller.dar
 import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/shimmer/shimmer_calendar.dart';
 import 'package:navalha/shared/utils.dart';
+import 'package:navalha/shared/widgets/network_image_fallback.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/appointment/widgets/services_page_web.dart';
@@ -184,9 +185,10 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                         width: 30,
                         height: 30,
                         child: ClipOval(
-                          child: FadeInImage.assetNetwork(
-                            placeholder: imgLoading3,
-                            image: data.barbershop!.imgProfile ?? '',
+                          child: NetworkImageFallback(
+                            url: data.barbershop!.imgProfile,
+                            placeholderAsset: imgLoading3,
+                            errorAsset: iconLogoApp,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -225,11 +227,11 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                     horizontal: 10, vertical: 5),
                                 width: 40,
                                 height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                            imgProfileDefaultS3),
+                                child: ClipOval(
+                                  child: NetworkImageFallback(
+                                    url: imgProfileDefaultS3,
+                                    placeholderAsset: imgLoading3,
+                                    errorAsset: iconLogoApp,
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -264,12 +266,11 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                     horizontal: 10, vertical: 5),
                                 width: 40,
                                 height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      retrievedCustomer!.image,
-                                    ),
+                                child: ClipOval(
+                                  child: NetworkImageFallback(
+                                    url: retrievedCustomer!.image,
+                                    placeholderAsset: imgLoading3,
+                                    errorAsset: iconLogoApp,
                                     fit: BoxFit.contain,
                                   ),
                                 ),

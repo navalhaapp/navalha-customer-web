@@ -15,6 +15,7 @@ import '../../../core/assets.dart';
 import '../../../core/colors.dart';
 import '../../../shared/shows_dialogs/evaluate__barber/widgets/comment_barber_bottom_sheet.dart';
 import '../../../shared/widgets/button_pattern_botton_sheet.dart';
+import '../../../shared/widgets/network_image_fallback.dart';
 
 class EvaluateBottonSheetWeb extends StatefulWidget {
   const EvaluateBottonSheetWeb({
@@ -83,12 +84,11 @@ class _SelectServiceBottonSheetState extends State<EvaluateBottonSheetWeb> {
                   height: 50,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(1000),
-                    child: FadeInImage.assetNetwork(
-                      placeholder: imgLoading3,
-                      image: widget.imgProfessional,
+                    child: NetworkImageFallback(
+                      url: widget.imgProfessional,
+                      placeholderAsset: imgLoading3,
+                      errorAsset: iconLogoApp,
                       fit: BoxFit.cover,
-                      fadeInDuration: const Duration(milliseconds: 500),
-                      fadeInCurve: Curves.easeIn,
                     ),
                   ),
                 ),

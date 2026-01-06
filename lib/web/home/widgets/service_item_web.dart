@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:navalha/core/images_s3.dart';
+import 'package:navalha/shared/widgets/network_image_fallback.dart';
 import 'package:navalha/core/cors_helper.dart';
 import 'package:navalha/mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 import '../../../../../../../core/assets.dart';
@@ -18,7 +20,7 @@ class ServiceItemWeb extends StatefulWidget {
     this.havePrice,
   }) : super(key: key);
 
-  final String img;
+  final String? img;
   final String name;
   final String duration;
   final String price;
@@ -75,10 +77,11 @@ class _ServiceItemWebState extends State<ServiceItemWeb> {
                     width: 60,
                     height: 60,
                     child: ClipOval(
-                      child: Image.network(
-                        // placeholder: imgLoading3,
-                        widget.img,
-                        // image: CORSHelper.getProxiedImageUrl(widget.img),
+                      child: NetworkImageFallback(
+                        url: widget.img,
+                        urlPrefix: baseUrlS3bucket,
+                        placeholderAsset: imgLoading3,
+                        errorAsset: iconLogoApp,
                         fit: BoxFit.fill,
                       ),
                     ),

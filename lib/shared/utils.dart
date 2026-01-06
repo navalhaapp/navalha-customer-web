@@ -258,8 +258,10 @@ List<Service> findServicesWithProfessionals(
 
   for (var service in services) {
     for (var professional in professionals) {
-      List<Service> professionalServices =
-          List<Service>.from(professional.professionalServices!);
+      final professionalServices = professional.professionalServices;
+      if (professionalServices == null) {
+        continue;
+      }
       for (var professionalService in professionalServices) {
         if (professionalService.name == service.name &&
             professionalService.activated == true) {

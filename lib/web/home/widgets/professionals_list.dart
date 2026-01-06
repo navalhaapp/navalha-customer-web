@@ -133,7 +133,7 @@ class _ProfessionalListPageWebState extends State<ProfessionalListPageWeb> {
                             .imgProfile!,
                         listProfessionals: getProfessionalsByService(
                           listProfessionals[i].professionalServices![iService],
-                          data.barbershop!.professionals!,
+                          data.barbershop?.professionals ?? [],
                         ),
                         onConfirm: () {
                           setState(() {});
@@ -152,11 +152,16 @@ class _ProfessionalListPageWebState extends State<ProfessionalListPageWeb> {
 
   List<Professional> getProfessionalsByService(
       Service service, List<Professional> professionals) {
-    final String serviceName = service.name!;
+    final String? serviceName = service.name;
+    if (serviceName == null) {
+      return [];
+    }
 
     return professionals.where((professional) {
-      final List<Service> professionalServices =
-          professional.professionalServices!;
+      final professionalServices = professional.professionalServices;
+      if (professionalServices == null) {
+        return false;
+      }
 
       final bool hasService = professionalServices.any((service) {
         return service.name == serviceName && service.activated == true;

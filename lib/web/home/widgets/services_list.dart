@@ -23,9 +23,11 @@ class ServicesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final professionals = data.barbershop?.professionals ?? [];
+    final services = showActivatedServices(data.barbershop?.services ?? []);
     List<Service> listServices = findServicesWithProfessionals(
-      data.barbershop!.professionals!,
-      showActivatedServices(data.barbershop!.services!),
+      professionals,
+      services,
     );
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,12 +61,12 @@ class ServicesList extends StatelessWidget {
                   packageSelected: packageSelected,
                   description: listServices[iService].description!,
                   duration: getDurationRange(
-                      getAllServices(data.barbershop!.professionals!),
+                      getAllServices(professionals),
                       listServices[iService].name!),
-                  img: listServices[iService].imgProfile!,
+                  img: listServices[iService].imgProfile,
                   name: listServices[iService].name!,
                   price: getPriceRange(
-                      getAllServices(data.barbershop!.professionals!),
+                      getAllServices(professionals),
                       listServices[iService].name!),
                 ),
                 onTap: () {
@@ -88,11 +90,16 @@ class ServicesList extends StatelessWidget {
 
   List<Professional> getProfessionalsByService(
       Service service, List<Professional> professionals) {
-    final String serviceName = service.name!;
+    final String? serviceName = service.name;
+    if (serviceName == null) {
+      return [];
+    }
 
     return professionals.where((professional) {
-      final List<Service> professionalServices =
-          professional.professionalServices!;
+      final professionalServices = professional.professionalServices;
+      if (professionalServices == null) {
+        return false;
+      }
 
       final bool hasService = professionalServices.any((service) {
         return service.name == serviceName && service.activated == true;

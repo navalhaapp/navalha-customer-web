@@ -255,7 +255,10 @@ class _BodyScheduleState extends ConsumerState<BodySchedule> {
 List<Service> getAllServices(List<Professional> professionals) {
   List<Service> services = [];
   for (Professional professional in professionals) {
-    List<Service> professionalServices = professional.professionalServices!;
+    final professionalServices = professional.professionalServices;
+    if (professionalServices == null) {
+      continue;
+    }
     for (Service service in professionalServices) {
       services.add(service);
     }

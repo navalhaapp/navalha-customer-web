@@ -39,9 +39,10 @@ class _ResumePageWebState extends State<ResumePageWeb> {
   String? couponName;
   @override
   Widget build(BuildContext context) {
-    String url = Uri.base.toString();
-    String params = Uri.splitQueryString(url).values.first;
-    final String barberShopId = params;
+    final barberShopId = Uri.base.queryParameters['id'] ??
+        (Uri.base.queryParameters.values.isNotEmpty
+            ? Uri.base.queryParameters.values.first
+            : '');
     return AnimatedSize(
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,

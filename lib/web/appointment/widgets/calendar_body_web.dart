@@ -42,8 +42,10 @@ class _BodyCalendarWebState extends ConsumerState<BodyCalendarWeb> {
     final getSchedule = ref.watch(getScheduleCustomerList(getScheduleModel));
     return getSchedule.when(
       data: (data) {
-        String url = Uri.base.toString();
-        String params = Uri.splitQueryString(url).values.first;
+        final params = Uri.base.queryParameters['id'] ??
+            (Uri.base.queryParameters.values.isNotEmpty
+                ? Uri.base.queryParameters.values.first
+                : '');
         List<ScheduleItemModel> listScheduleItem =
             orderScheduleList(data.result!);
         if (listScheduleItem.isNotEmpty) {

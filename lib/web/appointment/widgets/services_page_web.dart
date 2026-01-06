@@ -13,6 +13,7 @@ import 'package:navalha/shared/providers.dart';
 import 'package:navalha/shared/shimmer/shimmer_calendar.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
+import 'package:navalha/shared/widgets/network_image_fallback.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
 import 'package:navalha/web/home/widgets/service_item_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
@@ -98,11 +99,16 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
 
         List<Professional> getProfessionalsByService(
             Service service, List<Professional> professionals) {
-          final String serviceName = service.name!;
+          final String? serviceName = service.name;
+          if (serviceName == null) {
+            return [];
+          }
 
           return professionals.where((professional) {
-            final List<Service> professionalServices =
-                professional.professionalServices!;
+            final professionalServices = professional.professionalServices;
+            if (professionalServices == null) {
+              return false;
+            }
 
             final bool hasService = professionalServices.any((service) {
               return service.name == serviceName && service.activated == true;
@@ -113,9 +119,12 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
         }
 
         if (data.status != 'error') {
+          final professionals = data.barbershop?.professionals ?? [];
+          final services =
+              showActivatedServices(data.barbershop?.services ?? []);
           List<Service> listServices = findServicesWithProfessionals(
-            data.barbershop!.professionals!,
-            showActivatedServices(data.barbershop!.services!),
+            professionals,
+            services,
           );
           return Consumer(
             builder: (context, ref, child) {
@@ -138,9 +147,10 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                         width: 25,
                         height: 25,
                         child: ClipOval(
-                          child: FadeInImage.assetNetwork(
-                            placeholder: imgLoading3,
-                            image: data.barbershop!.imgProfile ?? '',
+                          child: NetworkImageFallback(
+                            url: data.barbershop!.imgProfile,
+                            placeholderAsset: imgLoading3,
+                            errorAsset: iconLogoApp,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -193,12 +203,11 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                                 horizontal: 10, vertical: 5),
                             width: 40,
                             height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  retrievedCustomer!.image,
-                                ),
+                            child: ClipOval(
+                              child: NetworkImageFallback(
+                                url: retrievedCustomer!.image,
+                                placeholderAsset: imgLoading3,
+                                errorAsset: iconLogoApp,
                                 fit: BoxFit.contain,
                               ),
                             ),
@@ -263,14 +272,12 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
                                         description:
                                             listServices[iService].description!,
                                         duration: getDurationRange(
-                                            getAllServices(data
-                                                .barbershop!.professionals!),
+                                            getAllServices(professionals),
                                             listServices[iService].name!),
-                                        img: listServices[iService].imgProfile!,
+                                        img: listServices[iService].imgProfile,
                                         name: listServices[iService].name!,
                                         price: getPriceRange(
-                                            getAllServices(data
-                                                .barbershop!.professionals!),
+                                            getAllServices(professionals),
                                             listServices[iService].name!),
                                       ),
                                       onTap: () {

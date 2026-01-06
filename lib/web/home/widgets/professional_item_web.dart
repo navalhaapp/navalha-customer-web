@@ -6,6 +6,8 @@ import 'package:navalha/core/cors_helper.dart';
 import 'package:navalha/shared/model/barber_shop_model.dart';
 import 'package:navalha/shared/model/professional_model.dart';
 import 'package:navalha/shared/model/service_model.dart';
+import 'package:navalha/shared/widgets/network_image_fallback.dart';
+import '../../../../../../core/images_s3.dart';
 import '../../../../../../core/assets.dart';
 import '../../../mobile-DEPRECIATED/home/model/response_get_barber_shop_by_id.dart';
 
@@ -100,10 +102,10 @@ class _ProfessionalItemWebState extends State<ProfessionalItemWeb> {
                     width: 50,
                     height: 50,
                     child: ClipOval(
-                      child: FadeInImage.assetNetwork(
-                        placeholder: imgLoading3,
-                        image: widget.img,
-                        // image: CORSHelper.getProxiedImageUrl(widget.img),
+                      child: NetworkImageFallback(
+                        url: widget.img,
+                        placeholderAsset: imgLoading3,
+                        errorAsset: iconLogoApp,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -181,14 +183,12 @@ class _ProfessionalItemWebState extends State<ProfessionalItemWeb> {
                                     width: 20,
                                     height: 20,
                                     child: ClipOval(
-                                      child: FadeInImage.assetNetwork(
-                                        placeholder: imgLoading3,
-                                        image: 
-                                            widget.listImgServices![i]
-                                                .imgProfile!,
-                                        // image: CORSHelper.getProxiedImageUrl(
-                                        //     widget.listImgServices![i]
-                                        //         .imgProfile!),
+                                      child: NetworkImageFallback(
+                                        url: widget
+                                            .listImgServices![i].imgProfile,
+                                        urlPrefix: baseUrlS3bucket,
+                                        placeholderAsset: imgLoading3,
+                                        errorAsset: iconLogoApp,
                                         fit: BoxFit.fill,
                                       ),
                                     ),
