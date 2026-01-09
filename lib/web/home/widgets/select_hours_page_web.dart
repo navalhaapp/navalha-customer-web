@@ -238,7 +238,7 @@ class _SelectHoursPageWebState extends State<SelectHoursPageWeb> {
                     });
                     ResponseCreateCacheService response =
                         await createCacheController.createCacheService(
-                      barberShop.name!,
+                      barberShop.barbershopId!,
                       reservedTime.state.professionalId!,
                       reservedTime.state.serviceId!,
                       reservedTime.state.date!,

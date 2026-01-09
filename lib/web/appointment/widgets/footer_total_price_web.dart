@@ -266,7 +266,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               ResponseCreateSchedule response =
                                   await createSchedule.createSchedule(
                                 retrievedCustomer.customerId,
-                                widget.barberShop.name!,
+                                widget.barberShop.barbershopId!,
                                 retrievedCustomer.token,
                                 listResumePayment.state.transactionAmount!,
                                 listResumePayment
@@ -674,7 +674,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                             responseCreateAppointment =
                                             await createSchedule.createSchedule(
                                           response.customer.customerId,
-                                          widget.barberShop.name!,
+                                          widget.barberShop.barbershopId!,
                                           response.token,
                                           listResumePayment
                                               .state.transactionAmount!,
