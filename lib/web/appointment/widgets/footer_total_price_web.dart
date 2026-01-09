@@ -81,7 +81,8 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
         final createSchedule =
             ref.watch(CreateScheduleStateController.provider.notifier);
         var barberShopProvider = ref.watch(barberShopSelectedProvider.state);
-        listResumePayment.state.barbershopId = barberShopProvider.state.name;
+        listResumePayment.state.barbershopId =
+            barberShopProvider.state.barbershopId;
         var totalPriceProvider = ref.watch(totalPriceServiceProvider.state);
         listResumePayment.state.transactionAmount = calcPriceWithDiscount(
           totalPriceProvider.state.totalPriceWithoutDicount!,
@@ -372,7 +373,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
     baseUrl: baseURLV1,
   ));
   var loading = false;
-    bool _passwordVisible = false;
+  bool _passwordVisible = false;
   int _state = 0;
   static final RegExp nameRegExp =
       RegExp(r'^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$');
@@ -520,7 +521,8 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                   _passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: const Color.fromARGB(255, 255, 255, 255),
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                 ),
                                 onPressed: () {
                                   setState(() {

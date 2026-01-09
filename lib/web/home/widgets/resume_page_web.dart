@@ -56,7 +56,8 @@ class _ResumePageWebState extends State<ResumePageWeb> {
           var barberShopProvider = ref.watch(barberShopSelectedProvider.state);
           final listResumePayment =
               ref.watch(listResumePaymentProvider.notifier);
-          listResumePayment.state.barbershopId = barberShopProvider.state.name;
+          listResumePayment.state.barbershopId =
+              barberShopProvider.state.barbershopId;
           listResumePayment.state.transactionAmount = calcPriceWithDiscount(
             totalPriceProvider.state.totalPriceWithoutDicount!,
             totalPriceProvider.state.discount ?? 0,
