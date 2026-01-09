@@ -81,8 +81,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
         final createSchedule =
             ref.watch(CreateScheduleStateController.provider.notifier);
         var barberShopProvider = ref.watch(barberShopSelectedProvider.state);
-        listResumePayment.state.barbershopId =
-            barberShopProvider.state.barbershopId;
+        listResumePayment.state.barbershopId = barberShopProvider.state.name;
         var totalPriceProvider = ref.watch(totalPriceServiceProvider.state);
         listResumePayment.state.transactionAmount = calcPriceWithDiscount(
           totalPriceProvider.state.totalPriceWithoutDicount!,
@@ -266,7 +265,7 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
                               ResponseCreateSchedule response =
                                   await createSchedule.createSchedule(
                                 retrievedCustomer.customerId,
-                                widget.barberShop.barbershopId!,
+                                widget.barberShop.name!,
                                 retrievedCustomer.token,
                                 listResumePayment.state.transactionAmount!,
                                 listResumePayment
@@ -658,7 +657,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                                             responseCreateAppointment =
                                             await createSchedule.createSchedule(
                                           response.customer.customerId,
-                                          widget.barberShop.barbershopId!,
+                                          widget.barberShop.name!,
                                           response.token,
                                           listResumePayment
                                               .state.transactionAmount!,

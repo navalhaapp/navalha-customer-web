@@ -38,7 +38,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     Uri uri = Uri.base;
-    String barberShopId = uri.queryParameters['id'] ?? '';
+    String barberShopName = uri.queryParameters['id'] ?? '';
 
     return MaterialApp(
       title: 'Navalha',
@@ -49,7 +49,7 @@ class _MyAppState extends ConsumerState<MyApp> {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
-            return animatedRoute(HomePageWeb(barberShopId: barberShopId),
+            return animatedRoute(HomePageWeb(barberShopName: barberShopName),
                 routeName: '/');
           case '/login':
             return animatedRoute(const LoginPageWeb(), routeName: '/login');
@@ -80,11 +80,10 @@ class _MyAppState extends ConsumerState<MyApp> {
                 ApprovedSchedulePage(page: '/', arguments: args),
                 routeName: '/approved/fit-service');
           default:
-            return animatedRoute(HomePageWeb(barberShopId: barberShopId),
+            return animatedRoute(HomePageWeb(barberShopName: barberShopName),
                 routeName: '/');
         }
       },
-
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

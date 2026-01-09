@@ -55,8 +55,7 @@ class _ResumePageWebState extends State<ResumePageWeb> {
           var barberShopProvider = ref.watch(barberShopSelectedProvider.state);
           final listResumePayment =
               ref.watch(listResumePaymentProvider.notifier);
-          listResumePayment.state.barbershopId =
-              barberShopProvider.state.barbershopId;
+          listResumePayment.state.barbershopId = barberShopProvider.state.name;
           listResumePayment.state.transactionAmount = calcPriceWithDiscount(
             totalPriceProvider.state.totalPriceWithoutDicount!,
             totalPriceProvider.state.discount ?? 0,
@@ -107,7 +106,6 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                       ],
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Container(
@@ -172,7 +170,6 @@ class _ResumePageWebState extends State<ResumePageWeb> {
                       ),
                     ),
                   ),
-
                   serviceCache.state.isNotEmpty
                       ? ListView.builder(
                           padding: EdgeInsets.zero,

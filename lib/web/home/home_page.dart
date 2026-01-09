@@ -30,12 +30,12 @@ class HomePageWeb extends StatefulHookConsumerWidget {
     Key? key,
     this.packageSelected,
     this.havePrice,
-    this.barberShopId,
+    this.barberShopName,
   }) : super(key: key);
 
   final CustomerPackages? packageSelected;
   final bool? havePrice;
-  final String? barberShopId;
+  final String? barberShopName;
 
   @override
   ConsumerState<HomePageWeb> createState() => _HomePageWebState();
@@ -118,7 +118,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
   void initState() {
     super.initState();
     getBarberShopModel = ParamsBarberShopById(
-      barberShopId: widget.barberShopId!,
+      barberShopName: widget.barberShopName!,
       customerId: null,
     );
   }
@@ -171,7 +171,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
               });
               return Scaffold(
                 backgroundColor: colorBackground181818,
-                drawer: DrawerPageWeb(barberShopId: widget.barberShopId!),
+                drawer: DrawerPageWeb(barberShopId: widget.barberShopName!),
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Colors.transparent,
@@ -228,8 +228,7 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                            imgProfileDefaultS3),
+                                    image: NetworkImage(imgProfileDefaultS3),
                                     fit: BoxFit.contain,
                                   ),
                                 ),

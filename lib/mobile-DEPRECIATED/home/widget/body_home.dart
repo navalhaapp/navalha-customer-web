@@ -233,8 +233,7 @@ class BodyState extends ConsumerState<BodyHome> {
                               ResponseBarberShopById response =
                                   await getBarberShopById.getAllBarberShopById(
                                 ParamsBarberShopById(
-                                  barberShopId:
-                                      listBarbershops[i].barbershopId!,
+                                  barberShopName: listBarbershops[i].name!,
                                   customerId: authLoginController
                                           .user?.customer?.customerId ??
                                       '',

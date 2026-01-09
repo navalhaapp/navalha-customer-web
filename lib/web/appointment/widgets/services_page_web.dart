@@ -26,12 +26,12 @@ class ServicesPageWeb extends StatefulHookConsumerWidget {
     Key? key,
     this.packageSelected,
     this.havePrice,
-    this.barberShopId,
+    this.barberShopName,
   }) : super(key: key);
 
   final CustomerPackages? packageSelected;
   final bool? havePrice;
-  final String? barberShopId;
+  final String? barberShopName;
 
   @override
   ConsumerState<ServicesPageWeb> createState() => _ServicesPageWebState();
@@ -53,7 +53,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
   void initState() {
     super.initState();
     getBarberShopModel = ParamsBarberShopById(
-      barberShopId: widget.barberShopId!,
+      barberShopName: widget.barberShopName!,
       customerId: null,
     );
   }
@@ -125,7 +125,7 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
               });
               return Scaffold(
                 backgroundColor: colorBackground181818,
-                drawer: DrawerPageWeb(barberShopId: widget.barberShopId!),
+                drawer: DrawerPageWeb(barberShopId: widget.barberShopName!),
                 appBar: AppBar(
                   elevation: 0,
                   backgroundColor: colorBackground181818,
@@ -327,7 +327,6 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
         } else {
           return const SizedBox();
         }
-        
       },
       error: (error, stackTrace) => Scaffold(
         body: Center(
@@ -348,8 +347,6 @@ class _ServicesPageWebState extends ConsumerState<ServicesPageWeb> {
     );
   }
 }
-
-
 
 class AlertContainer extends StatelessWidget {
   final String message;

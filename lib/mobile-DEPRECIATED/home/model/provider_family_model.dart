@@ -11,11 +11,11 @@ class ProviderFamilyGetAllBarberShopModel {
 }
 
 class ParamsBarberShopById {
-  String barberShopId;
+  String barberShopName;
   String? customerId;
 
   ParamsBarberShopById({
-    required this.barberShopId,
+    required this.barberShopName,
     required this.customerId,
   });
 }

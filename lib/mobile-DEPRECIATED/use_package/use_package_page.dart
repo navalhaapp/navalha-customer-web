@@ -62,7 +62,7 @@ class UsePackagePage extends StatelessWidget {
                     ResponseBarberShopById response =
                         await getBarberShopById.getAllBarberShopById(
                       ParamsBarberShopById(
-                        barberShopId: barberShopProvider.state.barbershopId!,
+                        barberShopName: barberShopProvider.state.name!,
                         customerId:
                             authLoginController.user?.customer.customerId,
                       ),

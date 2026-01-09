@@ -14,7 +14,7 @@ class GetBarberShopByIdEndPoint {
     final data = {"customer_id": params.customerId};
     try {
       var response = await dio.post(
-        '$baseURLV1/customer/barbershop/getById/${params.barberShopId}',
+        '$baseURLV1/customer/barbershop/getByName/${params.barberShopName}',
         data: data,
         options: Options(headers: headers),
       );
