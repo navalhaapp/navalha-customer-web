@@ -4,8 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/mobile-DEPRECIATED/calendar/model/model_cancel_appointment.dart';
 import 'package:navalha/mobile-DEPRECIATED/calendar/provider/provider_cancel_appointment.dart';
 import 'package:navalha/mobile-DEPRECIATED/calendar/widget/status_item.dart';
+import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/shared/utils.dart';
+import 'package:navalha/shared/widgets/network_image_fallback.dart';
 import 'package:navalha/web/appointment/widgets/evaluate_botton_sheet_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 import 'package:navalha/web/shared/navalha_dialog.dart';
@@ -94,10 +96,13 @@ class ContainerCalendarWeb extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       width: 30,
                       height: 30,
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage: NetworkImage(imgBarberShop),
+                      child: ClipOval(
+                        child: NetworkImageFallback(
+                          url: imgBarberShop,
+                          placeholderAsset: imgLoading3,
+                          errorAsset: iconLogoApp,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 5),

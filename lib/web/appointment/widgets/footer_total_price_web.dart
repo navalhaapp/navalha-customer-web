@@ -372,6 +372,7 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
     baseUrl: baseURLV1,
   ));
   var loading = false;
+    bool _passwordVisible = false;
   int _state = 0;
   static final RegExp nameRegExp =
       RegExp(r'^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$');
@@ -508,11 +509,25 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
                             padding: const EdgeInsets.only(bottom: 5),
                             child: TextEditPatternWeb(
                               label: 'Senha',
-                              obscure: false,
                               maxLength: 50,
                               controller: passwordController,
                               hint: 'Digite uma senha',
                               keyboardType: TextInputType.emailAddress,
+                              obscure: !_passwordVisible,
+                              suffixIcon: IconButton(
+                                splashColor: Colors.transparent,
+                                icon: Icon(
+                                  _passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: const Color.fromARGB(255, 255, 255, 255),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                           // Se quiser reativar o validador de senha, está aqui:

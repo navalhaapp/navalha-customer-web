@@ -13,6 +13,7 @@ import 'package:navalha/mobile-DEPRECIATED/home/home_page.dart';
 import 'package:navalha/mobile-DEPRECIATED/login/login_page.dart';
 import 'package:navalha/shared/animation/page_trasition.dart';
 import 'package:navalha/shared/onboarding/onboarding_page.dart';
+import 'package:navalha/shared/widgets/network_image_fallback.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../shared/utils.dart';
@@ -215,12 +216,11 @@ class _ImageProfile extends StatelessWidget {
             height: 100,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(1000),
-              child: FadeInImage.assetNetwork(
-                placeholder: imgLoading3,
-                image: imgProfile,
+              child: NetworkImageFallback(
+                url: imgProfile,
+                placeholderAsset: imgLoading3,
+                errorAsset: iconLogoApp,
                 fit: BoxFit.cover,
-                fadeInDuration: const Duration(milliseconds: 500),
-                fadeInCurve: Curves.easeIn,
               ),
             ),
           ),

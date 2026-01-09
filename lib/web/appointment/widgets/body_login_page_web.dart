@@ -192,9 +192,13 @@ class _BodyLoginWebState extends ConsumerState<BodyLoginWeb>
 
                               Future.delayed(const Duration(seconds: 1))
                                   .then((value) async {
-                                String url = Uri.base.toString();
-                                String params =
-                                    Uri.splitQueryString(url).values.first;
+                                final params =
+                                    Uri.base.queryParameters['id'] ??
+                                        (Uri.base.queryParameters.values
+                                                .isNotEmpty
+                                            ? Uri.base.queryParameters.values
+                                                .first
+                                            : '');
 
                                 bool? resumeLastPageValue =
                                     LocalStorageManagerLastPage

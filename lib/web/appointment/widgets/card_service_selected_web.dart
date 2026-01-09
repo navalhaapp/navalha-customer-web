@@ -11,6 +11,7 @@ import 'package:navalha/shared/utils.dart';
 import '../../../core/assets.dart';
 import '../../../core/colors.dart';
 import '../../../shared/providers.dart';
+import '../../../shared/widgets/network_image_fallback.dart';
 
 class CardServiceSelectedWeb extends StatefulWidget {
   final String observation;
@@ -192,13 +193,11 @@ class _CardServiceSelectedWebState extends State<CardServiceSelectedWeb> {
                                   child: SizedBox(
                                     width: size.width * 0.05,
                                     height: size.width * 0.05,
-                                    child: FadeInImage.assetNetwork(
-                                      placeholder: imgLoading3,
-                                      image: widget.professionalImg,
+                                    child: NetworkImageFallback(
+                                      url: widget.professionalImg,
+                                      placeholderAsset: imgLoading3,
+                                      errorAsset: iconLogoApp,
                                       fit: BoxFit.cover,
-                                      fadeInDuration:
-                                          const Duration(milliseconds: 500),
-                                      fadeInCurve: Curves.easeIn,
                                     ),
                                   ),
                                 )

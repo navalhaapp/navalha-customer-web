@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:navalha/core/assets.dart';
 import 'package:navalha/core/colors.dart';
 import 'package:navalha/shared/providers.dart';
+import 'package:navalha/shared/widgets/network_image_fallback.dart';
 import 'package:navalha/shared/widgets/widget_empty.dart';
 import 'package:navalha/web/appointment/widgets/calendar_body_web.dart';
 import 'package:navalha/web/appointment/widgets/drawer_page_web.dart';
@@ -24,8 +25,10 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
     return SafeArea(
       top: false,
       child: Consumer(builder: (context, ref, child) {
-        String url = Uri.base.toString();
-        String params = Uri.splitQueryString(url).values.first;
+        final params = Uri.base.queryParameters['id'] ??
+            (Uri.base.queryParameters.values.isNotEmpty
+                ? Uri.base.queryParameters.values.first
+                : '');
         final retrievedCustomer = LocalStorageManager.getCustomer();
         return Scaffold(
           backgroundColor: colorBackground181818,
@@ -57,7 +60,7 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                         color: Colors.white,
                       )),
                   retrievedCustomer == null
-                  ? Container(
+                      ? Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 5),
                           width: 40,
@@ -71,20 +74,19 @@ class _CalendarPageWebState extends State<CalendarPageWeb> {
                           ),
                         )
                       : Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            retrievedCustomer.image,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          width: 40,
+                          height: 40,
+                          child: ClipOval(
+                            child: NetworkImageFallback(
+                              url: retrievedCustomer.image,
+                              placeholderAsset: imgLoading3,
+                              errorAsset: iconLogoApp,
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                          fit: BoxFit.contain,
                         ),
-                      ),
-                    ),
                   
                 ],
               )
