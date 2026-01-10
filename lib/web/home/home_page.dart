@@ -286,25 +286,25 @@ class _HomePageWebState extends ConsumerState<HomePageWeb> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Visibility(
-                          visible:
-                              data.barbershop?.packageList?.isNotEmpty ?? true,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            child: SizedBox(
-                              width: getResponsiveWidth(context),
-                              child: Center(
-                                child: AlertContainer(
-                                  textColor: Colors.white,
-                                  backgroundColor: colorContainers353535,
-                                  message:
-                                      'Atenção: Aqui na barbearia você também encontra pacotes com vários serviços por um preço especial. Baixe o app e aproveite esse benefício.',
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Visibility(
+                        //   visible:
+                        //       data.barbershop?.packageList?.isNotEmpty ?? true,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.symmetric(
+                        //         vertical: 10, horizontal: 10),
+                        //     child: SizedBox(
+                        //       width: getResponsiveWidth(context),
+                        //       child: Center(
+                        //         child: AlertContainer(
+                        //           textColor: Colors.white,
+                        //           backgroundColor: colorContainers353535,
+                        //           message:
+                        //               'Atenção: Aqui na barbearia você também encontra pacotes com vários serviços por um preço especial. Baixe o app e aproveite esse benefício.',
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Center(
                           child: Container(
                             margin: const EdgeInsets.all(10),
