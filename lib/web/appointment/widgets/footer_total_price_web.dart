@@ -27,6 +27,7 @@ import 'package:navalha/shared/shows_dialogs/dialog.dart';
 import 'package:navalha/shared/utils.dart';
 import 'package:navalha/shared/widgets/button_pattern_dialog.dart';
 import 'package:navalha/web/appointment/text_edit_web.dart';
+import 'package:navalha/web/appointment/widgets/calendar_web.dart';
 import 'package:navalha/web/appointment/widgets/register_web/registration_password_web.dart';
 import 'package:navalha/web/db/db_customer_shared.dart';
 
@@ -76,6 +77,8 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
       builder: (context, ref, child) {
         CustomerDB? retrievedCustomer = LocalStorageManager.getCustomer();
         var serviceCache = ref.watch(listServicesCacheProvider.state);
+        final reservedTime = ref.watch(reservedTimeProvider.state);
+        final daySelectedController = ref.watch(daySelectedProvider.state);
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
 
         final createSchedule =
@@ -324,6 +327,10 @@ class _FooterTotalPriceWebState extends State<FooterTotalPriceWeb> {
 
                                 serviceCache.state.clear();
                                 listResumePayment.state.clear();
+                                reservedTime.state.clear();
+                                daySelectedController.state = DateTime.now();
+                                ref.refresh(fetchOpenHoursProvider(
+                                    daySelectedController.state));
                               } else {
                                 showSnackBar(context, 'Erro ao marcar serviço');
                               }
@@ -413,6 +420,8 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
             ref.watch(CreateScheduleStateController.provider.notifier);
         var serviceCache = ref.watch(listServicesCacheProvider.state);
         final listResumePayment = ref.watch(listResumePaymentProvider.notifier);
+        final reservedTime = ref.watch(reservedTimeProvider.state);
+        final daySelectedController = ref.watch(daySelectedProvider.state);
 
         return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -742,6 +751,11 @@ class _FittingServiceBottomSheetState extends State<FittingServiceBottomSheet> {
 
                                           serviceCache.state.clear();
                                           listResumePayment.state.clear();
+                                          reservedTime.state.clear();
+                                          daySelectedController.state =
+                                              DateTime.now();
+                                          ref.refresh(fetchOpenHoursProvider(
+                                              daySelectedController.state));
                                         } else {
                                           showSnackBar(context,
                                               'Erro ao marcar serviço');

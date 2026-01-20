@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:navalha/mobile-DEPRECIATED/schedule/model/model_get_open_hours_by_date.dart';
 import 'package:navalha/mobile-DEPRECIATED/schedule/provider/provider_get_open_hours_by_date.dart';
@@ -49,8 +50,28 @@ class CalendarState extends ConsumerState<CalendarWeb> {
   void initState() {
     super.initState();
     initializeDateFormatting();
-    ref.refresh(fetchOpenHoursProvider(_focusedDay));
-    _selectedDay = _focusedDay;
+    final reservedTime = ref.read(reservedTimeProvider.state);
+    DateTime initialDate = DateTime.now();
+
+    final reservedDate = reservedTime.state.date;
+    if (reservedDate != null && reservedDate.isNotEmpty) {
+      try {
+        initialDate = DateFormat('MM-dd-yyyy').parse(reservedDate);
+      } catch (_) {
+        initialDate = DateTime.now();
+      }
+    }
+
+    _focusedDay = initialDate;
+    _selectedDay = initialDate;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      final daySelectedController = ref.read(daySelectedProvider.state);
+      daySelectedController.state = initialDate;
+      ref.refresh(fetchOpenHoursProvider(initialDate));
+    });
   }
 
   Key calendarKey = UniqueKey();
