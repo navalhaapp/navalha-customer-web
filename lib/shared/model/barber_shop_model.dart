@@ -32,6 +32,7 @@ class BarberShop {
   List<Review>? barberShopReviews;
   List<PackageModel>? packageList;
   List<GalleryImages>? galleryImages;
+  int? scheduleAdvanceDays;
 
   BarberShop({
     this.professionals,
@@ -59,6 +60,7 @@ class BarberShop {
     this.openingHourList,
     this.barberShopReviews,
     this.packageList,
+    this.scheduleAdvanceDays,
   });
 
   BarberShop.fromJson(Map<String, dynamic> json) {
@@ -125,6 +127,7 @@ class BarberShop {
         packageList!.add(PackageModel.fromJson(v));
       });
     }
+    scheduleAdvanceDays = json['schedule_advance_days'];
   }
 
   Map<String, dynamic> toJson() {
@@ -173,6 +176,7 @@ class BarberShop {
     if (packageList != null) {
       data['package_list'] = packageList!.map((v) => v.toJson()).toList();
     }
+    data['schedule_advance_days'] = scheduleAdvanceDays;
     return data;
   }
 }
