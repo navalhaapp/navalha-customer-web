@@ -109,6 +109,10 @@ class CalendarState extends ConsumerState<CalendarWeb> {
               ? CalendarFormat.twoWeeks
               : CalendarFormat.month,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+          enabledDayPredicate: (day) {
+            // Desabilita dias após o lastDay
+            return !day.isAfter(lastDay);
+          },
           daysOfWeekStyle: const DaysOfWeekStyle(
             weekdayStyle:
                 TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -132,6 +136,23 @@ class CalendarState extends ConsumerState<CalendarWeb> {
             todayDecoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Color.fromARGB(123, 116, 116, 116),
+            ),
+            // Estilo visual para dias desabilitados/bloqueados
+            disabledDecoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromARGB(50, 255, 0, 0),
+            ),
+            disabledTextStyle: TextStyle(
+              color: Color.fromARGB(100, 255, 100, 100),
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.lineThrough,
+            ),
+            outsideDecoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.transparent,
+            ),
+            outsideTextStyle: TextStyle(
+              color: Color.fromARGB(80, 150, 150, 150),
             ),
           ),
           headerStyle: const HeaderStyle(
