@@ -82,6 +82,11 @@ class CalendarState extends ConsumerState<CalendarWeb> {
     final daySelectedController = ref.watch(daySelectedProvider.state);
     final response =
         ref.watch(fetchOpenHoursProvider(daySelectedController.state));
+    final barberShop = ref.watch(barberShopSelectedProvider);
+
+    // Define o lastDay baseado no scheduleAdvanceDays da barbearia
+    final int advanceDays = barberShop.scheduleAdvanceDays ?? 30;
+    final DateTime lastDay = DateTime.now().add(Duration(days: advanceDays));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,13 +103,16 @@ class CalendarState extends ConsumerState<CalendarWeb> {
           pageAnimationEnabled: true,
           firstDay: DateTime(DateTime.now().year - 5, DateTime.now().month,
               DateTime.now().day),
-          lastDay: DateTime(DateTime.now().year + 5, DateTime.now().month,
-              DateTime.now().day),
+          lastDay: lastDay,
           focusedDay: _focusedDay,
           calendarFormat: reservedTime.state.date != ''
               ? CalendarFormat.twoWeeks
               : CalendarFormat.month,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+          enabledDayPredicate: (day) {
+            // Desabilita dias após o lastDay
+            return !day.isAfter(lastDay);
+          },
           daysOfWeekStyle: const DaysOfWeekStyle(
             weekdayStyle:
                 TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -128,6 +136,23 @@ class CalendarState extends ConsumerState<CalendarWeb> {
             todayDecoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Color.fromARGB(123, 116, 116, 116),
+            ),
+            // Estilo visual para dias desabilitados/bloqueados
+            disabledDecoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromARGB(50, 255, 0, 0),
+            ),
+            disabledTextStyle: TextStyle(
+              color: Color.fromARGB(100, 255, 100, 100),
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.lineThrough,
+            ),
+            outsideDecoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.transparent,
+            ),
+            outsideTextStyle: TextStyle(
+              color: Color.fromARGB(80, 150, 150, 150),
             ),
           ),
           headerStyle: const HeaderStyle(

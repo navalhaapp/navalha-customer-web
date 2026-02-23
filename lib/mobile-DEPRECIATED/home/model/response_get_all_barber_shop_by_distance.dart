@@ -49,6 +49,7 @@ class Barbershops {
   String? imgProfile;
   double? rating;
   CheapServices? cheapServices;
+  int? scheduleAdvanceDays;
 
   Barbershops(
       {this.barbershopId,
@@ -56,7 +57,8 @@ class Barbershops {
       this.distance,
       this.imgProfile,
       this.rating,
-      this.cheapServices});
+      this.cheapServices,
+      this.scheduleAdvanceDays});
 
   Barbershops.fromJson(Map<String, dynamic> json) {
     barbershopId = json['barbershop_id'];
@@ -67,6 +69,7 @@ class Barbershops {
     cheapServices = json['cheap_services'] != null
         ? CheapServices.fromJson(json['cheap_services'])
         : null;
+    scheduleAdvanceDays = json['schedule_advance_days'];
   }
 
   Map<String, dynamic> toJson() {
@@ -79,6 +82,7 @@ class Barbershops {
     if (cheapServices != null) {
       data['cheap_services'] = cheapServices!.toJson();
     }
+    data['schedule_advance_days'] = scheduleAdvanceDays;
     return data;
   }
 }
