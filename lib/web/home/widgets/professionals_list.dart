@@ -33,7 +33,6 @@ class _ProfessionalListPageWebState extends State<ProfessionalListPageWeb> {
     final String? serviceName = widget.serviceData['serviceName'];
     late StateController<ReservedTime> reservedTime;
     final ResponseBarberShopById data = widget.serviceData['data'];
-    final int? iService = widget.serviceData['iService'];
     final List<Professional> listProfessionals =
         widget.serviceData['listProfessionals'];
     final CustomerPackages? packageSelected =
@@ -87,6 +86,10 @@ class _ProfessionalListPageWebState extends State<ProfessionalListPageWeb> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: listProfessionals.length,
                   itemBuilder: (context, i) {
+                    final Service? selectedService = _getServiceByName(
+                      listProfessionals[i].professionalServices,
+                      serviceName,
+                    );
                     return GestureDetector(
                       onTap: () {
                         reservedTime.state.professionalId =
@@ -111,28 +114,18 @@ class _ProfessionalListPageWebState extends State<ProfessionalListPageWeb> {
                         img: listProfessionals[i].imgProfile!,
                         name: listProfessionals[i].name!,
                         rating: listProfessionals[i].rating!,
-                        imgService: listProfessionals[i]
-                            .professionalServices![iService!]
-                            .imgProfile,
+                        imgService: selectedService?.imgProfile,
                         listImgServices:
                             listProfessionals[i].professionalServices,
-                        serviceTime: listProfessionals[i]
-                            .professionalServices![iService]
-                            .duration,
+                        serviceTime: selectedService?.duration,
                         havePrice: false,
                         packageList: packageSelected,
                         barberShop: data.barbershop!,
-                        servicePrice: listProfessionals[i]
-                            .professionalServices![iService]
-                            .price!,
-                        serviceName: listProfessionals[i]
-                            .professionalServices![iService]
-                            .name!,
-                        serviceImg: listProfessionals[i]
-                            .professionalServices![iService]
-                            .imgProfile!,
+                        servicePrice: selectedService?.price,
+                        serviceName: selectedService?.name ?? serviceName ?? '',
+                        serviceImg: selectedService?.imgProfile ?? '',
                         listProfessionals: getProfessionalsByService(
-                          listProfessionals[i].professionalServices![iService],
+                          selectedService ?? Service(name: serviceName),
                           data.barbershop?.professionals ?? [],
                         ),
                         onConfirm: () {
@@ -169,5 +162,27 @@ class _ProfessionalListPageWebState extends State<ProfessionalListPageWeb> {
 
       return hasService;
     }).toList();
+  }
+
+  Service? _getServiceByName(
+    List<Service>? services,
+    String? serviceName,
+  ) {
+    if (services == null || services.isEmpty) {
+      return null;
+    }
+    if (serviceName != null) {
+      for (final service in services) {
+        if (service.name == serviceName && service.activated == true) {
+          return service;
+        }
+      }
+      for (final service in services) {
+        if (service.name == serviceName) {
+          return service;
+        }
+      }
+    }
+    return services.first;
   }
 }
